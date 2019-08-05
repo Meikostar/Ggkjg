@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_f2f2f2"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bj_105dp"
+                android:background="@color/my_color_d60029"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/bj_45dp">
+
+                <TextView
+                    android:id="@+id/tv_des_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/my_color_white"
+                    android:textSize="@dimen/wz_20sp" />
+
+                <TextView
+                    android:id="@+id/tv_des_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_white"
+                    android:textSize="@dimen/wz_13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bj_48dp"
+                android:background="@color/my_color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/bj_15dp"
+                android:paddingRight="@dimen/bj_15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="退款金额"
+                    android:textColor="@color/my_color_black"
+                    android:textSize="@dimen/wz_15sp" />
+
+                <TextView
+                    android:id="@+id/tv_return_money_red"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textColor="@color/my_color_d60029"
+                    android:textSize="@dimen/wz_15sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_des_return_success"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bj_49dp"
+                android:background="@color/my_color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/bj_15dp"
+                android:paddingRight="@dimen/bj_15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="退款金额"
+                    android:textColor="@color/my_color_black"
+                    android:textSize="@dimen/wz_15sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="200"
+                    android:textColor="@color/my_color_d60029"
+                    android:textSize="@dimen/wz_15sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bj_49dp"
+                android:layout_marginTop="@dimen/bj_10dp"
+                android:background="@color/my_color_white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/bj_15dp"
+                android:text="退款信息"
+                android:textColor="@color/my_color_black"
+                android:textSize="@dimen/wz_15sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recy_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/my_color_white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/bj_15dp"
+                android:paddingRight="@dimen/bj_15dp"
+                android:paddingBottom="@dimen/bj_10dp">
+
+                <TextView
+                    android:id="@+id/tv_return_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_999999"
+                    android:textSize="@dimen/wz_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_return_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_999999"
+                    android:textSize="@dimen/wz_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_return_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_999999"
+                    android:textSize="@dimen/wz_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_return_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_999999"
+                    android:textSize="@dimen/wz_13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_address_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_10dp"
+                android:background="@color/my_color_white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/bj_15dp"
+                android:paddingRight="@dimen/bj_15dp"
+                android:paddingBottom="@dimen/bj_10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_express_people"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_black"
+                    android:textSize="@dimen/wz_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_express_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_black"
+                    android:textSize="@dimen/wz_13sp" />
+
+                <TextView
+                    android:id="@+id/tv_express_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_10dp"
+                    android:textColor="@color/my_color_black"
+                    android:textSize="@dimen/wz_13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_48dp"
+        android:background="@color/my_color_white"
+        android:gravity="right|center_vertical"
+        android:paddingRight="@dimen/bj_15dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_content_user"
+            android:layout_width="@dimen/bj_75dp"
+            android:layout_height="@dimen/bj_25dp"
+            android:layout_marginRight="@dimen/bj_15dp"
+            android:gravity="center"
+            android:text="联系客服"
+            android:textColor="@color/my_color_8b8b8b"
+            android:textSize="@dimen/wz_13sp" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="@dimen/bj_75dp"
+            android:layout_height="@dimen/bj_25dp"
+            android:gravity="center"
+            android:text="取消申请"
+            android:textColor="@color/my_color_d60029"
+            android:textSize="@dimen/wz_13sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_single_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_48dp"
+        android:background="@color/my_color_d60029"
+        android:text="联系客服"
+        android:textColor="@color/my_color_white"
+        android:textSize="@dimen/wz_18sp"
+        android:visibility="gone" />
+</LinearLayout>

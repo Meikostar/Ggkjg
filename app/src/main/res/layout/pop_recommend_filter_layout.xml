@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_33000000"
+    android:orientation="vertical">
+
+    <ImageView style="@style/line_1" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recy"
+        android:layout_width="@dimen/bj_150dp"
+        android:layout_height="match_parent"
+        android:background="@color/my_color_white"
+        android:layout_gravity="right"/>
+</LinearLayout>

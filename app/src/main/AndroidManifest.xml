@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ggkjg">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--网络权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--文件写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--文件读权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 拨号权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 相机 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <!-- 配置隐示意图启动：用来浏览器中启动app -->
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="ggkjg" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.mainfragment.login.LoginActivity"
+            android:label="登录"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.login.RegisterActivity"
+            android:label="注册"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.login.ForgetPwdActivity"
+            android:label="忘记密码"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.login.BindPhoneActivity"
+            android:label="绑定手机号"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.settings.FeedbackActivity"
+            android:label="@string/setting_feedback"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.SetPayPwdActivity"
+            android:label="@string/setting_set_pay_pwd"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.ModifyPayPwdActivity"
+            android:label="修改支付密码"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.UpdateLoginPwsActivity"
+            android:label="@string/setting_update_pwd"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.UpdatePhoneActivity"
+            android:label="@string/setting_update_phone"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.UserInfoSetActivity"
+            android:label="@string/setting"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.UserNameActivity"
+            android:label="@string/nickname"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.HelpActivity"
+            android:label="@string/help"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.settings.ValidateMobileNoActivity"
+            android:label="修改手机号码"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
+        <activity
+            android:name=".view.mainfragment.personalcenter.wallet.WalletActivity"
+            android:label="@string/wallet"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.wallet.WalletRechargeActivity"
+            android:label="@string/wallet_recharge"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.wallet.WalletTransferActivity"
+            android:label="@string/wallet_transfer"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.MYCCActivity"
+            android:label="@string/mycc"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.HKDTActivity"
+            android:label="@string/hkdt"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.HKDTTransferActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.RewardActivity"
+            android:label="@string/reward"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.RecommendActivity"
+            android:label="@string/recommend"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.UserValidationActivity"
+            android:label="@string/user_validation"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.shop.ShopProductListActivity"
+            android:label="商品列表"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.shop.SearchShopProduct"
+            android:label="搜索商品"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.shop.CommodityDetailActivity"
+            android:label="商品详情"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.message.ShopMessageActivity"
+            android:label="商城快讯"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
+        <activity
+            android:name=".view.mainfragment.personalcenter.GoodsAddressActivity"
+            android:label="@string/goods_address"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.AreaListActivity"
+            android:label="@string/address_area"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.AddGoodsAddressActivity"
+            android:label="@string/add_goods_address"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.MyCommentActivity"
+            android:label="@string/my_comment"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.MemberUpgradeActivity"
+            android:label="@string/member_upgrade"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.ShareQRcodeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.message.ShopMessageListActivity"
+            android:label="商城快讯"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.square.SquareGoldInputActivity"
+            android:label="港豆收购"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.square.SquareGoldOutActivity"
+            android:label="港豆出让"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.shop.ShopEvaluateActivity"
+            android:label="商品评价"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.MessageCenterActivity"
+            android:label="系统消息"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.personalcenter.MyCollectionActivity"
+            android:label="我的收藏"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.order.MyOrderActivity"
+            android:label="全部订单"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.mainfragment.order.ConfirmOrderActivity"
+            android:label="确认订单"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.order.MyOrderLogisticsActivity"
+            android:label="物流"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.shop.SearchProductResults"
+            android:label="搜索结果列表"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.order.AfterSaleActivity"
+            android:label="退款/售后"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.order.AfterSaleDetailActivity"
+            android:label="退款详情"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.order.PayOrderActivity"
+            android:label="支付方式"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.order.PaySuccessActivity"
+            android:label="付款成功"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.order.MyOrderDetailActivity"
+            android:label="订单详情"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.order.MyOrderEvaluateActivity"
+            android:label="商品评价"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.ImagePreviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.message.AgreementActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
+        <!--微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 支付宝H5页面 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!--支付宝支付页面-->
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 微信支付回调 -->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+    </application>
+
+</manifest>

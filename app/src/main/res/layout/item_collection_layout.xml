@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bj_100dp"
+    android:layout_marginTop="@dimen/bj_10dp">
+
+    <com.ggkjg.view.widgets.autoview.SwipeMenuLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_color_white"
+        app:contentId="@+id/ll_collection"
+        app:rightMenuId="@+id/right_item_collection_menu">
+
+        <RelativeLayout
+            android:id="@+id/ll_collection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bj_100dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/my_color_white"
+            android:paddingLeft="@dimen/bj_15dp"
+            android:paddingRight="@dimen/bj_15dp">
+
+            <ImageView
+                android:id="@+id/img_good_logo"
+                android:layout_width="@dimen/bj_80dp"
+                android:layout_height="@dimen/bj_80dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/bj_10dp"
+                android:src="@mipmap/img_default_1" />
+
+            <TextView
+                android:id="@+id/tv_good_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/img_good_logo"
+                android:layout_toRightOf="@id/img_good_logo"
+                android:ellipsize="end"
+                android:lines="2"
+                android:textSize="@dimen/wz_13sp" />
+
+            <TextView
+                android:id="@+id/tv_coin_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_good_des"
+                android:layout_marginTop="@dimen/bj_15dp"
+                android:layout_toRightOf="@id/img_good_logo"
+                android:drawableLeft="@mipmap/icon_gold_coin"
+                android:drawablePadding="@dimen/bj_5dp"
+                android:textColor="@color/my_color_D13229"
+                android:textSize="@dimen/wz_13sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/right_item_collection_menu"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/right_item_del"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@color/my_color_ED444B"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_14sp" />
+        </LinearLayout>
+    </com.ggkjg.view.widgets.autoview.SwipeMenuLayout>
+</LinearLayout>

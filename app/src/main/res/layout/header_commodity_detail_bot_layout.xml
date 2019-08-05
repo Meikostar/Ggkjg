@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header_commodity_detail_bot_layout"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_alignParentBottom="true"
+    android:background="@color/my_color_white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_commodity_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/icon_commodity_service"
+        android:drawablePadding="@dimen/bj_3dp"
+        android:gravity="center"
+        android:text="客户电话"
+        android:textColor="@color/my_color_696969"
+        android:textSize="@dimen/wz_12sp" />
+
+    <TextView
+        android:id="@+id/tv_commodity_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/icon_commodity_collection"
+        android:drawablePadding="@dimen/bj_3dp"
+        android:gravity="center"
+        android:text="收藏"
+        android:textColor="@color/my_color_696969"
+        android:textSize="@dimen/wz_12sp" />
+
+    <TextView
+        android:id="@+id/tv_commodity_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/icon_commodity_cart"
+        android:drawablePadding="@dimen/bj_3dp"
+        android:gravity="center"
+        android:text="购物车"
+        android:textColor="@color/my_color_696969"
+        android:textSize="@dimen/wz_12sp" />
+
+    <TextView
+        android:id="@+id/tv_shop_cart_submit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:background="@color/my_color_008CD6"
+        android:gravity="center"
+        android:text="加入购物车"
+        android:textColor="@color/my_color_white"
+        android:textSize="@dimen/wz_17sp" />
+
+</LinearLayout>

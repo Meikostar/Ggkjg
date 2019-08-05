@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <ImageView style="@style/line_1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_15dp"
+        android:text="置换数量："
+        android:textColor="@color/my_color_333333"
+        android:textSize="@dimen/wz_15sp" />
+
+    <EditText
+        android:id="@+id/ed_money"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_40dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:background="@drawable/shape_gray_line"
+        android:hint="置换数量≥500"
+        android:paddingLeft="@dimen/bj_10dp"
+        android:textColor="@color/my_color_333333"
+        android:textColorHint="@color/my_color_cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_30dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_balance_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HKDT余额："
+            android:textColor="@color/my_color_999999"
+            android:textSize="@dimen/wz_13sp" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1000"
+            android:textColor="@color/my_color_999999"
+            android:textSize="@dimen/wz_13sp" />
+
+        <TextView
+            android:id="@+id/btn_all_fill"
+            android:layout_width="@dimen/bj_80dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="全部置换"
+            android:textColor="@color/my_color_008CD6"
+            android:textSize="@dimen/wz_13sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_remarks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_15dp"
+        android:text=""
+        android:textColor="@color/my_color_999999"
+        android:textSize="@dimen/wz_13sp" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/btn_confirm"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_50dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:text="确认置换" />
+</LinearLayout>

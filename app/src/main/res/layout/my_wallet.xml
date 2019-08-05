@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_f6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@mipmap/bg_orange">
+
+        <TextView
+            android:id="@+id/tv_bean_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/bj_35dp"
+            android:text="我的余额"
+            android:textColor="@color/my_color_white"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/tv_gold_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_bean_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/bj_5dp"
+            android:drawableLeft="@mipmap/icon_gold_coin"
+            android:drawablePadding="@dimen/bj_5dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/my_color_white"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_48dp"
+        android:background="@color/my_color_white">
+
+        <LinearLayout
+            android:id="@+id/ll_change"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/bj_16dp"
+                android:layout_height="@dimen/bj_16dp"
+                android:src="@mipmap/icon_wallet_change" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bj_5dp"
+                android:text="余额转让"
+                android:textColor="@color/my_color_212121"
+                android:textSize="@dimen/wz_16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="@dimen/bj_30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/my_color_f6f6f6" />
+
+        <LinearLayout
+            android:id="@+id/ll_recharge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/bj_16dp"
+                android:layout_height="@dimen/bj_16dp"
+                android:src="@mipmap/icon_wallet_recharge" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bj_5dp"
+                android:text="余额充值"
+                android:textColor="@color/my_color_212121"
+                android:textSize="@dimen/wz_16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_filter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_38dp"
+        android:layout_marginTop="@dimen/bj_10dp"
+        android:background="@color/my_color_white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/bj_15dp">
+
+        <TextView
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_wallet_filter"
+            android:drawablePadding="@dimen/bj_10dp"
+            android:text="收支明细"
+            android:textColor="@color/my_color_212121"
+            android:textSize="@dimen/wz_16sp" />
+    </LinearLayout>
+
+    <com.ggkjg.view.widgets.SuperSwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recy_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </com.ggkjg.view.widgets.SuperSwipeRefreshLayout>
+</LinearLayout>

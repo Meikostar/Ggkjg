@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bj_110dp"
+    android:layout_marginTop="0.5dp"
+    android:paddingRight="@dimen/bj_15dp">
+
+    <ImageView
+        android:id="@+id/img_after_sale_logo"
+        android:layout_width="@dimen/bj_85dp"
+        android:layout_height="@dimen/bj_85dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginRight="@dimen/bj_10dp"
+        android:src="@mipmap/img_default_1" />
+
+    <TextView
+        android:id="@+id/tv_after_sale_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img_after_sale_logo"
+        android:layout_toRightOf="@id/img_after_sale_logo"
+        android:textColor="@color/my_color_212121"
+        android:textSize="@dimen/wz_12sp" />
+
+    <TextView
+        android:id="@+id/tv_after_sale_form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_after_sale_des"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:layout_toRightOf="@id/img_after_sale_logo"
+        android:textColor="@color/my_color_8b8b8b"
+        android:textSize="@dimen/wz_12sp" />
+
+
+</RelativeLayout>
+

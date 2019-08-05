@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_f6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_200dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="154dp"
+            android:background="@mipmap/bg_top_deep_blue" />
+
+        <TextView
+            android:id="@+id/tv_reward_count_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/bj_34dp"
+            android:text="奖金总额"
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/tv_reward_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_reward_count_label"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/bj_5dp"
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_25sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bj_92dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/bj_10dp"
+            android:paddingRight="@dimen/bj_10dp">
+
+            <LinearLayout
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_blue_shadow"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/icon_profit"
+                    android:drawablePadding="@dimen/bj_5dp"
+                    android:gravity="center"
+                    android:text="分润奖励"
+                    android:textColor="@color/my_color_333333"
+                    android:textSize="@dimen/wz_15sp" />
+
+                <TextView
+                    android:id="@+id/tv_profit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_8dp"
+                    android:gravity="center"
+                    android:textColor="@color/my_color_008CD6"
+                    android:textSize="@dimen/wz_18sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/bj_5dp"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_blue_shadow"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/icon_commission"
+                    android:drawablePadding="@dimen/bj_5dp"
+                    android:gravity="center"
+                    android:text="分享奖励"
+                    android:textColor="@color/my_color_333333"
+                    android:textSize="@dimen/wz_15sp" />
+
+                <TextView
+                    android:id="@+id/tv_commission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/bj_8dp"
+                    android:gravity="center"
+                    android:textColor="@color/my_color_008CD6"
+                    android:textSize="@dimen/wz_18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/commonTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_48dp"
+        tl:tl_iconVisible="false"
+        tl:tl_indicator_color="@color/my_color_008CD6"
+        tl:tl_textSelectColor="@color/my_color_008CD6"
+        tl:tl_textUnselectColor="@color/my_color_212121"
+        tl:tl_textsize="@dimen/sp_16" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#14000000" />
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+</LinearLayout>

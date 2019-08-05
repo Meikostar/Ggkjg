@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_110dp"
+        android:paddingLeft="@dimen/bj_15dp"
+        android:paddingRight="@dimen/bj_15dp">
+
+        <ImageView
+            android:id="@+id/img_me_order_logo"
+            android:layout_width="@dimen/bj_80dp"
+            android:layout_height="@dimen/bj_80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/bj_10dp"
+            android:src="@mipmap/img_default_1" />
+
+        <TextView
+            android:id="@+id/tv_me_order_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/img_me_order_logo"
+            android:layout_toRightOf="@id/img_me_order_logo"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/my_color_050000"
+            android:textSize="@dimen/wz_12sp" />
+
+        <TextView
+            android:id="@+id/tv_me_order_form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_me_order_des"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/img_me_order_logo"
+            android:textColor="@color/my_color_8b8b8b"
+            android:textSize="@dimen/wz_12sp" />
+
+        <TextView
+            android:id="@+id/tv_me_order_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_me_order_form"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/img_me_order_logo"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/my_color_050000"
+            android:textSize="@dimen/wz_12sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_me_order_branch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_me_order_number"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/my_color_8b8b8b"
+            android:textSize="@dimen/wz_12sp"
+            android:drawableLeft="@mipmap/home_gold"
+            android:drawablePadding="@dimen/bj_5dp"
+          />
+    </RelativeLayout>
+
+    <ImageView style="@style/line_1" />
+
+    <RelativeLayout
+        android:id="@+id/rl_comment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_35dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/btn_comment"
+            android:layout_width="@dimen/bj_60dp"
+            android:layout_height="@dimen/bj_25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/bj_15dp"
+            android:background="@drawable/btn_order_blue"
+            android:gravity="center"
+            android:text="评价"
+            android:textColor="@color/my_color_4E4CFA"
+            android:textSize="@dimen/wz_14sp" />
+
+        <ImageView
+            style="@style/line_1"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+
+</LinearLayout>

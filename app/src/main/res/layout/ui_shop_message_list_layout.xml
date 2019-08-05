@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_EBEBEB"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <com.ggkjg.view.widgets.SuperSwipeRefreshLayout
+        android:id="@+id/refresh_shop_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ggkjg.view.widgets.autoview.ObservableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_shop_message_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/bj_15dp"
+                    android:layout_marginTop="@dimen/bj_20dp"
+                    android:layout_marginRight="@dimen/bj_15dp"
+                    android:background="@color/my_color_white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/bj_10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_shop_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@mipmap/img_default_1" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_message_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:singleLine="true"
+                        android:text="标题"
+                        android:textColor="@color/my_color_333333"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_message_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:singleLine="true"
+                        android:text="2019-01-21 16:09:06"
+                        android:textColor="@color/my_color_aaaaaa"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tv_shop_message_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="正文内容"
+                        android:textColor="@color/my_color_aaaaaa"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/bj_15dp"
+                    android:layout_marginTop="@dimen/bj_20dp"
+                    android:layout_marginRight="@dimen/bj_15dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recy_shop_message_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+        </com.ggkjg.view.widgets.autoview.ObservableScrollView>
+    </com.ggkjg.view.widgets.SuperSwipeRefreshLayout>
+</LinearLayout>

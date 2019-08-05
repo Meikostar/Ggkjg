@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_height="@dimen/bj_50dp">
+
+            <ImageView
+                android:id="@+id/iv_top_sweep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/top_sweep_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="购物车"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_18sp" />
+
+            <ImageView
+                android:id="@+id/iv_top_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/top_message_icon" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/my_color_EBEBEB" />
+        <!-- android:fillViewport="true"-->
+        <com.ggkjg.view.widgets.autoview.ObservableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recy_shop_cart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/my_color_F6F6F6">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/home_products_recommend_2" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/my_color_EBEBEB" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recy_shop_cart_recommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/my_color_EBEBEB"
+                        android:focusable="false"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </com.ggkjg.view.widgets.autoview.ObservableScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_shop_cart_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/my_color_white">
+
+        <CheckBox
+            android:id="@+id/cb_shop_cart_all_sel"
+            style="@style/checkbox.theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:padding="@dimen/bj_5dp"
+            android:text="全选"
+            android:textColor="@color/my_color_333333"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/cb_shop_cart_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/cb_shop_cart_all_sel"
+            android:drawableRight="@mipmap/home_gold"
+            android:drawablePadding="@dimen/bj_5dp"
+            android:text="金额:"
+            android:textColor="@color/my_color_333333"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/cb_shop_cart_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/cb_shop_cart_price_title"
+            android:layout_marginLeft="2dp"
+            android:gravity="center"
+            android:text="00.00"
+            android:textColor="@color/my_color_F32F12"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/tv_shop_cart_submit"
+            android:layout_width="@dimen/bj_130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/my_color_008CD6"
+            android:gravity="center"
+            android:text="去结算"
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_18sp" />
+    </RelativeLayout>
+</RelativeLayout>

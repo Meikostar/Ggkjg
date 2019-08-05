@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_f6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        style="@style/ll_userInfo_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_80dp"
+        android:paddingLeft="@dimen/bj_15dp"
+        android:paddingRight="@dimen/bj_15dp">
+
+        <ImageView
+            android:id="@+id/img_user_header"
+            android:layout_width="@dimen/bj_60dp"
+            android:layout_height="@dimen/bj_60dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/img_default_1" />
+
+        <TextView
+            style="@style/tv_userInfo_des"
+            android:hint="修改头像" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_nick_name"
+        style="@style/ll_userInfo_item"
+        android:orientation="vertical">
+
+        <LinearLayout style="@style/ll_userInfo_item_child">
+
+            <TextView
+                style="@style/tv_userInfo_title"
+                android:text="昵 称" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/tv_userInfo_des" />
+        </LinearLayout>
+
+        <ImageView style="@style/line_1" />
+
+        <LinearLayout
+            android:id="@+id/ll_phone"
+            style="@style/ll_userInfo_item_child">
+
+            <TextView
+                style="@style/tv_userInfo_title"
+                android:text="手机号" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/tv_userInfo_des" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_userInfo_item"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_login_password"
+            style="@style/ll_userInfo_item_child">
+
+            <TextView
+                style="@style/tv_userInfo_title"
+                android:text="登录密码" />
+
+            <TextView
+                style="@style/tv_userInfo_des"
+                android:text="修改" />
+        </LinearLayout>
+
+        <ImageView style="@style/line_1" />
+
+        <LinearLayout
+            android:id="@+id/ll_pay_password"
+            style="@style/ll_userInfo_item_child">
+
+            <TextView
+                style="@style/tv_userInfo_title"
+                android:text="支付密码" />
+
+            <TextView
+                style="@style/tv_userInfo_des"
+                android:text="修改" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_userInfo_item"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_help"
+            style="@style/ll_userInfo_item_child">
+
+            <TextView
+                style="@style/tv_userInfo_title"
+                android:text="帮助中心" />
+
+            <TextView style="@style/tv_userInfo_des" />
+        </LinearLayout>
+
+        <ImageView style="@style/line_1" />
+
+        <LinearLayout
+            android:id="@+id/ll_feedback"
+            style="@style/ll_userInfo_item_child">
+
+            <TextView
+                style="@style/tv_userInfo_title"
+                android:text="意见反馈" />
+
+            <TextView style="@style/tv_userInfo_des" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="@dimen/bj_200dp"
+        android:layout_height="@dimen/bj_40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/bj_20dp"
+        android:background="@drawable/bg_white_gray_borde_shape"
+        android:text="退出登录"
+        android:textColor="@color/my_color_black"
+        android:textSize="@dimen/wz_16sp" />
+</LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bj_70dp"
+    android:background="@color/my_color_white"
+    android:minHeight="@dimen/bj_70dp"
+    android:paddingLeft="@dimen/bj_15dp"
+    android:paddingRight="@dimen/bj_15dp">
+
+    <ImageView
+        android:id="@+id/img_user_header"
+        android:layout_width="@dimen/bj_50dp"
+        android:layout_height="@dimen/bj_50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/bj_10dp"
+        android:src="@mipmap/img_default_1" />
+
+    <TextView
+        android:id="@+id/tv_user_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/img_user_header"
+        android:layout_toRightOf="@id/img_user_header"
+        android:textColor="@color/my_color_black"
+        android:textSize="@dimen/wz_14sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_user_nickname"
+        android:layout_toRightOf="@id/img_user_header">
+
+        <ImageView
+            android:id="@+id/img_level"
+            android:layout_width="15dp"
+            android:layout_height="@dimen/bj_15dp"
+            android:layout_marginRight="@dimen/bj_5dp"
+            android:src="@mipmap/icon_user_level" />
+
+        <TextView
+            android:id="@+id/tv_level_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_user_header"
+            android:text="普通会员"
+            android:textColor="@color/my_color_666666"
+            android:textSize="@dimen/wz_11sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_level_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_level"
+        android:layout_marginTop="@dimen/bj_2dp"
+        android:layout_toRightOf="@id/img_user_header"
+        android:textColor="@color/my_color_666666"
+        android:textSize="@dimen/wz_11sp" />
+
+    <ImageView
+        style="@style/line_1"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:id="@+id/tv_push_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总业绩: 0"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/wz_14sp"
+        android:textColor="@color/my_color_212121"/>
+</RelativeLayout>

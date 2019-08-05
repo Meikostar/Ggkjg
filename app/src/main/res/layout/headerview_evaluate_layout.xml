@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_1dp"
+        android:background="@color/my_color_EBEBEB" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_30dp"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:layout_marginBottom="@dimen/bj_5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_evaluate_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@drawable/text_color_radio_gray_select"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/tv_evaluate_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="好评(0)"
+            android:textColor="@drawable/text_color_radio_gray_select"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/tv_evaluate_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="有图(0)"
+            android:textColor="@drawable/text_color_radio_gray_select"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/tv_evaluate_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="差评(0)"
+            android:textColor="@drawable/text_color_radio_gray_select"
+            android:textSize="@dimen/wz_15sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_1dp"
+        android:background="@color/my_color_EBEBEB" />
+</LinearLayout>

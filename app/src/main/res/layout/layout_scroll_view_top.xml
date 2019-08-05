@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bj_24dp"
+    android:id="@+id/iv_scroll_view_top_layout"
+    android:background="@color/my_color_00AAED"
+    android:orientation="vertical" />

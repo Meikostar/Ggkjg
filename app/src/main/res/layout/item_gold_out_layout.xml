@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bj_18dp"
+        android:layout_marginLeft="@dimen/bj_16dp"
+        android:layout_marginRight="@dimen/bj_16dp"
+        android:background="@drawable/bg_item_gold_out_shape"
+        android:orientation="vertical"
+        android:padding="@dimen/bj_18dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.shehuan.niv.NiceImageView
+                android:id="@+id/iv_item_gold_user_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/user_default_icon"
+                app:corner_radius="5dp" />
+
+            <TextView
+                android:id="@+id/iv_item_gold_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/bj_15dp"
+                android:layout_toRightOf="@+id/iv_item_gold_user_icon"
+                android:maxEms="4"
+                android:singleLine="true"
+                android:text="尚道"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_15sp" />
+
+            <TextView
+                android:id="@+id/iv_item_gold_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="发布时间:2019-01-18"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_13sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/iv_item_gold_user_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:text="消息............................................."
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_15sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:background="@color/my_color_white" />
+
+        <TextView
+            android:id="@+id/iv_item_gold_user_name_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:text="姓名:周六福"
+            android:singleLine="true"
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/iv_item_gold_user_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:singleLine="true"
+            android:text="QQ:000222114"
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_15sp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:background="@color/my_color_white" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出让数量"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_item_gold_buy_num"
+                android:background="@mipmap/home_gold" />
+
+            <TextView
+                android:id="@+id/iv_item_gold_buy_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/bj_5dp"
+                android:text="1000"
+                android:textColor="@color/my_color_F5FB0A"
+                android:textSize="@dimen/wz_15sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="出让单个金额"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_15sp" />
+
+
+            <TextView
+                android:id="@+id/iv_item_gold_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1港币/港豆"
+                android:textColor="@color/my_color_F5FB0A"
+                android:textSize="@dimen/wz_15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

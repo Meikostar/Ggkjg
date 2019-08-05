@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/my_color_white">
+
+    <ImageView
+        android:id="@+id/iv_item_home_img"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/bj_10dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/img_default_4" />
+
+    <TextView
+        android:id="@+id/tv_item_home_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_item_home_img"
+        android:layout_marginBottom="@dimen/bj_10dp"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="水果"
+        android:textColor="@color/my_color_696969"
+        android:textSize="@dimen/wz_12sp" />
+
+</RelativeLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bj_50dp"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/bj_15dp"
+    android:paddingRight="@dimen/bj_15dp">
+
+    <ImageView
+        android:id="@+id/img_pay_logo"
+        android:layout_width="@dimen/bj_15dp"
+        android:layout_height="@dimen/bj_15dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/icon_gold_coin" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_toRightOf="@id/img_pay_logo"
+        android:text="港豆"
+        android:textColor="@color/my_color_212121"
+        android:textSize="@dimen/wz_15sp" />
+
+    <ImageView
+        android:id="@+id/img_status"
+        android:layout_width="@dimen/bj_15dp"
+        android:layout_height="@dimen/bj_15dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/radio_select_state" />
+
+    <ImageView
+        style="@style/line_1"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

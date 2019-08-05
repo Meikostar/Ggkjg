@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@mipmap/bg_violet">
+
+        <TextView
+            android:id="@+id/tv_bean_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/bj_35dp"
+            android:text="HKDT余额"
+            android:textColor="@color/my_color_white"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/tv_gold_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_bean_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/bj_5dp"
+            android:drawablePadding="@dimen/bj_5dp"
+            android:gravity="center"
+            android:textColor="@color/my_color_white"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_48dp"
+        android:background="@color/my_color_white">
+
+        <LinearLayout
+            android:id="@+id/ll_transfer_money"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/bj_16dp"
+                android:layout_height="@dimen/bj_16dp"
+                android:src="@mipmap/icon_wallet_change" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bj_5dp"
+                android:text="港豆置换HKDT"
+                android:textColor="@color/my_color_212121"
+                android:textSize="@dimen/wz_16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="@dimen/bj_30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/my_color_f6f6f6" />
+
+        <LinearLayout
+            android:id="@+id/ll_transfer_coin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/bj_16dp"
+                android:layout_height="@dimen/bj_16dp"
+                android:src="@mipmap/icon_wallet_recharge" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bj_5dp"
+                android:text="HKDT置换港豆"
+                android:textColor="@color/my_color_212121"
+                android:textSize="@dimen/wz_16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_10dp"
+        android:background="@color/my_color_f6f6f6" />
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/commonTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_48dp"
+        android:background="@color/my_color_white"
+        tl:tl_iconVisible="false"
+        tl:tl_indicator_color="@color/my_color_FB0000"
+        tl:tl_textSelectColor="@color/my_color_FB0000"
+        tl:tl_textUnselectColor="@color/my_color_212121"
+        tl:tl_textsize="@dimen/sp_16" />
+
+    <ImageView style="@style/line_1" />
+
+    <LinearLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+</LinearLayout>

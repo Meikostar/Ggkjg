@@ -1,0 +1,121 @@
+apply plugin: 'com.android.application'
+// apply plugin  for greendao
+apply plugin: 'org.greenrobot.greendao'
+
+
+def cfg = rootProject.ext.android
+def librarys = rootProject.ext.dependencies
+def ext = rootProject.ext
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    defaultConfig {
+        applicationId "com.ggkjg"
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    //添加我们签名文件配置
+    signingConfigs {
+        debug {
+            storeFile file('ggkjg.jks')
+            storePassword "123654"
+            keyAlias "ggkjg"
+            keyPassword "123654"
+        }
+        release {
+            storeFile file("ggkjg.jks")
+            storePassword "123654"
+            keyAlias "ggkjg"
+            keyPassword "123654"
+        }
+    }
+
+    buildTypes {
+        debug {
+            shrinkResources false // 移除无用的resource文件
+            minifyEnabled false //不启用混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro',
+                    'proguard-fresco.pro'
+            //签名配置
+            signingConfig signingConfigs.debug
+        }
+        release {
+            shrinkResources false // 移除无用的resource文件
+            minifyEnabled false //不启用混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名配置
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+greendao {
+    schemaVersion 1                         //指定数据库schema版本号，迁移等操作会用到；
+    daoPackage 'com.ggkjg.db.greendao.gen'      //通过gradle插件生成的数据库相关文件的包名，默认为你的entity所在的包名；
+    targetGenDir 'src/main/java' //生成的文件放到的目录
+}
+//configurations {
+//    all*.exclude group: 'com.android.support', module: 'support-v4'
+//}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    librarys.each { k, v -> implementation v }
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    // Rxjava+Retrofit请求框架
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    //申请权限，绑定View异步事件处理
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    // add library for greendao
+    implementation 'org.greenrobot:greendao:3.2.2'
+//    glide
+    implementation 'com.github.bumptech.glide:glide:4.3.1'
+//  ID注解获取 butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+//    标签布局
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    //adapter 适配器
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
+
+    //加载libs *.jar
+    implementation files('libs/alipaySdk-20180403.jar')
+    implementation files('libs/fastjson-1.2.54.jar')
+    //产品规格控件
+    implementation 'com.github.donkingliang:LabelsView:1.4.6'
+    //扫一扫
+    implementation 'com.github.yuzhiqiang1993:zxing:2.2.5'
+    //圆角ImageView
+    implementation ('com.github.SheHuan:NiceImageView:1.0.5'){
+        exclude group: 'com.android.support'
+    }
+    implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    //微信分享和授权
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+//    implementation 'com.github.donkingliang:ImageSelector:1.6.8'
+//    implementation 'com.yuyh.imgsel:library:2.0.6'
+    implementation project(path: ':imagepicker')
+    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
+    implementation 'com.facebook.stetho:stetho:1.3.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+}

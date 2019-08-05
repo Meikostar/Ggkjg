@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RadioButton
+        android:id="@+id/rb_shop_class_select"
+        android:layout_width="100dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_shop_class_select"
+        android:button="@null"
+        android:checked="false"
+        android:gravity="center"
+        android:text="品牌系列"
+        android:textColor="@drawable/text_color_shopclass_select"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/my_color_f6f6f6" />
+</LinearLayout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_20dp"
+        android:text="对方手机号："
+        android:textColor="@color/my_color_333333"
+        android:textSize="@dimen/wz_15sp" />
+
+    <EditText
+        android:id="@+id/ed_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_40dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_10dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:background="@drawable/bg_white_gray_borde_shape"
+        android:hint="请输入手机号"
+        android:inputType="number"
+        android:maxLength="11"
+        android:paddingLeft="@dimen/bj_10dp"
+        android:textColor="@color/my_color_333333"
+        android:textColorHint="@color/my_color_999999" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_20dp"
+        android:inputType="numberDecimal"
+        android:text="转让数量："
+        android:textColor="@color/my_color_333333"
+        android:textSize="@dimen/wz_15sp" />
+
+    <EditText
+        android:id="@+id/ed_count"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_40dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_10dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:background="@drawable/bg_white_gray_borde_shape"
+        android:hint="请输入数量"
+        android:paddingLeft="@dimen/bj_10dp"
+        android:textColor="@color/my_color_333333"
+        android:textColorHint="@color/my_color_999999"
+        android:inputType="numberDecimal"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_30dp"
+        android:paddingLeft="@dimen/bj_15dp"
+        android:paddingRight="@dimen/bj_15dp">
+
+        <TextView
+            android:id="@+id/tv_all_coin_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="余额"
+            android:textColor="@color/my_color_999999"
+            android:textSize="@dimen/wz_13sp" />
+
+        <ImageView
+            android:id="@+id/img_coin"
+            android:layout_width="@dimen/bj_13dp"
+            android:layout_height="@dimen/bj_13dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/bj_10dp"
+            android:layout_toRightOf="@id/tv_all_coin_title"
+            android:src="@mipmap/icon_gold_coin" />
+
+        <TextView
+            android:id="@+id/tv_count_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/bj_3dp"
+            android:layout_toRightOf="@id/img_coin"
+            android:text="."
+            android:textColor="@color/my_color_999999"
+            android:textSize="@dimen/wz_13sp" />
+
+        <TextView
+            android:id="@+id/btn_all_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="全部转让"
+            android:textColor="@color/my_color_008CD6"
+            android:textSize="@dimen/wz_13sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_20dp"
+        android:text="备注"
+        android:textColor="@color/my_color_333333"
+        android:textSize="@dimen/wz_15sp" />
+
+    <EditText
+        android:id="@+id/ed_remark"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_40dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_10dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:background="@drawable/bg_white_gray_borde_shape"
+        android:paddingLeft="@dimen/bj_10dp"
+        android:singleLine="true"
+        android:textColor="@color/my_color_333333"
+        android:textColorHint="@color/my_color_999999" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        style="@style/btn_confirm"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_marginTop="@dimen/bj_30dp"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:text="确定转让" />
+</LinearLayout>

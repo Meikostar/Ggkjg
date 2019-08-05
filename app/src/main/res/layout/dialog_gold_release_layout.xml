@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#11ffffff">
+
+    <LinearLayout
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_white_shape"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="消息发布"
+            android:textColor="@color/my_color_333333"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/my_color_EBEBEB" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="@dimen/bj_20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bj_20dp"
+                android:layout_marginRight="@dimen/bj_20dp"
+                android:background="@mipmap/square_gold_out" />
+
+            <Button
+                android:id="@+id/but_square_gold_out"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/bj_20dp"
+                android:background="@drawable/btn_confirm_shape"
+                android:gravity="center"
+                android:text="港豆出让"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:layout_marginBottom="@dimen/bj_30dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bj_20dp"
+                android:layout_marginRight="@dimen/bj_20dp"
+                android:background="@mipmap/square_gold_inout" />
+
+            <Button
+                android:id="@+id/but_square_gold_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/bj_20dp"
+                android:background="@drawable/btn_confirm_shape"
+                android:gravity="center"
+                android:text="港豆收购"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

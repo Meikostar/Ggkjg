@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/my_color_EBEBEB" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_30dp"
+        android:layout_marginTop="@dimen/bj_7dp"
+        android:layout_marginBottom="@dimen/bj_7dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_shop_product_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="综合"
+            android:textColor="@drawable/text_color_radio_gray_select"
+            android:textSize="@dimen/wz_15sp" />
+
+        <TextView
+            android:id="@+id/tv_shop_product_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="销量"
+            android:textColor="@drawable/text_color_radio_gray_select"
+            android:textSize="@dimen/wz_15sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_shop_product_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_shop_product_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="价格"
+                android:textColor="@drawable/text_color_radio_gray_select"
+                android:textSize="@dimen/wz_15sp" />
+
+            <ImageView
+                android:id="@+id/iv_shop_product_3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/bj_7dp"
+                android:focusable="true"
+                android:src="@mipmap/shop_product_price_litre"
+                android:tag="priceSelect" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shop_product_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_shop_product_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="筛选"
+                android:textColor="@drawable/text_color_radio_gray_select"
+                android:textSize="@dimen/wz_15sp" />
+
+            <ImageView
+                android:id="@+id/iv_shop_product_4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/bj_7dp"
+                android:focusable="true"
+                android:src="@mipmap/shop_product_select"
+                android:tag="productSelect" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/my_color_EBEBEB" />
+
+    <com.ggkjg.view.widgets.SuperSwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_color_EBEBEB">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recy_shop_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+
+    </com.ggkjg.view.widgets.SuperSwipeRefreshLayout>
+
+
+
+
+</LinearLayout>

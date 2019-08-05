@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="12dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="22dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="15dp">
+
+        <com.shehuan.niv.NiceImageView
+            android:id="@+id/iv_user_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/user_default_icon"
+            app:corner_radius="5dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@+id/iv_user_icon"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/iv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="违****喜欢"
+                android:textColor="@color/my_color_333333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/iv_user_specification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="2018-01-12颜色:z3深红色 尺码：82[腰围二尺四]"
+                android:textColor="@color/my_color_8b8b8b"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/iv_user_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="不错正品"
+                android:textColor="@color/my_color_535353"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_default_1"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_default_1" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_default_1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.shehuan.niv.NiceImageView
+                android:id="@+id/iv_user_img1"
+                android:layout_width="0dp"
+                android:layout_height="105dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_default_1"
+                android:visibility="invisible"
+                app:corner_bottom_left_radius="5dp"
+                app:corner_bottom_right_radius="5dp"
+                app:corner_top_left_radius="5dp"
+                app:corner_top_right_radius="5dp" />
+
+            <com.shehuan.niv.NiceImageView
+                android:id="@+id/iv_user_img2"
+                android:layout_width="0dp"
+                android:layout_height="105dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_default_1"
+                android:visibility="invisible"
+                app:corner_bottom_left_radius="5dp"
+                app:corner_bottom_right_radius="5dp"
+                app:corner_top_left_radius="5dp"
+                app:corner_top_right_radius="5dp" />
+
+            <com.shehuan.niv.NiceImageView
+                android:id="@+id/iv_user_img3"
+                android:layout_width="0dp"
+                android:layout_height="105dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_default_1"
+                android:visibility="invisible"
+                app:corner_bottom_left_radius="5dp"
+                app:corner_bottom_right_radius="5dp"
+                app:corner_top_left_radius="5dp"
+                app:corner_top_right_radius="5dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_10dp"
+        android:layout_marginTop="@dimen/bj_10dp"
+        android:background="@color/my_color_EBEBEB" />
+</LinearLayout>

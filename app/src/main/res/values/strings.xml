@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">港港跨境</string>
+    <string name="setting_feedback">帮助与反馈</string>
+    <string name="setting">设置</string>
+    <string name="nickname">昵称</string>
+    <string name="setting_update_phone">修改手机号</string>
+    <string name="setting_update_pwd">修改登录密码</string>
+    <string name="setting_set_pay_pwd">设置支付密码</string>
+    <string name="help">帮助</string>
+    <string name="wallet">我的钱包</string>
+    <string name="wallet_transfer">余额转让</string>
+    <string name="wallet_recharge">余额充值</string>
+    <string name="mycc">我的MYCC积分</string>
+    <string name="hkdt">我的HKDT</string>
+    <string name="reward">我的奖金</string>
+    <string name="recommend">列表</string>
+    <string name="user_validation">实名验证</string>
+    <string name="goods_address">收货地址</string>
+    <string name="address_area">区域选择</string>
+    <string name="add_goods_address">添加地址</string>
+    <string name="my_comment">我的评价</string>
+    <string name="member_upgrade">会员升级</string>
+
+    <string name="errcode_success">分享成功</string>
+    <string name="errcode_cancel">分享取消</string>
+    <string name="errcode_deny">分享被拒绝</string>
+    <string name="errcode_unknown">分享返回</string>
+</resources>

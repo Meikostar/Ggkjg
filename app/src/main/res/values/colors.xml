@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="my_color_black">#000000</color>
+    <color name="my_color_white">#ffffff</color>
+    <color name="my_color_212121">#212121</color>
+    <color name="my_color_2e2e2e">#2e2e2e</color>
+    <color name="my_color_333333">#333333</color>
+    <color name="my_color_535353">#535353</color>
+    <color name="my_color_919191">#919191</color>
+    <color name="my_color_F6F6F6">#F6F6F6</color>
+    <color name="my_color_696969">#696969</color>
+    <color name="my_color_F1F1F1">#F1F1F1</color>
+    <color name="my_color_F32F12">#F32F12</color>
+    <color name="my_color_A7A7A7">#A7A7A7</color>
+    <color name="my_color_EBEBEB">#EBEBEB</color>
+    <color name="my_color_00AAED">#00AAED</color>
+    <color name="my_color_f6f6f6">#f6f6f6</color>
+    <color name="my_color_F5FB0A">#F5FB0A</color>
+    <color name="my_color_799DFF">#799DFF</color>
+    <color name="my_color_E5E5E5">#E5E5E5</color>
+    <color name="my_color_666666">#666666</color>
+    <color name="my_color_FF4889">#FF4889</color>
+    <color name="my_color_010000">#010000</color>
+    <color name="my_color_8b8b8b">#8b8b8b</color>
+    <color name="my_color_afafaf">#afafaf</color>
+    <color name="my_color_d3d3d3">#d3d3d3</color>
+    <color name="my_color_999999">#999999</color>
+    <color name="my_color_f2f2f2">#f2f2f2</color>
+    <color name="my_color_5CB146">#5CB146</color>
+    <color name="my_color_FB0000">#FB0000</color>
+    <color name="my_color_FABB48">#FABB48</color>
+    <color name="my_color_282828">#282828</color>
+    <color name="my_color_bfbfbf">#bfbfbf</color>
+    <color name="my_color_141414">#141414</color>
+    <color name="my_color_6E6E6E">#6E6E6E</color>
+    <color name="my_color_cccccc">#cccccc</color>
+    <color name="my_color_14000000">#14000000</color>
+    <color name="my_color_33000000">#33000000</color>
+    <color name="my_color_D13229">#D13229</color>
+    <color name="my_color_d60029">#d60029</color>
+    <color name="my_color_050000">#050000</color>
+    <color name="my_color_52B5E7">#52B5E7</color>
+    <color name="my_color_ED444B">#ED444B</color>
+    <color name="my_color_FE9112">#FE9112</color>
+    <color name="my_color_9e9e9e">#9e9e9e</color>
+    <color name="my_color_4E4CFA">#4E4CFA</color>
+    <color name="my_color_14CA2E">#14CA2E</color>
+
+
+    <color name="my_color_008CD6">#008CD6</color>
+    <color name="my_color_aaaaaa">#aaaaaa</color>
+</resources>

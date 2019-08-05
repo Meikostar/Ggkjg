@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/bj_10dp"
+    android:background="@color/my_color_white"
+    android:paddingLeft="@dimen/bj_15dp"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingRight="@dimen/bj_15dp"
+    android:paddingBottom="@dimen/bj_10dp">
+
+    <TextView
+        android:id="@+id/tv_good_address_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/my_color_282828"
+        android:textSize="@dimen/wz_15sp" />
+
+    <TextView
+        android:id="@+id/tv_good_address_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/my_color_282828"
+        android:textSize="@dimen/wz_15sp" />
+
+    <TextView
+        android:id="@+id/tv_good_address_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_good_address_username"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:text="[默认]"
+        android:textColor="@color/my_color_008CD6"
+        android:textSize="@dimen/wz_15sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_good_address_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_good_address_username"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:layout_toRightOf="@id/tv_good_address_default"
+        android:textColor="@color/my_color_282828"
+        android:textSize="@dimen/wz_15sp" />
+
+    <ImageView
+        android:id="@+id/tv_good_address_del"
+        android:layout_width="@dimen/bj_20dp"
+        android:layout_height="@dimen/bj_20dp"
+        android:layout_below="@id/tv_good_address_des"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/bj_5dp"
+        android:src="@mipmap/icon_address_del" />
+
+    <ImageView
+        android:id="@+id/tv_good_address_edit"
+        android:layout_width="@dimen/bj_20dp"
+        android:layout_height="@dimen/bj_20dp"
+        android:layout_alignTop="@id/tv_good_address_del"
+        android:layout_marginRight="@dimen/bj_15dp"
+        android:layout_toLeftOf="@id/tv_good_address_del"
+        android:src="@mipmap/icon_address_edit" />
+</RelativeLayout>

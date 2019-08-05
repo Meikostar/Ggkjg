@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_1dp"
+        android:background="@color/my_color_EBEBEB" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="@dimen/bj_15dp"
+        android:text="港豆收购"
+        android:textColor="@color/my_color_333333"
+        android:textSize="@dimen/wz_15sp"
+        android:textStyle="bold" />
+
+    <com.ggkjg.view.widgets.autoview.ObservableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_15dp"
+                android:text="标题:"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_7dp"
+                android:background="@drawable/bg_welfare_shape"
+                android:orientation="horizontal">
+
+                <com.ggkjg.view.widgets.ClearEditText
+                    android:id="@+id/btn_gold_input_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/bj_6dp"
+                    android:background="@null"
+                    android:hint="限20字以内"
+                    android:maxLength="20"
+                    android:padding="@dimen/bj_10dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_15dp"
+                android:text="发布人姓名:"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_7dp"
+                android:background="@drawable/bg_welfare_shape"
+                android:orientation="horizontal">
+
+                <com.ggkjg.view.widgets.ClearEditText
+                    android:id="@+id/btn_gold_input_realName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/bj_6dp"
+                    android:background="@null"
+                    android:maxLength="20"
+                    android:padding="@dimen/bj_10dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_15dp"
+                android:text="QQ:"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_7dp"
+                android:background="@drawable/bg_welfare_shape"
+                android:orientation="horizontal">
+
+                <com.ggkjg.view.widgets.ClearEditText
+                    android:id="@+id/btn_gold_input_QQ"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/bj_6dp"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:maxLength="20"
+                    android:padding="@dimen/bj_10dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_15dp"
+                android:text="收购数量:"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_7dp"
+                android:background="@drawable/bg_welfare_shape"
+                android:orientation="horizontal">
+
+                <com.ggkjg.view.widgets.ClearEditText
+                    android:id="@+id/btn_gold_input_transferNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/bj_6dp"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:maxLength="20"
+                    android:padding="@dimen/bj_10dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_20dp"
+                android:text="收购单个金额:"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_7dp"
+                android:background="@drawable/bg_welfare_shape"
+                android:orientation="horizontal">
+
+                <com.ggkjg.view.widgets.ClearEditText
+                    android:id="@+id/btn_gold_input_transferPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/bj_6dp"
+                    android:background="@null"
+                    android:inputType="number|numberDecimal"
+                    android:maxLength="20"
+                    android:padding="@dimen/bj_10dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_gold_input_submit"
+                style="@style/btn_confirm"
+                android:layout_marginTop="@dimen/bj_20dp"
+                android:layout_marginBottom="@dimen/bj_50dp"
+                android:text="发布" />
+
+        </LinearLayout>
+    </com.ggkjg.view.widgets.autoview.ObservableScrollView>
+</LinearLayout>
