@@ -90,6 +90,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
         <activity
+            android:name=".view.mainfragment.spike.MineVoucherActivity"
+            android:label="我的港券"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
+        <activity
             android:name=".view.mainfragment.settings.UpdateLoginPwsActivity"
             android:label="@string/setting_update_pwd"
             android:screenOrientation="portrait"
@@ -104,6 +110,12 @@
             android:label="@string/setting"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.spike.SpikeActivity"
+            android:label="@string/spike"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
         <activity
             android:name=".view.mainfragment.settings.UserNameActivity"
             android:label="@string/nickname"

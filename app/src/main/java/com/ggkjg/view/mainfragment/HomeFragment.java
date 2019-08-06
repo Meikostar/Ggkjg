@@ -7,15 +7,17 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseFragment;
@@ -24,34 +26,34 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
-import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.GoodsPushDto;
-import com.ggkjg.dto.GoodsPushRowsDto;
 import com.ggkjg.dto.HomeActiveIndexDto;
 import com.ggkjg.dto.HomeAdsDto;
 import com.ggkjg.dto.HomeCategoryIndexDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
 import com.ggkjg.dto.MessageListDto;
 import com.ggkjg.dto.SlidersDto;
-import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.MainActivity;
 import com.ggkjg.view.adapter.HomeAdapter;
-import com.ggkjg.view.adapter.HomeGoodShopAdapter;
-import com.ggkjg.view.adapter.LoopViewPagerAdapter;
 import com.ggkjg.view.adapter.HomeCategoryIndexAdapter;
+import com.ggkjg.view.adapter.HomeGoodShopAdapter;
+import com.ggkjg.view.adapter.HomeGoodSpikeAdapter;
+import com.ggkjg.view.adapter.LoopViewPagerAdapter;
 import com.ggkjg.view.mainfragment.message.ShopMessageListActivity;
 import com.ggkjg.view.mainfragment.personalcenter.MessageCenterActivity;
 import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 import com.ggkjg.view.mainfragment.shop.SearchShopProduct;
 import com.ggkjg.view.mainfragment.shop.ShopProductListActivity;
+import com.ggkjg.view.mainfragment.spike.SpikeActivity;
 import com.ggkjg.view.widgets.LoadingDialog;
 import com.ggkjg.view.widgets.RecyclerItemDecoration;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
 import com.ggkjg.view.widgets.autoview.EmptyView;
 
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -85,6 +87,21 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     @BindView(R.id.home_good_shop_recy)
     RecyclerView goodShopRecyclerView;
     HomeGoodShopAdapter goodShopAdapter;
+    HomeGoodSpikeAdapter goodGabAdapter;
+    @BindView(R.id.tv_integer)
+    TextView tvInteger;
+    @BindView(R.id.tv_hour)
+    TextView tvHour;
+    @BindView(R.id.tv_minter)
+    TextView tvMinter;
+    @BindView(R.id.tv_second)
+    TextView tvSecond;
+    @BindView(R.id.ll_time)
+    LinearLayout llTime;
+    @BindView(R.id.ll_more)
+    LinearLayout llMore;
+    @BindView(R.id.grid)
+    GridView gridView;
 
     private List<HomeActiveIndexDto> homeActiveIndexDtos;
     @BindView(R.id.iv_home_img1)
@@ -163,6 +180,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         pushAdapter = new HomeAdapter(null, getActivity());
         recyclerView.setAdapter(pushAdapter);
         goodShopAdapter = new HomeGoodShopAdapter(null, getActivity());
+        goodGabAdapter = new HomeGoodSpikeAdapter(getActivity());
         goodShopRecyclerView.setAdapter(goodShopAdapter);
         homeCategoryIndexAdapter = new HomeCategoryIndexAdapter(null, getActivity());
         home_category_index.setAdapter(homeCategoryIndexAdapter);
@@ -189,6 +207,41 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         });
     }
 
+
+    private void iniGridView(final List<HomeGoodsIndexDto> list) {
+
+        int length = 82;  //定义一个长度
+        int size = 0;  //得到集合长度
+        //获得屏幕分辨路
+        DisplayMetrics dm = new DisplayMetrics();
+        if(dm==null||getActivity()==null){
+            return;
+        }
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+
+        int gridviewWidth = (int) (list.size() * (length + 5) * density);
+        int itemWidth = (int) (length * density);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.setMargins(10, 0, 0, 0);
+        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gridView.setColumnWidth(itemWidth); // 设置列表项宽
+        gridView.setHorizontalSpacing(10); // 设置列表项水平间距
+        gridView.setStretchMode(GridView.NO_STRETCH);
+        gridView.setNumColumns(list.size()); // 设置列数量=列表集合数
+        goodGabAdapter.setData(list);
+        gridView.setAdapter(goodGabAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+            }
+        });
+    }
     /**
      * 设置广告位图片
      *
@@ -256,6 +309,10 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             adClick(adThreeSlider);
         });
 
+        bindClickEvent(llMore,() -> {
+            gotoActivity(SpikeActivity.class);
+        });
+
         goodShopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -291,8 +348,8 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     /**
      * 其他广告点击事件的操作
      */
-    private void adClick(SlidersDto sDto){
-        if(sDto != null) {
+    private void adClick(SlidersDto sDto) {
+        if (sDto != null) {
             if (!TextUtils.isEmpty(sDto.getClickType())) {
                 switch (sDto.getClickType()) {
                     case "1":
@@ -386,7 +443,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
 
             @Override
             public void onError(Throwable throwable) {
-                LogUtil.i(TAG, "--RxLog-Thread: onError() = " );
+                LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
                 loadingDialog.setLoadinglevel(++loadinglevel);
             }
         }, 1, 1);
@@ -471,7 +528,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
 
             @Override
             public void onError(Throwable throwable) {
-                LogUtil.i(TAG, "--RxLog-Thread: onError() = " );
+                LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
                 loadingDialog.setLoadinglevel(++loadinglevel);
             }
         });

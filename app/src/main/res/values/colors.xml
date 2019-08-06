@@ -7,6 +7,8 @@
     <color name="transparent">#00000000</color>
     <color name="my_color_black">#000000</color>
     <color name="my_color_white">#ffffff</color>
+    <color name="my_color_red">#f02430</color>
+    <color name="my_color_red23">#f23030</color>
     <color name="my_color_212121">#212121</color>
     <color name="my_color_2e2e2e">#2e2e2e</color>
     <color name="my_color_333333">#333333</color>
@@ -19,6 +21,7 @@
     <color name="my_color_A7A7A7">#A7A7A7</color>
     <color name="my_color_EBEBEB">#EBEBEB</color>
     <color name="my_color_00AAED">#00AAED</color>
+    <color name="my_color_blue">#008cd6</color>
     <color name="my_color_f6f6f6">#f6f6f6</color>
     <color name="my_color_F5FB0A">#F5FB0A</color>
     <color name="my_color_799DFF">#799DFF</color>
@@ -54,4 +57,5 @@
 
     <color name="my_color_008CD6">#008CD6</color>
     <color name="my_color_aaaaaa">#aaaaaa</color>
+    <color name="my_color_9f">#99ffffff</color>
 </resources>

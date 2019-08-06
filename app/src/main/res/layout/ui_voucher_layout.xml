@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_color_f6f6f6"
+    android:orientation="vertical">
+
+    <include layout="@layout/action_bar" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:background="#eeeeee"/>
+    <LinearLayout
+        android:background="@drawable/bg_item_time_white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_50dp"
+        >
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_un_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/my_color_blue"
+            android:singleLine="true"
+            android:textSize="@dimen/wz_16sp"
+            android:text="未使用" />
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/my_color_333333"
+            android:singleLine="true"
+            android:textSize="@dimen/wz_16sp"
+            android:text="已使用" />
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_no_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/my_color_333333"
+            android:singleLine="true"
+            android:textSize="@dimen/wz_16sp"
+            android:text="已失效" />
+
+    </LinearLayout>
+
+
+    <com.ggkjg.view.widgets.NoScrollViewPager
+
+        android:id="@+id/viewpager_main"
+        android:background="@color/my_color_white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>
