@@ -1,10 +1,14 @@
 package com.ggkjg.view.mainfragment.order;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.Constants;
@@ -21,23 +26,29 @@ import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.AddressDto;
-import com.ggkjg.dto.ChooseAddressDto;
-import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.CartAtrrDto;
+import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.OrderPreviewSellersDto;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.adapter.GoodsOrderAdapter;
-import com.ggkjg.view.widgets.OrderChooseAddressDialog;
+import com.ggkjg.view.adapter.PopVoucherAdapter;
 import com.ggkjg.view.mainfragment.personalcenter.GoodsAddressActivity;
+import com.ggkjg.view.widgets.MCheckBox;
+import com.ggkjg.view.widgets.OrderChooseAddressDialog;
+import com.ggkjg.view.widgets.PhotoPopupWindow;
+import com.ggkjg.view.widgets.autoview.ActionbarView;
+import com.ggkjg.view.widgets.autoview.ObservableScrollView;
 import com.ggkjg.view.widgets.autoview.SuperExpandableListView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 确认订单
@@ -47,6 +58,28 @@ import butterknife.BindView;
 public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAddressDialog.ChooseAddressListener {
     private static final String TAG = ConfirmOrderActivity.class.getSimpleName();
     public static final String PRODUCT_LIST = "product_list";//调用者传递的名字
+    @BindView(R.id.custom_action_bar)
+    ActionbarView customActionBar;
+    @BindView(R.id.iv_action_bar_line)
+    ImageView ivActionBarLine;
+    @BindView(R.id.img_item_left)
+    ImageView imgItemLeft;
+    @BindView(R.id.iv_address_right)
+    ImageView ivAddressRight;
+    @BindView(R.id.tv_weight_kg)
+    TextView tvWeightKg;
+    @BindView(R.id.tv_price_sum)
+    TextView tvPriceSum;
+    @BindView(R.id.rl_offer)
+    RelativeLayout rlOffer;
+    @BindView(R.id.iv_add)
+    MCheckBox ivAdd;
+    @BindView(R.id.iv_agree)
+    MCheckBox ivAgree;
+    @BindView(R.id.sv_confirm_order)
+    ObservableScrollView svConfirmOrder;
+    @BindView(R.id.tv_confirm_order_goods_bottom_view)
+    LinearLayout tvConfirmOrderGoodsBottomView;
     private List<ShopCartDto> selectProduct;
     @BindView(R.id.iv_confirm_order_address_add)
     ImageView iv_confirm_order_address_add;
@@ -119,9 +152,108 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         StatusBarUtils.StatusBarLightMode(this);
         imgLevel = new ImageView[]{img_level_1, img_level_2};
         tvLevel = new TextView[]{tv_level_1, tv_level_2};
+
         dealSelLevel();
     }
+    private View mView;
+    private Context mContext;
+    private RecyclerView recyclerView;
+    private Button btSure;
+    private ImageView iv_close;
 
+
+    private List<ShopCartDto> datas=new ArrayList<>();
+    private PopVoucherAdapter popadapter;
+
+    public void showPopWindows() {
+        datas.clear();
+         if(mView==null){
+             mView = LayoutInflater.from(this).inflate(R.layout.chat_voucher_popwindow_view, null);
+             recyclerView = mView.findViewById(R.id.recy_voucher);
+             btSure = mView.findViewById(R.id.bt_sure);
+             iv_close = mView.findViewById(R.id.iv_close);
+             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true) {
+                 @Override
+                 public boolean canScrollVertically() {
+                     return true;
+                 }
+             };
+             recyclerView.setLayoutManager(linearLayoutManager);
+
+             popadapter=new PopVoucherAdapter(null);
+             recyclerView.setAdapter(popadapter);
+             btSure.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     mWindowAddPhoto.dismiss();
+                 }
+             });
+             iv_close.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     mWindowAddPhoto.dismiss();
+                 }
+             });
+             recyclerView.setAdapter(popadapter);
+             datas.add(new ShopCartDto());
+             datas.add(new ShopCartDto());
+             datas.add(new ShopCartDto());
+             datas.add(new ShopCartDto());
+             datas.add(new ShopCartDto());
+             popadapter.setNewData(datas);
+             mWindowAddPhoto = new PhotoPopupWindow(this).bindView(mView);
+             mWindowAddPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+         }else {
+             mWindowAddPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+         }
+
+
+    }
+    private View view;
+    private PhotoPopupWindow mWindowpayPhoto;
+    private LinearLayout llBalance;
+    private LinearLayout llZfb;
+    private LinearLayout llWx;
+    private MCheckBox mcbBalance;
+    private MCheckBox mcbZfb;
+    private MCheckBox mcbWx;
+    public void showPopPayWindows() {
+        datas.clear();
+         if(view==null){
+             view = LayoutInflater.from(this).inflate(R.layout.pay_popwindow_view, null);
+
+             btSure = view.findViewById(R.id.bt_sure);
+             iv_close = view.findViewById(R.id.iv_close);
+             llBalance = view.findViewById(R.id.ll_balance);
+             llZfb = view.findViewById(R.id.ll_zfb);
+             llWx = view.findViewById(R.id.ll_wx);
+             mcbBalance = view.findViewById(R.id.mcb_balance);
+             mcbZfb = view.findViewById(R.id.mcb_zfb);
+             mcbWx= view.findViewById(R.id.mcb_wx);
+
+
+             btSure.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     mWindowpayPhoto.dismiss();
+                 }
+             });
+             iv_close.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                mWindowpayPhoto.dismiss();
+                 }
+             });
+
+             mWindowpayPhoto = new PhotoPopupWindow(this).bindView(view);
+             mWindowpayPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+         }else {
+             mWindowpayPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+         }
+
+
+    }
+    private PhotoPopupWindow mWindowAddPhoto;
     @Override
     public void initData() {
         findDefaultReceiptAddr();
@@ -180,6 +312,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             gotoActivity(GoodsAddressActivity.class, false, bundle, Constants.INTENT_REQUESTCODE_SEL_ADDRESS);
         });
         bindClickEvent(butSubmit, () -> {
+            showPopPayWindows();
             if (iv_confirm_order_address_add.getVisibility() == View.VISIBLE) {
                 ToastUtil.showToast("请添加收货地址");
             } else {
@@ -191,21 +324,25 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     cardIds = cardIds.substring(0, cardIds.length() - 1);
                 }
 //              String pwdMd5 = MD5Utils.getMD5Str(password + "hkonline");
-                if(deliverType == 1){
+                if (deliverType == 1) {
                     String addressStr = tv_zt_address.getText().toString();
-                    if(addressStr.length() != 0){
+                    if (addressStr.length() != 0) {
                         addOrder(cardIds, "");
-                     } else{
+                    } else {
                         ToastUtil.showToast("请选择自提地址");
                     }
-                }else{
-                     addOrder(cardIds, "");
+                } else {
+                    addOrder(cardIds, "");
                 }
 //               }
 //              });
 //             dialog.show();
             }
         });
+//        bindClickEvent(butSubmit, () -> {
+//            showPopPayWindows();
+//
+//        });
         bindClickEvent(layout_level_1, () -> {
             selLevel = 0;
             deliverType = 1;
@@ -218,8 +355,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             dealSelLevel();
         });
 
+        bindClickEvent(rlOffer, () -> {
+            showPopWindows();
+        });
+
         bindClickEvent(layout_choose_address, () -> {
-            OrderChooseAddressDialog dialog = new OrderChooseAddressDialog(this,this);
+            OrderChooseAddressDialog dialog = new OrderChooseAddressDialog(this, this);
             dialog.show();
         });
     }
@@ -243,9 +384,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             contactNameStr = addressDto.getContactName();
             tv_confirm_consignee.setText("收货人:" + contactNameStr);
             tv_confirm_phone.setText(addressDto.getMobileNo());
-            addressStr =  addressDto.getProvince() + addressDto.getCity()
+            addressStr = addressDto.getProvince() + addressDto.getCity()
                     + addressDto.getArea() + addressDto.getAddrDetail();
-            tv_confirm_address.setText("收货地址:" +addressStr);
+            tv_confirm_address.setText("收货地址:" + addressStr);
         } else {
             iv_confirm_order_address_add.setVisibility(View.VISIBLE);
             rl_address_info.setVisibility(View.GONE);
@@ -273,7 +414,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                 LogUtil.i(TAG, "--RxLog-Thread:onError() = ");
                 dissLoadDialog();
             }
-        },cardIds);
+        }, cardIds);
     }
 
     /**
@@ -309,9 +450,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 //      map.put("tradePwd", tradePwd);//交易密码
         map.put("contactName", contactNameStr);//收货人
         map.put("mobileNo", tv_confirm_phone.getText().toString());//手机号
-        if(deliverType == 1){
-            map.put("address",tv_zt_address.getText().toString());//自提地址
-        }else{
+        if (deliverType == 1) {
+            map.put("address", tv_zt_address.getText().toString());//自提地址
+        } else {
             map.put("address", addressStr);//收货地址
         }
         map.put("deliverType", deliverType + "");//收货方式 1-自提 2-配送
@@ -341,7 +482,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         }, map);
     }
 
-     private void dealSelLevel() {
+    private void dealSelLevel() {
         for (int i = 0; i < imgLevel.length; i++) {
             if (selLevel == i) {
                 imgLevel[i].setSelected(true);
@@ -352,17 +493,24 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             }
         }
 
-        if(selLevel == 0){
+        if (selLevel == 0) {
             iv_choose_address_line.setVisibility(View.VISIBLE);
             layout_choose_address.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             iv_choose_address_line.setVisibility(View.GONE);
             layout_choose_address.setVisibility(View.GONE);
         }
     }
 
-     @Override
-     public void callbackChooseAddress(String chooseAddressStr) {
-         tv_zt_address.setText(chooseAddressStr);
-     }
+    @Override
+    public void callbackChooseAddress(String chooseAddressStr) {
+        tv_zt_address.setText(chooseAddressStr);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

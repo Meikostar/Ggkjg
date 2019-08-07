@@ -1,11 +1,10 @@
 package com.ggkjg.view.mainfragment.spike;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ggkjg.R;
@@ -15,11 +14,10 @@ import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.dto.TimeDataDto;
 import com.ggkjg.view.adapter.FragmentViewPagerAdapter;
 import com.ggkjg.view.adapter.TestAdapter;
-import com.ggkjg.view.mainfragment.SpikeFragment;
+import com.ggkjg.view.mainfragment.MangerVoucherFragment;
 import com.ggkjg.view.mainfragment.VoucherFragment;
 import com.ggkjg.view.widgets.NoScrollViewPager;
 import com.ggkjg.view.widgets.autoview.ActionbarView;
-import com.ggkjg.view.widgets.autoview.AutoLocateHorizontalView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,41 +28,40 @@ import butterknife.ButterKnife;
 /**
  * 秒杀专区
  */
-public class MineVoucherActivity extends BaseActivity {
+public class MangerVoucherActivity extends BaseActivity {
 
 
     @BindView(R.id.custom_action_bar)
     ActionbarView customActionBar;
-    @BindView(R.id.tv_un_user)
-    TextView tvUnUser;
-    @BindView(R.id.tv_user)
-    TextView tvUser;
-    @BindView(R.id.tv_no_user)
-    TextView tvNoUser;
     @BindView(R.id.viewpager_main)
     NoScrollViewPager viewpagerMain;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
+    @BindView(R.id.line_send)
+    View lineSend;
+    @BindView(R.id.tv_user)
+    TextView tvUser;
+    @BindView(R.id.line_user)
+    View lineUser;
     private int currentPage = Constants.PAGE_NUM;
 
     @Override
     public void initListener() {
-        bindClickEvent(tvUnUser,()->{
-         selection(0,true);
+        bindClickEvent(tvSend, () -> {
+            selection(0, true);
         });
-        bindClickEvent(tvUser,()->{
-            selection(1,true);
+        bindClickEvent(tvUser, () -> {
+            selection(1, true);
         });
-        bindClickEvent(tvNoUser,()->{
-            selection(2,true);
-        });
+
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.ui_voucher_layout;
+        return R.layout.ui_manger_voucher_layout;
     }
 
     //    private SpikeChooseTimeAdapter testAdapter;
-    private TestAdapter testAdapter;
     private boolean isShow;
 
     @Override
@@ -79,7 +76,7 @@ public class MineVoucherActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                selection(position,false);
+                selection(position, false);
             }
 
             @Override
@@ -89,7 +86,6 @@ public class MineVoucherActivity extends BaseActivity {
         StatusBarUtils.StatusBarLightMode(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-
 
 
     }
@@ -103,38 +99,32 @@ public class MineVoucherActivity extends BaseActivity {
     }
 
 
-
-    public void selection(int poition,boolean isShow){
-        switch (poition){
+    public void selection(int poition, boolean isShow) {
+        switch (poition) {
             case 0:
-                tvUnUser.setTextColor(getResources().getColor(R.color.my_color_blue));
+                tvSend.setTextColor(getResources().getColor(R.color.my_color_blue));
                 tvUser.setTextColor(getResources().getColor(R.color.my_color_333333));
-                tvNoUser.setTextColor(getResources().getColor(R.color.my_color_333333));
-                if(isShow){
-                    viewpagerMain.setCurrentItem(0,false);
+                lineSend.setVisibility(View.VISIBLE);
+                lineUser.setVisibility(View.INVISIBLE);
+                if (isShow) {
+                    viewpagerMain.setCurrentItem(0, false);
                 }
 
                 break;
             case 1:
-                tvUnUser.setTextColor(getResources().getColor(R.color.my_color_333333));
+                tvSend.setTextColor(getResources().getColor(R.color.my_color_333333));
                 tvUser.setTextColor(getResources().getColor(R.color.my_color_blue));
-                tvNoUser.setTextColor(getResources().getColor(R.color.my_color_333333));
+                lineUser.setVisibility(View.VISIBLE);
+                lineSend.setVisibility(View.INVISIBLE);
 
-                if(isShow){
-                    viewpagerMain.setCurrentItem(1,false);
+                if (isShow) {
+                    viewpagerMain.setCurrentItem(1, false);
                 }
                 break;
-            case 2:
-                tvUnUser.setTextColor(getResources().getColor(R.color.my_color_333333));
-                tvUser.setTextColor(getResources().getColor(R.color.my_color_333333));
-                tvNoUser.setTextColor(getResources().getColor(R.color.my_color_blue));
-                if(isShow){
-                    viewpagerMain.setCurrentItem(2,false);
-                }
 
-                break;
         }
     }
+
     private List<Fragment> list_productfragment;   //定义要装fragment的列表
     private FragmentViewPagerAdapter mainViewPagerAdapter;
 
@@ -142,14 +132,13 @@ public class MineVoucherActivity extends BaseActivity {
         list_productfragment = new ArrayList<>();
         VoucherFragment spikeFragment = new VoucherFragment();
         list_productfragment.add(spikeFragment);
-        VoucherFragment spikeFragment1 = new VoucherFragment();
+        MangerVoucherFragment spikeFragment1 = new MangerVoucherFragment();
         list_productfragment.add(spikeFragment1);
-        VoucherFragment spikeFragment2 = new VoucherFragment();
-        list_productfragment.add(spikeFragment2);
+
 
         mainViewPagerAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), list_productfragment);
         viewpagerMain.setAdapter(mainViewPagerAdapter);
-        viewpagerMain.setOffscreenPageLimit(2);//设置缓存view 的个数
+        viewpagerMain.setOffscreenPageLimit(1);//设置缓存view 的个数
         viewpagerMain.setCurrentItem(poistion);
 
     }

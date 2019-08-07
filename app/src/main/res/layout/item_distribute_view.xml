@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bj_71dp"
+    android:background="@color/my_color_white"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+    <LinearLayout
+        android:id="@+id/ll_balance"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bj_70dp">
+        <com.ggkjg.view.widgets.MCheckBox
+            android:layout_marginLeft="10dp"
+            android:id="@+id/mcb_choose"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:padding="3dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:clickable="false"
+            app:drawablechoose="@drawable/distribute_choose"
+            app:drawables="@drawable/distbute_unchoose"
+            app:canNoClick="false"
+            app:isCheckeds="true"
+
+            />
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:layout_width="@dimen/bj_44dp"
+            android:layout_height="@dimen/bj_44dp"
+            />
+        <LinearLayout
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:singleLine="true"
+                android:text="18166036858"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_15sp" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:text="普通会员"
+                android:textColor="@color/my_color_999999"
+                android:textSize="@dimen/wz_13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="@dimen/bj_15dp"
+            android:gravity="right|center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_below="@+id/tv_title"
+                android:id="@+id/tv_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:singleLine="true"
+                android:text="区域：未设置"
+                android:textColor="@color/my_color_999999"
+                android:textSize="@dimen/wz_13sp" />
+            <LinearLayout
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:paddingBottom="3dp"
+                    android:layout_gravity="bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总业绩:"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/wz_14sp" />
+
+                <TextView
+                    android:id="@+id/tv_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:textColor="#fd2323"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/my_color_EBEBEB"/>
+</LinearLayout>

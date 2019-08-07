@@ -94,6 +94,16 @@
             android:label="我的港券"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.spike.MangerVoucherActivity"
+            android:label="我的港券"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.spike.DistributeActivity"
+            android:label="派发"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
 
         <activity
             android:name=".view.mainfragment.settings.UpdateLoginPwsActivity"

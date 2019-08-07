@@ -7,6 +7,7 @@ import com.ggkjg.dto.BrowerDto;
 import com.ggkjg.view.MainActivity;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
+import com.ggkjg.view.mainfragment.order.ConfirmOrderActivity;
 
 /**
  * 启动页面
@@ -27,6 +28,8 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initData() {
         fileBrower();
+//        gotoActivity(ConfirmOrderActivity.class);
+//        finish();
     }
 
     @Override
