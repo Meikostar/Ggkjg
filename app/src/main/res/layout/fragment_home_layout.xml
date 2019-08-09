@@ -100,11 +100,13 @@
                     android:layout_height="@dimen/bj_41dp"
                     android:background="@color/my_color_white"
                     android:orientation="horizontal">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="78dp"
+                        android:layout_height="@dimen/bj_21dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/home_products_nice" />
+                        android:layout_marginLeft="@dimen/bj_5dp"
+                        android:src="@drawable/home_ms" />
 
                     <TextView
                         android:id="@+id/tv_integer"
@@ -193,13 +195,13 @@
                         android:textColor="@color/my_color_999999"/>
 
                     <ImageView
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/selector_back_press"
                         android:layout_width="5dp"
-                        android:layout_height="9dp"
+                        android:layout_height="11dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="12dp" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="12dp"
+                        android:src="@drawable/arrow_right_black" />
                 </LinearLayout>
                 <HorizontalScrollView
                     android:layout_width="fill_parent"
@@ -239,12 +241,14 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/bj_5dp"
+                            android:layout_width="@dimen/bj_82dp"
+                            android:layout_height="@dimen/bj_21dp"
                             android:layout_gravity="center_vertical"
-                            android:src="@mipmap/home_products_nice" />
+                            android:src="@drawable/home_gg" />
 
                         <TextView
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -253,12 +257,47 @@
                             android:maxEms="11"
                             android:singleLine="true"
                             android:text="精选尖货来袭" />
-                    </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="更多"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/my_color_999999"/>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/home_good_shop_recy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        <ImageView
+                            android:layout_width="5dp"
+                            android:layout_height="11dp"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="12dp"
+                            android:src="@drawable/arrow_right_black" />
+                    </LinearLayout>
+                    <HorizontalScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/my_color_white"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="90dp"
+                            android:layout_marginTop="3dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <GridView
+                                android:id="@+id/grid_gg"
+                                style="@style/lv_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="15dp"
+                                android:gravity="center_vertical" />
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
                 </LinearLayout>
 
                 <LinearLayout
