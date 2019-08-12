@@ -106,8 +106,8 @@
                 android:textSize="@dimen/wz_15sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/bj_17dp"
+                android:layout_height="@dimen/bj_17dp"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/iv_item_gold_buy_num"
                 android:background="@mipmap/home_gold" />

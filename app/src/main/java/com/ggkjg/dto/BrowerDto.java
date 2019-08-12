@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class BrowerDto implements Serializable {
 
     private String browerPrefix;
+    public String sysPath;
 
 
     public String getBrowerPrefix() {

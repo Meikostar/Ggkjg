@@ -11,9 +11,9 @@
         <ImageView
             android:id="@+id/tv_item_home_good_shop_img"
             android:layout_width="@dimen/bj_96dp"
-            android:layout_height="@dimen/bj_96dp"
-            android:src="@mipmap/img_default_5" />
+            android:layout_height="@dimen/bj_96dp"/>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_zone"
             android:background="@drawable/home_zone_bg"
             android:orientation="horizontal"
@@ -30,6 +30,7 @@
                 android:layout_marginLeft="3dp"
                 android:layout_height="@dimen/bj_20dp"/>
             <TextView
+                android:id="@+id/tv_cout"
                 android:singleLine="true"
                 android:gravity="center"
                 android:textColor="#ffff33"
@@ -47,7 +48,7 @@
         android:id="@+id/tv_title"
         android:layout_width="@dimen/bj_96dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/bj_3dp"
+        android:layout_marginLeft="@dimen/bj_1dp"
         android:singleLine="true"
         android:text="00.00"
         android:textColor="@color/my_color_333333"
@@ -61,7 +62,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="3dp"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_gravity="center_vertical"

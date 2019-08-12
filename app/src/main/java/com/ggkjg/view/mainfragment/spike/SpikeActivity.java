@@ -11,6 +11,8 @@ import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TimeUtil;
+import com.ggkjg.dto.SpikeDto;
 import com.ggkjg.dto.TimeDataDto;
 import com.ggkjg.view.adapter.FragmentViewPagerAdapter;
 import com.ggkjg.view.adapter.HelpAdapter;
@@ -36,18 +38,7 @@ public class SpikeActivity extends BaseActivity {
     ActionbarView customActionBar;
     @BindView(R.id.auto_scroll)
     AutoLocateHorizontalView autoScroll;
-    @BindView(R.id.tv_integer)
-    TextView tvInteger;
-    @BindView(R.id.tv_hour)
-    TextView tvHour;
-    @BindView(R.id.tv_minter)
-    TextView tvMinter;
-    @BindView(R.id.tv_second)
-    TextView tvSecond;
-    @BindView(R.id.ll_time)
-    LinearLayout llTime;
-    @BindView(R.id.ll_more)
-    LinearLayout llMore;
+
     @BindView(R.id.viewpager_main)
     NoScrollViewPager viewpagerMain;
     private int currentPage = Constants.PAGE_NUM;
@@ -56,7 +47,7 @@ public class SpikeActivity extends BaseActivity {
     public void initListener() {
 
     }
-
+   private int state;
     @Override
     public int getLayoutId() {
         return R.layout.ui_spike_layout;
@@ -65,11 +56,14 @@ public class SpikeActivity extends BaseActivity {
     //    private SpikeChooseTimeAdapter testAdapter;
     private TestAdapter testAdapter;
     private boolean isShow;
+    private SpikeDto spikeDto;
     @Override
     public void initView() {
         actionbar.setImgStatusBar(R.color.my_color_white);
         actionbar.setTitle(R.string.spike);
         actionbar.setTitleColor(R.color.my_color_212121);
+        spikeDto= (SpikeDto) getIntent().getSerializableExtra("data");
+        state=getIntent().getIntExtra("state",1);
         viewpagerMain.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -99,7 +93,7 @@ public class SpikeActivity extends BaseActivity {
         });
 
         testAdapter = new TestAdapter();
-        autoScroll.setInitPos(5);
+        autoScroll.setInitPos(state);
         autoScroll.setItemCount(5);
         autoScroll.setAdapter(testAdapter);
         testAdapter.setItemClick(new TestAdapter.ItemClickListener() {
@@ -114,49 +108,30 @@ public class SpikeActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        TimeDataDto timeDataDto = new TimeDataDto();
-        timeDataDto.setState(2);
-        timeDataDto.setTime("08:00");
-        TimeDataDto timeDataDto1 = new TimeDataDto();
-        timeDataDto1.setState(2);
-        timeDataDto1.setTime("09:00");
-        TimeDataDto timeDataDto2 = new TimeDataDto();
-        timeDataDto2.setState(2);
-        timeDataDto2.setTime("10:00");
-        TimeDataDto timeDataDto3 = new TimeDataDto();
-        timeDataDto3.setState(1);
-        timeDataDto3.setTime("11:00");
-        TimeDataDto timeDataDto4 = new TimeDataDto();
-        timeDataDto4.setState(3);
-        timeDataDto4.setTime("12:00");
-        TimeDataDto timeDataDto5 = new TimeDataDto();
-        timeDataDto5.setState(3);
-        timeDataDto5.setTime("13:00");
-        TimeDataDto timeDataDto6 = new TimeDataDto();
-        timeDataDto6.setState(3);
-        timeDataDto6.setTime("14:00");
-        TimeDataDto timeDataDto7 = new TimeDataDto();
-        timeDataDto7.setState(3);
-        timeDataDto7.setTime("15:00");
-        TimeDataDto timeDataDto8 = new TimeDataDto();
-        timeDataDto8.setState(3);
-        timeDataDto8.setTime("16:00");
-        TimeDataDto timeDataDto9 = new TimeDataDto();
-        timeDataDto9.setState(3);
-        timeDataDto9.setTime("17:00");
-        datas.add(timeDataDto);
-        datas.add(timeDataDto1);
-        datas.add(timeDataDto2);
-        datas.add(timeDataDto3);
-        datas.add(timeDataDto4);
-        datas.add(timeDataDto5);
-        datas.add(timeDataDto6);
-        datas.add(timeDataDto7);
-        datas.add(timeDataDto8);
-        datas.add(timeDataDto9);
+        datas.clear();
+        int i=0;
+        for(SpikeDto spikeDto:spikeDto.sedKillTimes){
+            TimeDataDto timeDataDto = new TimeDataDto();
+            long star=TimeUtil.getStringToDate(spikeDto.startTime);
+            long end=TimeUtil.getStringToDate(spikeDto.endTime);
+            long curr=System.currentTimeMillis();
+            if(curr>end){
+                timeDataDto.setState(2);
+            }else if(curr<star){
+                timeDataDto.setState(3);
+            }else {
+                timeDataDto.setState(1);
+            }
+
+            timeDataDto.setTime(TimeUtil.formatHoursTime(TimeUtil.getStringToDate(spikeDto.startTime)));
+            timeDataDto.id=spikeDto.id;
+            datas.add(timeDataDto);
+            i++;
+        }
+
         testAdapter.setDatas(datas);
         testAdapter.notifyDataSetChanged();
-        initFragMents(0);
+        initFragMents(state);
     }
     private String[] titles;
     private List<Fragment> list_productfragment;   //定义要装fragment的列表
@@ -165,6 +140,8 @@ public class SpikeActivity extends BaseActivity {
         list_productfragment = new ArrayList<>();
        for (TimeDataDto dataDto:datas){
            SpikeFragment spikeFragment = new SpikeFragment();
+           spikeFragment.setId(dataDto.id);
+           spikeFragment.setState(dataDto.getState());
            list_productfragment.add(spikeFragment);
        }
 

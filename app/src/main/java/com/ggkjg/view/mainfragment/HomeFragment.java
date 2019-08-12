@@ -2,6 +2,7 @@ package com.ggkjg.view.mainfragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,13 +27,17 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
+import com.ggkjg.common.utils.TextUtil;
+import com.ggkjg.common.utils.TimeUtil;
 import com.ggkjg.dto.GoodsPushDto;
 import com.ggkjg.dto.HomeActiveIndexDto;
 import com.ggkjg.dto.HomeAdsDto;
 import com.ggkjg.dto.HomeCategoryIndexDto;
+import com.ggkjg.dto.HomeDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
 import com.ggkjg.dto.MessageListDto;
 import com.ggkjg.dto.SlidersDto;
+import com.ggkjg.dto.SpikeDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.MainActivity;
@@ -48,6 +53,7 @@ import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 import com.ggkjg.view.mainfragment.shop.SearchShopProduct;
 import com.ggkjg.view.mainfragment.shop.ShopProductListActivity;
 import com.ggkjg.view.mainfragment.spike.SpikeActivity;
+import com.ggkjg.view.mainfragment.spike.VoucherProductListActivity;
 import com.ggkjg.view.widgets.LoadingDialog;
 import com.ggkjg.view.widgets.RecyclerItemDecoration;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
@@ -123,6 +129,9 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     Unbinder unbinder;
     @BindView(R.id.home_ll_indicators)
     LinearLayout homeLlIndicators;
+    @BindView(R.id.ll_zone)
+    LinearLayout ll_zone;
+
     @BindView(R.id.iv_ad_one)
     ImageView ivAdOne;
     @BindView(R.id.iv_ad_two)
@@ -184,12 +193,13 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         zoneAdapter = new HomeZoneAdapter(getActivity());
         homeCategoryIndexAdapter = new HomeCategoryIndexAdapter(null, getActivity());
         home_category_index.setAdapter(homeCategoryIndexAdapter);
+        findGoodsSedKill();
         getHomeMessage();
         findCategoryIndex();
         findGoodsIndex();
         findActiveIndex();
         findAdsList();
-        findQualityGoodsList(false, currentPage, Constants.PAGE_NUM);
+        findQualityGoodsList(false, currentPage, Constants.PAGE_SIZE);
     }
 
     private void findAdsList() {
@@ -208,9 +218,9 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     }
 
 
-    private void iniGridView(final List<HomeGoodsIndexDto> list) {
+    private void iniGridView(final List<HomeDto> list) {
 
-        int length = 82;  //定义一个长度
+        int length = 96;  //定义一个长度
         int size = 0;  //得到集合长度
         //获得屏幕分辨路
         DisplayMetrics dm = new DisplayMetrics();
@@ -242,9 +252,9 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             }
         });
     }
-    private void iniGridViewgg(final List<HomeGoodsIndexDto> list) {
+    private void iniGridViewgg(final List<HomeDto> list) {
 
-        int length = 82;  //定义一个长度
+        int length = 96;  //定义一个长度
         int size = 0;  //得到集合长度
         //获得屏幕分辨路
         DisplayMetrics dm = new DisplayMetrics();
@@ -265,9 +275,10 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         gridViewGg.setHorizontalSpacing(10); // 设置列表项水平间距
         gridViewGg.setStretchMode(GridView.NO_STRETCH);
         gridViewGg.setNumColumns(list.size()); // 设置列数量=列表集合数
-        goodGabAdapter.setData(list);
-        gridView.setAdapter(goodGabAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        zoneAdapter.setData(list);
+        gridViewGg.setAdapter(zoneAdapter);
+
+        gridViewGg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -344,8 +355,18 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         });
 
         bindClickEvent(llMore,() -> {
-            gotoActivity(SpikeActivity.class);
+            Intent intent = new Intent(getActivity(),SpikeActivity.class);
+            intent.putExtra("data",spikeDto);
+            intent.putExtra("state",state);
+            startActivity(intent);
+
         });
+        bindClickEvent(ll_zone,() -> {
+            Intent intent = new Intent(getActivity(), VoucherProductListActivity.class);
+            startActivity(intent);
+
+        });
+
 
 //        goodShopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 //            @Override
@@ -375,7 +396,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         bindClickEvent(iv_top_message, () -> {
             gotoActivity(MessageCenterActivity.class);
         });
-        setScrollListener(Constants.PAGE_NUM);
+        setScrollListener(Constants.PAGE_SIZE);
 
     }
 
@@ -439,6 +460,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             public void onRefresh() {
                 currentPage = Constants.PAGE_NUM;
                 swipeRefreshLayoutUtil.setCanLoadMore(true);
+                findGoodsSedKill();
                 findCategoryIndex();
                 findGoodsIndex();
                 findActiveIndex();
@@ -450,6 +472,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             public void onLoadMore() {
                 swipeRefreshLayoutUtil.setCanLoadMore(true);
                 currentPage++;
+                findGoodsSedKill();
                 findCategoryIndex();
                 findGoodsIndex();
                 findActiveIndex();
@@ -507,9 +530,68 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
      * 获取精选好货
      */
     private void findGoodsIndex() {
-        DataManager.getInstance().findGoodsIndex(new DefaultSingleObserver<List<HomeGoodsIndexDto>>() {
+        DataManager.getInstance().findGoodsIndex(new DefaultSingleObserver<HomeDto>() {
             @Override
-            public void onSuccess(List<HomeGoodsIndexDto> object) {
+            public void onSuccess(HomeDto object) {
+                if(object!=null&&object.conponList!=null){
+                    iniGridViewgg(object.conponList);
+                }
+                if(object!=null&&object.goodsSedKill!=null&&object.goodsSedKill.records!=null){
+                    if(object.goodsSedKill.records.size()==0){
+//                        gridView.setVisibility(View.GONE);
+                    }else {
+                        iniGridView(object.goodsSedKill.records);
+                        gridView.setVisibility(View.VISIBLE);
+                    }
+
+                }else {
+//                    gridView.setVisibility(View.GONE);
+                }
+                if(object!=null&&object.sedKillTime!=null){
+                  if(TextUtil.isNotEmpty(object.sedKillTime.startTime)){
+                      String hour = TimeUtil.formatHourTime(TimeUtil.getStringToDate(object.sedKillTime.startTime));
+                      tvInteger.setText(hour+"点场");
+                  }
+
+                  if(TextUtil.isNotEmpty(object.sedKillTime.endTime)){
+                        long time = TimeUtil.getStringToDate(object.sedKillTime.endTime);
+                        long current = System.currentTimeMillis();
+                        long times=0;
+                        if(time>current){
+                            times=time-current;
+                        }else{
+                            times=current-time;
+                        }
+                        if(countDownTimer!=null){
+                            countDownTimer.cancel();
+                        }
+
+                        countDownTimer = new CountDownTimer(times, 1000) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                String timeFormat = TimeUtil.getTimeFormat(millisUntilFinished/1000);
+                                String[] split = timeFormat.split(",");
+                                if(tvHour!=null){
+                                    tvHour.setText(split[1]);
+                                    tvMinter.setText(split[2]);
+                                    tvSecond.setText(split[3]);
+                                }
+
+                            }
+                            @Override
+                            public void onFinish() {
+                                findGoodsIndex();
+                                if(tvHour!=null){
+                                    tvHour.setText("00");
+                                    tvMinter.setText("00");
+                                    tvSecond.setText("00");
+                                }
+
+                            }
+                        }.start();
+                    }
+                }
+
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
 //                goodShopAdapter.setNewData(object);
                 loadingDialog.setLoadinglevel(++loadinglevel);
@@ -522,7 +604,42 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             }
         });
     }
+    private SpikeDto spikeDto;
+    private int state=1;
+    /**
+     * 秒杀专区
+     */
+    private void findGoodsSedKill() {
+        DataManager.getInstance().findGoodsSedKill(new DefaultSingleObserver<SpikeDto>() {
+            @Override
+            public void onSuccess(SpikeDto object) {
+                if(object!=null&&object.sedKillTimes!=null){
+                    spikeDto=object;
+                    int i=0;
+                    for(SpikeDto skd:object.sedKillTimes){
+                        String star = TimeUtil.formatHourTime(TimeUtil.getStringToDate(skd.startTime));
+                        String end = TimeUtil.formatHourTime(TimeUtil.getStringToDate(skd.endTime));
+                        String cur = TimeUtil.formatHourTime(System.currentTimeMillis());
+                        if(Integer.valueOf(star)<=Integer.valueOf(cur)&&Integer.valueOf(cur)<Integer.valueOf(end)){
+                            state=i;
 
+                        }
+                        i++;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
+                loadingDialog.setLoadinglevel(++loadinglevel);
+            }
+        });
+    }
+
+
+    private CountDownTimer countDownTimer;
     /**
      * 获取首页活动商品
      */

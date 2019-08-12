@@ -100,6 +100,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
         <activity
+            android:name=".view.mainfragment.spike.GgBusinessActivity"
+            android:label="我的港券"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.spike.GgBusinessListActivity"
+            android:label="我的港券"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
             android:name=".view.mainfragment.spike.DistributeActivity"
             android:label="派发"
             android:screenOrientation="portrait"
@@ -125,6 +135,12 @@
             android:label="@string/spike"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.spike.VoucherProductListActivity"
+            android:label="专区列表"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
 
         <activity
             android:name=".view.mainfragment.settings.UserNameActivity"

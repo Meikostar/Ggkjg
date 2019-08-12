@@ -12,6 +12,8 @@ import com.ggkjg.dto.AgreeMentDto;
 import com.ggkjg.dto.AreaDataDto;
 import com.ggkjg.dto.BoundsDataDto;
 import com.ggkjg.dto.BrowerDto;
+import com.ggkjg.dto.BusinessDto;
+import com.ggkjg.dto.BusinessListDto;
 import com.ggkjg.dto.CategoryDto;
 import com.ggkjg.dto.ChooseAddressDto;
 import com.ggkjg.dto.CollectionDto;
@@ -31,6 +33,7 @@ import com.ggkjg.dto.HelpDto;
 import com.ggkjg.dto.HomeActiveIndexDto;
 import com.ggkjg.dto.HomeAdsDto;
 import com.ggkjg.dto.HomeCategoryIndexDto;
+import com.ggkjg.dto.HomeDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
 import com.ggkjg.dto.HotSearchDto;
 import com.ggkjg.dto.LoginDto;
@@ -49,6 +52,7 @@ import com.ggkjg.dto.ShareGoodsDto;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.dto.ShopEvaluateDto;
 import com.ggkjg.dto.ShopEvaluateTotalDto;
+import com.ggkjg.dto.SpikeDto;
 import com.ggkjg.dto.SystemMessageDataDto;
 import com.ggkjg.dto.UserInfoDto;
 import com.ggkjg.dto.SquareDto;
@@ -177,6 +181,28 @@ public class DataManager {
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
+
+    /**
+     * 商学院首页
+     *
+     * @param observer 由调用者传过来的观察者对象
+     */
+    public void findCommercialCollegeIndex(DefaultSingleObserver<BusinessDto> observer) {
+        Single<BusinessDto> observable = retrofitService.findCommercialCollegeIndex()
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+    /**
+     * 商学院首页
+     *
+     * @param observer 由调用者传过来的观察者对象
+     */
+    public void findCommercialCollegeList(DefaultSingleObserver<BusinessListDto> observer) {
+        Single<BusinessListDto> observable = retrofitService.findCommercialCollegeList()
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+
 
     /**
      * 意见与反馈
@@ -405,11 +431,32 @@ public class DataManager {
     /**
      * 获取精选好货
      */
-    public void findGoodsIndex(DefaultSingleObserver<List<HomeGoodsIndexDto>> observer) {
-        Single<List<HomeGoodsIndexDto>> observable = retrofitService.findGoodsIndex()
+    public void findGoodsIndex(DefaultSingleObserver<HomeDto> observer) {
+        Single<HomeDto> observable = retrofitService.findGoodsIndex()
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
+
+    /**
+     * 秒杀
+     */
+    public void findGoodsSedKill(DefaultSingleObserver<SpikeDto> observer) {
+        Single<SpikeDto> observable = retrofitService.findGoodsSedKill()
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+    /**
+     * 秒杀
+     */
+    public void findGoodsSedKill(DefaultSingleObserver<SpikeDto> observer  , int page, int rows) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("page", page + "");
+        map.put("rows", rows + "");
+        Single<SpikeDto> observable = retrofitService.findGoodsSedKill(map)
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+
 
     /**
      * 获取首页活动商品
@@ -545,6 +592,17 @@ public class DataManager {
      */
     public void findShoppingCartList(DefaultSingleObserver<List<ShopCartDto>> observer) {
         Single<List<ShopCartDto>> observable = retrofitService.findShoppingCartList()
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+
+    /**
+     * 购物车列表
+     *
+     * @param observer
+     */
+    public void findMemberConpon(DefaultSingleObserver<List<ShopCartDto>> observer) {
+        Single<List<ShopCartDto>> observable = retrofitService.findMemberConpon()
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }

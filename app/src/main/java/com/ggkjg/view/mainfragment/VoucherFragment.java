@@ -107,7 +107,7 @@ public class VoucherFragment extends BaseFragment {
      */
     private void findShoppingCartList() {
         showLoadDialog();
-        DataManager.getInstance().findShoppingCartList(new DefaultSingleObserver<List<ShopCartDto>>() {
+        DataManager.getInstance().findMemberConpon(new DefaultSingleObserver<List<ShopCartDto>>() {
             @Override
             public void onSuccess(List<ShopCartDto> shopCartDtoList) {
                 dissLoadDialog();

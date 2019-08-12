@@ -39,6 +39,8 @@ import com.ggkjg.view.mainfragment.personalcenter.ShareQRcodeActivity;
 import com.ggkjg.view.mainfragment.personalcenter.UserValidationActivity;
 import com.ggkjg.view.mainfragment.personalcenter.wallet.WalletActivity;
 import com.ggkjg.view.mainfragment.settings.UserInfoSetActivity;
+import com.ggkjg.view.mainfragment.spike.GgBusinessActivity;
+import com.ggkjg.view.mainfragment.spike.MineVoucherActivity;
 import com.ggkjg.view.widgets.QRcodeDialog;
 import com.ggkjg.view.widgets.autoview.ObservableScrollView;
 
@@ -74,8 +76,11 @@ public class MeFragment extends BaseFragment {
     RelativeLayout rl_me_item_wallet;
     @BindView(R.id.rl_me_item_mycc)
     RelativeLayout rl_me_item_mycc;
-    @BindView(R.id.rl_me_item_hkdt)
-    RelativeLayout rl_me_item_hkdt;
+    @BindView(R.id.rl_voucher)
+    RelativeLayout rl_voucher;
+    @BindView(R.id.rl_business)
+    RelativeLayout rl_business;
+
     @BindView(R.id.rl_me_item_reward)
     RelativeLayout rl_me_item_reward;
     @BindView(R.id.rl_me_item_group)
@@ -149,9 +154,16 @@ public class MeFragment extends BaseFragment {
         bindClickEvent(rl_me_item_mycc, () -> {
             gotoActivity(MYCCActivity.class);
         });
-        bindClickEvent(rl_me_item_hkdt, () -> {
-            gotoActivity(HKDTActivity.class);
+        bindClickEvent(rl_voucher, () -> {
+            gotoActivity(MineVoucherActivity.class);
         });
+        bindClickEvent(rl_business, () -> {
+            gotoActivity(GgBusinessActivity.class);
+        });
+
+//        bindClickEvent(rl_voucher, () -> {
+//            gotoActivity(HKDTActivity.class);
+//        });
         bindClickEvent(rl_me_item_reward, () -> {
             gotoActivity(RewardActivity.class);
         });

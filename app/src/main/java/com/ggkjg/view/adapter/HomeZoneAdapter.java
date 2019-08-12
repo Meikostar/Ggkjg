@@ -1,5 +1,6 @@
 package com.ggkjg.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ggkjg.R;
+import com.ggkjg.common.utils.GlideUtils;
+import com.ggkjg.common.utils.TextUtil;
+import com.ggkjg.dto.HomeDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by mykar on 161/4/13.
@@ -21,10 +28,9 @@ import java.util.List;
 public class HomeZoneAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<HomeGoodsIndexDto> data;
+    private List<HomeDto> data;
     private int type = 0;//0 表示默认使用list数据
     private String types;
-
 
 
     private String[] names;
@@ -44,14 +50,14 @@ public class HomeZoneAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<HomeGoodsIndexDto> data) {
-       this.data=data;
+    public void setData(List<HomeDto> data) {
+        this.data = data;
 
     }
 
     @Override
     public int getCount() {
-        return data!=null?data.size():0;
+        return data != null ? data.size() : 0;
     }
 
     @Override
@@ -64,18 +70,36 @@ public class HomeZoneAdapter extends BaseAdapter {
         return i;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
         if (view == null) {
-            holder = new ViewHolder();
-            view = inflater.inflate(R.layout.item_home_zone_view, null);
 
+            view = inflater.inflate(R.layout.item_home_zone_view, null);
+            holder = new ViewHolder(view);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
-
+        GlideUtils.getInstances().loadNormalImg(context,holder.tvItemHomeGoodShopImg,data.get(i).goodsImg);
+        if(TextUtil.isNotEmpty(data.get(i).goodsName)){
+            holder.tvTitle.setText(data.get(i).goodsName);
+        }
+        if(TextUtil.isNotEmpty(data.get(i).goodsName)){
+            holder.tvTitle.setText(data.get(i).goodsName);
+        }
+        if(TextUtil.isNotEmpty(data.get(i).gdPrice)){
+            holder.tvItemHomeGoodShopPrice.setText(data.get(i).gdPrice);
+        }
+        if(data.get(i).isConpon.equals("1")){
+            holder.llZone.setVisibility(View.VISIBLE);
+            if(TextUtil.isNotEmpty(data.get(i).conponPrice)){
+                holder.tv_cout.setText(Double.valueOf(data.get(i).conponPrice).intValue()+"港券");
+            }
+        }else {
+            holder.llZone.setVisibility(View.GONE);
+        }
         // PROFILE_ITEM item = list.get(i);
         return view;
     }
@@ -93,10 +117,22 @@ public class HomeZoneAdapter extends BaseAdapter {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
-    class ViewHolder {
-        LinearLayout llbg;
-        TextView txt_name;
-        ImageView img_icon;
 
+    static
+    class ViewHolder {
+        @BindView(R.id.tv_item_home_good_shop_img)
+        ImageView tvItemHomeGoodShopImg;
+        @BindView(R.id.ll_zone)
+        LinearLayout llZone;
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
+        @BindView(R.id.tv_cout)
+        TextView tv_cout;
+        @BindView(R.id.tv_item_home_good_shop_price)
+        TextView tvItemHomeGoodShopPrice;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

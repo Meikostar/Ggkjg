@@ -6,7 +6,10 @@ public class TimeDataDto {
 
 
     private String time;
+    private long star;
+    private long end;
     private int state;
+    public String id;
 
     public String getTime() {
         return time;

@@ -7,6 +7,8 @@ import com.ggkjg.dto.AdsDataDto;
 import com.ggkjg.dto.AgreeMentDto;
 import com.ggkjg.dto.AreaDataDto;
 import com.ggkjg.dto.BoundsDataDto;
+import com.ggkjg.dto.BusinessDto;
+import com.ggkjg.dto.BusinessListDto;
 import com.ggkjg.dto.CategoryDto;
 import com.ggkjg.dto.ChooseAddressDto;
 import com.ggkjg.dto.CollectionDto;
@@ -26,6 +28,7 @@ import com.ggkjg.dto.HelpDto;
 import com.ggkjg.dto.HomeActiveIndexDto;
 import com.ggkjg.dto.HomeAdsDto;
 import com.ggkjg.dto.HomeCategoryIndexDto;
+import com.ggkjg.dto.HomeDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
 import com.ggkjg.dto.HotSearchDto;
 import com.ggkjg.dto.LoginDto;
@@ -44,6 +47,7 @@ import com.ggkjg.dto.ShareGoodsDto;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.dto.ShopEvaluateDto;
 import com.ggkjg.dto.ShopEvaluateTotalDto;
+import com.ggkjg.dto.SpikeDto;
 import com.ggkjg.dto.SystemMessageDataDto;
 import com.ggkjg.dto.UserInfoDto;
 import com.ggkjg.dto.SquareDto;
@@ -113,6 +117,19 @@ public interface RetrofitService {
      */
     @POST("silent/member/findHelpCenter")
     Single<HttpResult<HelpDto>> helpCenter(@Query("page") int page, @Query("rows") int rows);
+
+
+    /**
+     * 商学院首页
+     */
+    @POST("silent/store/findCommercialCollegeIndex")
+    Single<HttpResult<BusinessDto>> findCommercialCollegeIndex();
+
+    /**
+     * 商学院列表
+     */
+    @POST("silent/store/findCommercialCollegeList")
+    Single<HttpResult<BusinessListDto>> findCommercialCollegeList();
 
     /**
      * 获取反馈类型
@@ -258,7 +275,19 @@ public interface RetrofitService {
      * 获取精选好货
      */
     @POST("silent/store/findGoodsIndex")
-    Single<HttpResult<List<HomeGoodsIndexDto>>> findGoodsIndex();
+    Single<HttpResult<HomeDto>> findGoodsIndex();
+
+    /**
+     * 获取精选好货
+     */
+    @POST("silent/store/findGoodsSedKill")
+    Single<HttpResult<SpikeDto>> findGoodsSedKill();
+
+    /**
+     * 获取精选好货
+     */
+    @POST("silent/store/findGoodsSedKill")
+    Single<HttpResult<SpikeDto>> findGoodsSedKill(@QueryMap HashMap<String, String> map);
 
     /**
      * 获取首页活动商品
@@ -351,6 +380,12 @@ public interface RetrofitService {
      */
     @POST("noSilent/store/findShoppingCartList")
     Single<HttpResult<List<ShopCartDto>>> findShoppingCartList();
+
+    /**
+     * 购物车列表
+     */
+    @POST("noSilent/member/findMemberConpon")
+    Single<HttpResult<List<ShopCartDto>>> findMemberConpon();
 
     /**
      * 删除购物车

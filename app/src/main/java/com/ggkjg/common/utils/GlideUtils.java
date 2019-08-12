@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ggkjg.R;
+import com.ggkjg.base.BuildConfig;
 import com.ggkjg.view.widgets.CircleTransform;
 import com.ggkjg.view.widgets.RoundCornerTransform;
 
@@ -93,7 +94,7 @@ public class GlideUtils {
      */
     public void loadNormalImg(Context context, ImageView imageView, Object imgUrl) {
         try {
-            Glide.with(context).asBitmap().load(imgUrl).apply(new RequestOptions()
+            Glide.with(context).asBitmap().load(imgUrl instanceof String ?(((String)imgUrl).contains("http")?imgUrl: BuildConfig.BASE_IMAGE_URL +(String)imgUrl):imgUrl).apply(new RequestOptions()
                     .placeholder(R.mipmap.img_default_1) // 预加载图片
                     .error(R.mipmap.img_default_1) // 加载失败显示图片
                     .priority(Priority.LOW)) // 优先级

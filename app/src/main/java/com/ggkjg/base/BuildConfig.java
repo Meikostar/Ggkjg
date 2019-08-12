@@ -4,13 +4,19 @@ public class BuildConfig {
     /**
      * 请求http基地址
      */
-    public static final String BASE_URL = "http://47.107.143.211:8080/hkonline/";
+//    public static final String BASE_URL = "http://47.107.143.211:8080/hkonline/";
+    /**
+     * 调试
+     */
+    public static final String BASE_URL = "http://b.ng.2aa6.com:8080/hkonline/";
+//    public static final String BASE_URL = "http://a.smg.kingstang.com:8080/hkonline/";
 
     /**
      * 图片的基本地址
      */
     //public static final String BASE_IMAGE_URL = "http://47.107.143.211:8080/hkonline";
-    public static String BASE_IMAGE_URL = "http://47.107.143.211:80/";
+    public static String BASE_IMAGE_URL = "http://app.ggkjsz.com";
+//    public static String BASE_IMAGE_URL = "http://47.107.143.211:80/";
     /**
      * Get请求图片验证码地址
      */
