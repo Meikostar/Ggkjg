@@ -3,11 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/my_color_white">
+    <include layout="@layout/common_refresh_recyclerview_layout" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recy_spike_cart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"/>
 
 </RelativeLayout>

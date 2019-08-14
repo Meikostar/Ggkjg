@@ -16,6 +16,7 @@ import com.ggkjg.dto.CommodityDetailDto;
 import com.ggkjg.dto.CommodityDetailListDto;
 import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.DataPageDto;
+import com.ggkjg.dto.DistributeDto;
 import com.ggkjg.dto.FavoriteStateDto;
 import com.ggkjg.dto.FeedBackTypeDto;
 import com.ggkjg.dto.GoodsColorAndSpecDto;
@@ -54,6 +55,7 @@ import com.ggkjg.dto.SquareDto;
 import com.ggkjg.dto.StoreCategoryDto;
 import com.ggkjg.dto.CartAtrrDto;
 import com.ggkjg.dto.BrowerDto;
+import com.ggkjg.dto.VoucherDto;
 import com.ggkjg.http.response.HttpResult;
 
 import java.util.HashMap;
@@ -124,6 +126,26 @@ public interface RetrofitService {
      */
     @POST("silent/store/findCommercialCollegeIndex")
     Single<HttpResult<BusinessDto>> findCommercialCollegeIndex();
+
+
+    /**
+     * 商学院首页
+     */
+    @POST("noSilent/member/findMemberConponIsPayout")
+    Single<HttpResult<List<VoucherDto>>> findMemberConponIsPayout();
+
+    /**
+     * 商学院首页
+     */
+    @POST("noSilent/member/payoutConpon")
+    Single<HttpResult<Object>> payoutConpon(@Query("memberIds") String memberIds, @Query("conponId") String conponId);
+
+
+    /**
+     * 获取可用优惠券列表
+     */
+    @POST("noSilent/member/findMemberConpon")
+    Single<HttpResult<List<VoucherDto>>> findMemberConpon(@Query("conponStatus") long conponStatus);
 
     /**
      * 商学院列表
@@ -381,11 +403,8 @@ public interface RetrofitService {
     @POST("noSilent/store/findShoppingCartList")
     Single<HttpResult<List<ShopCartDto>>> findShoppingCartList();
 
-    /**
-     * 购物车列表
-     */
-    @POST("noSilent/member/findMemberConpon")
-    Single<HttpResult<List<ShopCartDto>>> findMemberConpon();
+
+
 
     /**
      * 删除购物车

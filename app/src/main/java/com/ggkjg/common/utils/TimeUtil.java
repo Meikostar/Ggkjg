@@ -238,6 +238,11 @@ public class TimeUtil {
         SimpleDateFormat format = new SimpleDateFormat("mm.ss");
         return format.format(new Date(time));
     }
+    public static String formatYearTimes(long time){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        return format.format(new Date(time));
+    }
+
     public static String formatHourTime(long time){
         SimpleDateFormat format = new SimpleDateFormat("HH");
         return format.format(new Date(time));

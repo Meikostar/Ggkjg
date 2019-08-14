@@ -141,10 +141,13 @@ public class MineVoucherActivity extends BaseActivity {
     private void initFragMents(int poistion) {
         list_productfragment = new ArrayList<>();
         VoucherFragment spikeFragment = new VoucherFragment();
+        spikeFragment.setConponStatus(0);
         list_productfragment.add(spikeFragment);
         VoucherFragment spikeFragment1 = new VoucherFragment();
+        spikeFragment1.setConponStatus(2);
         list_productfragment.add(spikeFragment1);
         VoucherFragment spikeFragment2 = new VoucherFragment();
+        spikeFragment2.setConponStatus(4);
         list_productfragment.add(spikeFragment2);
 
         mainViewPagerAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), list_productfragment);

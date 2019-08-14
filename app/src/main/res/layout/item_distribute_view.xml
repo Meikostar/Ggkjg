@@ -24,10 +24,11 @@
             app:drawablechoose="@drawable/distribute_choose"
             app:drawables="@drawable/distbute_unchoose"
             app:canNoClick="false"
-            app:isCheckeds="true"
+            app:isCheckeds="false"
 
             />
         <ImageView
+            android:id="@+id/iv_img"
             android:layout_marginLeft="15dp"
             android:layout_width="@dimen/bj_44dp"
             android:layout_height="@dimen/bj_44dp"

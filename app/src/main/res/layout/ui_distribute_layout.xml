@@ -8,17 +8,21 @@
 
     <include layout="@layout/action_bar" />
     <RelativeLayout
+        android:layout_marginLeft="@dimen/bj_28dp"
+        android:layout_marginRight="@dimen/bj_28dp"
         android:background="@drawable/bg_distribute"
         android:layout_gravity="center_horizontal"
-        android:layout_width="324dp"
+        android:layout_width="match_parent"
         android:layout_height="32dp"
         android:orientation="horizontal">
         <com.ggkjg.view.widgets.ClearEditText
+            android:paddingLeft="@dimen/bj_18dp"
             android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="@null"
             android:singleLine="true"
+            android:focusable="false"
             android:textColor="@color/my_color_333333"
             android:textSize="14sp" />
         <LinearLayout
@@ -121,31 +125,34 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bj_45dp">
+
         <com.ggkjg.view.widgets.MCheckBox
-            android:layout_marginLeft="10dp"
-            android:id="@+id/mcb_choose"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
-            android:padding="3dp"
+            android:id="@+id/mcb_chos"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:clickable="false"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:padding="7dp"
+            app:canNoClick="false"
             app:drawablechoose="@drawable/distribute_choose"
             app:drawables="@drawable/distbute_unchoose"
-            app:canNoClick="false"
-            app:isCheckeds="true"
+            app:isCheckeds="false"
 
             />
         <TextView
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="1dp"
             android:singleLine="true"
             android:text="全选"
             android:textColor="@color/my_color_333333"
             android:textSize="@dimen/wz_15sp" />
         <TextView
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:id="@+id/tv_send"
             android:layout_width="@dimen/bj_120dp"
             android:layout_height="@dimen/bj_45dp"

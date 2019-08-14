@@ -16,6 +16,7 @@ import com.ggkjg.view.adapter.FragmentViewPagerAdapter;
 import com.ggkjg.view.adapter.TestAdapter;
 import com.ggkjg.view.mainfragment.MangerVoucherFragment;
 import com.ggkjg.view.mainfragment.VoucherFragment;
+import com.ggkjg.view.mainfragment.VoucherFragments;
 import com.ggkjg.view.widgets.NoScrollViewPager;
 import com.ggkjg.view.widgets.autoview.ActionbarView;
 
@@ -107,7 +108,7 @@ public class MangerVoucherActivity extends BaseActivity {
                 lineSend.setVisibility(View.VISIBLE);
                 lineUser.setVisibility(View.INVISIBLE);
                 if (isShow) {
-                    viewpagerMain.setCurrentItem(0, false);
+                    viewpagerMain.setCurrentItem(0, true);
                 }
 
                 break;
@@ -118,7 +119,7 @@ public class MangerVoucherActivity extends BaseActivity {
                 lineSend.setVisibility(View.INVISIBLE);
 
                 if (isShow) {
-                    viewpagerMain.setCurrentItem(1, false);
+                    viewpagerMain.setCurrentItem(1, true);
                 }
                 break;
 
@@ -130,7 +131,7 @@ public class MangerVoucherActivity extends BaseActivity {
 
     private void initFragMents(int poistion) {
         list_productfragment = new ArrayList<>();
-        VoucherFragment spikeFragment = new VoucherFragment();
+        VoucherFragments spikeFragment = new VoucherFragments();
         list_productfragment.add(spikeFragment);
         MangerVoucherFragment spikeFragment1 = new MangerVoucherFragment();
         list_productfragment.add(spikeFragment1);

@@ -71,10 +71,13 @@ public class MangerVoucherFragment extends BaseFragment {
     private void initFragMents(int poistion) {
         list_productfragment = new ArrayList<>();
         VoucherFragment spikeFragment = new VoucherFragment();
+        spikeFragment.setConponStatus(0);
         list_productfragment.add(spikeFragment);
         VoucherFragment spikeFragment1 = new VoucherFragment();
+        spikeFragment1.setConponStatus(2);
         list_productfragment.add(spikeFragment1);
         VoucherFragment spikeFragment2 = new VoucherFragment();
+        spikeFragment2.setConponStatus(4);
         list_productfragment.add(spikeFragment2);
 
         mainViewPagerAdapter = new FragmentViewPagerAdapter(getChildFragmentManager(), list_productfragment);
@@ -123,13 +126,7 @@ public class MangerVoucherFragment extends BaseFragment {
         bindClickEvent(tvNoUser, () -> {
             selection(2, true);
         });
-        shopSpikeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-
-            }
-        });
 
 
     }
@@ -141,7 +138,7 @@ public class MangerVoucherFragment extends BaseFragment {
                 tvUser.setTextColor(getResources().getColor(R.color.my_color_333333));
                 tvNoUser.setTextColor(getResources().getColor(R.color.my_color_333333));
                 if (isShow) {
-                    viewpagerMain.setCurrentItem(0, false);
+                    viewpagerMain.setCurrentItem(0, true);
                 }
 
                 break;
@@ -151,7 +148,7 @@ public class MangerVoucherFragment extends BaseFragment {
                 tvNoUser.setTextColor(getResources().getColor(R.color.my_color_333333));
 
                 if (isShow) {
-                    viewpagerMain.setCurrentItem(1, false);
+                    viewpagerMain.setCurrentItem(1, true);
                 }
                 break;
             case 2:
@@ -159,7 +156,7 @@ public class MangerVoucherFragment extends BaseFragment {
                 tvUser.setTextColor(getResources().getColor(R.color.my_color_333333));
                 tvNoUser.setTextColor(getResources().getColor(R.color.my_color_blue));
                 if (isShow) {
-                    viewpagerMain.setCurrentItem(2, false);
+                    viewpagerMain.setCurrentItem(2, true);
                 }
 
                 break;

@@ -21,6 +21,7 @@ import com.ggkjg.dto.CommodityDetailDto;
 import com.ggkjg.dto.CommodityDetailListDto;
 import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.DataPageDto;
+import com.ggkjg.dto.DistributeDto;
 import com.ggkjg.dto.FavoriteStateDto;
 import com.ggkjg.dto.FeedBackTypeDto;
 import com.ggkjg.dto.GoodsColorAndSpecDto;
@@ -58,6 +59,7 @@ import com.ggkjg.dto.UserInfoDto;
 import com.ggkjg.dto.SquareDto;
 import com.ggkjg.dto.StoreCategoryDto;
 import com.ggkjg.dto.CartAtrrDto;
+import com.ggkjg.dto.VoucherDto;
 import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.http.RetrofitHelper;
@@ -192,6 +194,17 @@ public class DataManager {
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
+    /**
+     * 商学院首页
+     *
+     * @param observer 由调用者传过来的观察者对象
+     */
+    public void findMemberConponIsPayout(DefaultSingleObserver<List<VoucherDto>> observer) {
+        Single<List<VoucherDto>> observable = retrofitService.findMemberConponIsPayout()
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+
     /**
      * 商学院首页
      *
@@ -405,7 +418,16 @@ public class DataManager {
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
+    /**
+     * 获取团队信息
+     */
+    public void findMyTeams(DefaultSingleObserver<DataPageDto<RecommendDto>> observer,HashMap<String, String> map) {
 
+
+        Single<DataPageDto<RecommendDto>> observable = retrofitService.findMyTeam(map)
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
     /**
      * 会员等级申请
      */
@@ -596,16 +618,30 @@ public class DataManager {
         subscribe(observable, observer);
     }
 
+
+
     /**
-     * 购物车列表
+     *可用优惠券
      *
      * @param observer
      */
-    public void findMemberConpon(DefaultSingleObserver<List<ShopCartDto>> observer) {
-        Single<List<ShopCartDto>> observable = retrofitService.findMemberConpon()
+    public void findMemberConpon(DefaultSingleObserver<List<VoucherDto>> observer,long conponStatus) {
+        Single<List<VoucherDto>> observable = retrofitService.findMemberConpon(conponStatus)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
+
+    /**
+     *可用优惠券
+     *
+     * @param observer
+     */
+    public void payoutConpon(DefaultSingleObserver<Object> observer,String memberIds,String conponId) {
+        Single<Object> observable = retrofitService.payoutConpon(memberIds,conponId)
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+
 
     /**
      * 删除购物车

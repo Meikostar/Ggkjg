@@ -10,6 +10,7 @@ public class RecommendDto {
     String area;
     String id;
     String pushNum;
+    public boolean isChoose;
 
     public String getHeadImg() {
         return headImg;

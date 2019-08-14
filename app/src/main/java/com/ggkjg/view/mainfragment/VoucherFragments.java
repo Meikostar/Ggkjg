@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseFragment;
-import com.ggkjg.dto.BusinessDto;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.dto.VoucherDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
-import com.ggkjg.view.adapter.ShopSpikeAdapter;
+import com.ggkjg.view.adapter.ShopManVoucherAdapter;
 import com.ggkjg.view.adapter.ShopVoucherAdapter;
 
 import java.util.ArrayList;
@@ -32,16 +31,15 @@ import butterknife.Unbinder;
  * Created by dahai on 2019/01/18.
  */
 
-public class VoucherFragment extends BaseFragment {
-    private static final String TAG = VoucherFragment.class.getSimpleName();
+public class VoucherFragments extends BaseFragment {
+    private static final String TAG = VoucherFragments.class.getSimpleName();
 
     @BindView(R.id.recy_spike_cart)
     RecyclerView recySpikeCart;
     Unbinder unbinder;
-    private ShopVoucherAdapter shopSpikeAdapter;
+    private ShopManVoucherAdapter shopSpikeAdapter;
 
 
-    private Set<ShopCartDto> selectList = new HashSet<>();//被选中的资源
 
     @Override
     protected int getLayoutId() {
@@ -60,16 +58,33 @@ public class VoucherFragment extends BaseFragment {
 
 
     }
-   private List<ShopCartDto> datas=new ArrayList<>();
+
     @Override
     protected void initData() {
-        shopSpikeAdapter = new ShopVoucherAdapter(null);
+        shopSpikeAdapter = new ShopManVoucherAdapter(null);
         recySpikeCart.setAdapter(shopSpikeAdapter);
-        shopSpikeAdapter.setState(conponStatus);
 
 
 
 
+    }
+    public void getData(){
+        DataManager.getInstance().findMemberConponIsPayout(new DefaultSingleObserver<List<VoucherDto>>() {
+            @Override
+            public void onSuccess(List<VoucherDto> helpDto) {
+                if(helpDto!=null){
+                    shopSpikeAdapter.setNewData(helpDto);
+                }
+                dissLoadDialog();
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        });
     }
 
     @Override
@@ -78,15 +93,11 @@ public class VoucherFragment extends BaseFragment {
         if (!hidden) {
         }
     }
-    private long conponStatus;
-    public void setConponStatus(int conponStatus){
-        this.conponStatus=conponStatus;
-    }
+
     @Override
     public void onResume() {
-        selectList.clear();
-        findShoppingCartList();
 
+        getData();
         super.onResume();
     }
 
@@ -105,28 +116,7 @@ public class VoucherFragment extends BaseFragment {
     }
 
 
-    /**
-     * 获取购物车列表
-     */
-    private void findShoppingCartList() {
-        showLoadDialog();
-        DataManager.getInstance().findMemberConpon(new DefaultSingleObserver<List<VoucherDto>>() {
-            @Override
-            public void onSuccess(List<VoucherDto> shopCartDtoList) {
-                dissLoadDialog();
-               if(shopCartDtoList!=null&&shopCartDtoList.size()>0){
 
-                   shopSpikeAdapter.setNewData(shopCartDtoList);
-               }
-
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                dissLoadDialog();
-            }
-        },conponStatus);
-    }
 
 
     @Override
