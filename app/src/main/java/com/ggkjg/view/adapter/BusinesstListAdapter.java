@@ -1,6 +1,9 @@
 package com.ggkjg.view.adapter;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -11,6 +14,7 @@ import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.BusinessDto;
 import com.ggkjg.dto.BusinessListDto;
 import com.ggkjg.dto.CommodityDetailInfoDto;
+import com.ggkjg.view.mainfragment.spike.ArticleActivity;
 
 import java.util.List;
 
@@ -25,9 +29,6 @@ public class BusinesstListAdapter extends BaseQuickAdapter<BusinessListDto, Base
         super(R.layout.item_business_list_layout);
     }
 
-    public BusinesstListAdapter(@Nullable List<BusinessListDto> data) {
-        super(R.layout.item_product_list_layout, data);
-    }
 
     @Override
     protected void convert(BaseViewHolder helper, BusinessListDto item) {
@@ -36,10 +37,18 @@ public class BusinesstListAdapter extends BaseQuickAdapter<BusinessListDto, Base
             if(TextUtil.isNotEmpty(item.cmsTitle)){
                 helper.setText(R.id.tv_title, item.cmsTitle);
             }
-            if(TextUtil.isNotEmpty(item.createTime)){
-                helper.setText(R.id.tv_content, item.createTime);
+            if(TextUtil.isNotEmpty(item.createDate)){
+                helper.setText(R.id.tv_content, item.createDate);
             }
-
+            RelativeLayout view = helper.getView(R.id.ll_bg);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, ArticleActivity.class);
+                    intent.putExtra("id",item.id);
+                    mContext.startActivity(intent);
+                }
+            });
             String imgUrl = BuildConfig.BASE_IMAGE_URL + item.cmsMainImg;
             GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_item_product_img), imgUrl, R.mipmap.img_default_6);
         }

@@ -24,12 +24,12 @@
 
         <TextView
             android:id="@+id/tv_gold_coin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/bj_17dp"
+            android:layout_height="@dimen/bj_17dp"
             android:layout_below="@id/tv_bean_title"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/bj_5dp"
-            android:drawableLeft="@mipmap/icon_gold_coin"
+            android:drawableLeft="@mipmap/home_gold"
             android:drawablePadding="@dimen/bj_5dp"
             android:gravity="center"
             android:text="0"

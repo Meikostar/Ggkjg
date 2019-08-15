@@ -10,13 +10,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.Constants;
+import com.ggkjg.common.type.TransferType;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.TextUtil;
+import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.BusinessDto;
 import com.ggkjg.dto.BusinessListDto;
 import com.ggkjg.http.manager.DataManager;
@@ -27,6 +30,7 @@ import com.ggkjg.view.adapter.LoopViewListAdapter;
 import com.ggkjg.view.widgets.ClearEditText;
 import com.ggkjg.view.widgets.autoview.ActionbarView;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,8 +40,7 @@ public class GgBusinessListActivity extends BaseActivity {
     @BindView(R.id.recy_view)
     RecyclerView recyclerView;
     BusinesstListAdapter mAdapter;
-    @BindView(R.id.custom_action_bar)
-    ActionbarView customActionBar;
+
     @BindView(R.id.vp_container)
     ViewPager vpContainer;
     @BindView(R.id.et_search)
@@ -50,8 +53,15 @@ public class GgBusinessListActivity extends BaseActivity {
     ImageView actionbarBack;
     @BindView(R.id.rl_vp_container)
     RelativeLayout rlVpContainer;
+    @BindView(R.id.tv_search)
+    TextView tv_search;
+    @BindView(R.id.ll_bg)
+    LinearLayout ll_bg;
+
+
     private int currentPage = Constants.PAGE_NUM;
     private String search;
+    private String id;
     @Override
     public void initListener() {
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -63,13 +73,34 @@ public class GgBusinessListActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                if(TextUtil.isNotEmpty(charSequence.toString())){
+                   ll_bg.setVisibility(View.GONE);
                  search=charSequence.toString();
-                }
+                }else {
+                   ll_bg.setVisibility(View.VISIBLE);
+                   search="";
+                   loadData();
+               }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        actionbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        tv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TextUtil.isNotEmpty(search)){
+                    loadData();
+                }else {
+                    ToastUtil.showToast("请输入搜索内容");
+                }
             }
         });
     }
@@ -81,8 +112,8 @@ public class GgBusinessListActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        actionbar.setImgStatusBar(R.color.my_color_white);
-        StatusBarUtils.StatusBarLightMode(this);
+
+        id=getIntent().getStringExtra("id");
         initAdapter();
 
 
@@ -115,7 +146,7 @@ public class GgBusinessListActivity extends BaseActivity {
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        mAdapter = new BusinesstListAdapter(null);
+        mAdapter = new BusinesstListAdapter();
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -128,6 +159,12 @@ public class GgBusinessListActivity extends BaseActivity {
 
     private void loadData() {
         showLoadDialog();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        if(TextUtil.isNotEmpty(search)){
+            map.put("cmsTitle", search);
+        }
+
         DataManager.getInstance().findCommercialCollegeList(new DefaultSingleObserver<BusinessListDto>() {
             @Override
             public void onSuccess(BusinessListDto helpDto) {
@@ -147,7 +184,7 @@ public class GgBusinessListActivity extends BaseActivity {
                 dissLoadDialog();
 
             }
-        });
+        },map);
     }
 
 

@@ -1,5 +1,7 @@
 package com.ggkjg;
 
+import android.util.Log;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,6 +14,13 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+
+        changeTime("20180801");
+    }
+    public String changeTime(String time){
+        String year = time.substring(0, 4);
+        String month = time.substring(5, 7);
+        String times=year+month;
+       return times;
     }
 }

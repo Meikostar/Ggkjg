@@ -8,6 +8,8 @@
 
     <include layout="@layout/action_bar" />
     <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_marginLeft="@dimen/bj_28dp"
         android:layout_marginRight="@dimen/bj_28dp"
         android:background="@drawable/bg_distribute"
@@ -22,10 +24,10 @@
             android:layout_height="32dp"
             android:background="@null"
             android:singleLine="true"
-            android:focusable="false"
             android:textColor="@color/my_color_333333"
             android:textSize="14sp" />
         <LinearLayout
+            android:id="@+id/ll_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -119,50 +121,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-    <LinearLayout
+    <com.ggkjg.view.widgets.autoview.ObservableScrollView
 
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:id="@+id/sv_confirm_order"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bj_45dp">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
-        <com.ggkjg.view.widgets.MCheckBox
-            android:id="@+id/mcb_chos"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:clickable="true"
-            android:padding="7dp"
-            app:canNoClick="false"
-            app:drawablechoose="@drawable/distribute_choose"
-            app:drawables="@drawable/distbute_unchoose"
-            app:isCheckeds="false"
+        <LinearLayout
 
-            />
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
-            android:singleLine="true"
-            android:text="全选"
-            android:textColor="@color/my_color_333333"
-            android:textSize="@dimen/wz_15sp" />
-        <TextView
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:id="@+id/tv_send"
-            android:layout_width="@dimen/bj_120dp"
-            android:layout_height="@dimen/bj_45dp"
-            android:background="@color/my_color_blue"
-            android:layout_marginLeft="5dp"
-            android:singleLine="true"
-            android:gravity="center"
-            android:text="派发"
-            android:textColor="@color/my_color_white"
-            android:textSize="@dimen/wz_16sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bj_45dp">
 
-    </LinearLayout>
+            <com.ggkjg.view.widgets.MCheckBox
+
+                android:id="@+id/mcb_chos"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:clickable="true"
+                android:padding="7dp"
+                app:canNoClick="false"
+                app:drawablechoose="@drawable/distribute_choose"
+                app:drawables="@drawable/distbute_unchoose"
+                app:isCheckeds="false"
+
+                />
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:singleLine="true"
+                android:text="全选"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_15sp" />
+            <Button
+                android:id="@+id/tv_send"
+                android:layout_width="@dimen/bj_120dp"
+                android:layout_height="@dimen/bj_45dp"
+                android:background="@color/my_color_blue"
+                android:layout_marginLeft="5dp"
+                android:singleLine="true"
+                android:gravity="center"
+                android:text="派发"
+                android:textColor="@color/my_color_white"
+                android:textSize="@dimen/wz_16sp" />
+
+        </LinearLayout>
+
+    </com.ggkjg.view.widgets.autoview.ObservableScrollView>
+
+
 </LinearLayout>

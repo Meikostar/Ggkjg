@@ -11,10 +11,12 @@ public class CommodityDetailInfoDto implements Serializable {
     private long id;
     private String barCode;
     private String goodsSn;
+    public String isConpon;
     private String productNo;
     private String goodsName;
     private String goodsImg;
     private String marketPrice;
+    public String conponPrice;
     private String gdPrice;
     private long oneCatsId;
     private long twoCatsId;
@@ -36,7 +38,10 @@ public class CommodityDetailInfoDto implements Serializable {
     private String freight;
     private String freightType;
     private String isSales;
-    private String salesTime;
+    public String salesTime;
+    public String startTime;
+    public String activePrice;
+    public String endTime;
     private String createTime;
     private String modifyTime;
     private String enableFlag;

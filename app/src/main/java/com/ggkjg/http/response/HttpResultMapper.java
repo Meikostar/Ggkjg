@@ -36,9 +36,9 @@ public final class HttpResultMapper {
             if (httpResult.getStatus() != 200 && httpResult.getStatus() != 1) {
                 throw new ApiException(httpRequest, httpResult.getStatus(), httpResult.getMsg());
             }
-//            if (httpResult.getData() == null) {
-//                throw new ApiException(httpRequest, 200, "没有有效的数据");
-//            }
+            if (httpResult.getData() == null) {
+                throw new ApiException(httpRequest, 200, "ok");
+            }
             return httpResult.getData();
         }
     }

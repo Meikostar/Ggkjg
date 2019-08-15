@@ -4,6 +4,7 @@
     android:gravity="center_horizontal"
     android:layout_height="wrap_content"
     android:background="@color/my_color_white"
+    android:id="@+id/ll_bg"
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="@dimen/bj_96dp"
@@ -36,7 +37,7 @@
                 android:textColor="#ffff33"
                 android:textSize="@dimen/wz_9sp"
                 android:layout_width="wrap_content"
-                android:text="477港券"
+                android:text="港券"
                 android:layout_height="@dimen/bj_20dp"/>
         </LinearLayout>
 

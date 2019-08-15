@@ -758,4 +758,6 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 }

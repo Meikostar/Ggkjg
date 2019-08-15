@@ -31,7 +31,7 @@ public class PayOrderAdapter extends BaseQuickAdapter<PayOrderDto, BaseViewHolde
         }
         switch (item.getPaymentCode()) {
             case "gd":
-                helper.setImageResource(R.id.img_pay_logo, R.mipmap.icon_gold_coin);
+                helper.setImageResource(R.id.img_pay_logo, R.mipmap.home_gold);
                 break;
             case "wx":
                 helper.setImageResource(R.id.img_pay_logo, R.mipmap.icon_pay_wx);

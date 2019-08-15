@@ -23,6 +23,7 @@ import com.ggkjg.dto.BusinessListDto;
 import com.ggkjg.view.adapter.baseadapter.BaseLoopPagerAdapter;
 import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 import com.ggkjg.view.mainfragment.shop.ShopProductListActivity;
+import com.ggkjg.view.mainfragment.spike.ArticleActivity;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
@@ -124,7 +125,9 @@ public class LoopViewListAdapter extends BaseLoopPagerAdapter {
             }
         }
         bindClickEvent(holder.ivBanner, () -> {
-
+            Intent intent = new Intent(activity, ArticleActivity.class);
+            intent.putExtra("id",slidersDto.id);
+            activity.startActivity(intent);
         });
         return convertView;
     }

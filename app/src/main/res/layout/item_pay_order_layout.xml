@@ -11,7 +11,7 @@
         android:layout_width="@dimen/bj_15dp"
         android:layout_height="@dimen/bj_15dp"
         android:layout_centerVertical="true"
-        android:src="@mipmap/icon_gold_coin" />
+        android:src="@mipmap/home_gold" />
 
     <TextView
         android:id="@+id/tv_title"

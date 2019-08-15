@@ -17,11 +17,12 @@
              android:layout_height="40dp">
 
              <TextView
+                 android:id="@+id/tv_title"
                  android:layout_width="wrap_content"
                  android:layout_height="match_parent"
                  android:layout_centerHorizontal="true"
                  android:gravity="center"
-                 android:text="发货与到货时间"
+                 android:text="港券"
                  android:textColor="@color/my_color_333333"
                  android:textSize="15sp" />
 
@@ -45,7 +46,7 @@
              android:id="@+id/recy_voucher"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:focusable="true"/>
+             android:focusable="false"/>
          <Button
              android:layout_alignParentBottom="true"
              android:id="@+id/bt_sure"

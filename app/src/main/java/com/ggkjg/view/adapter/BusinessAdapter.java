@@ -15,6 +15,7 @@ import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.BusinessDto;
 import com.ggkjg.dto.GoodsPushRowsDto;
 import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
+import com.ggkjg.view.mainfragment.spike.GgBusinessListActivity;
 
 import java.util.List;
 
@@ -41,15 +42,11 @@ public class BusinessAdapter extends BaseQuickAdapter<BusinessDto, BaseViewHolde
             bg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    if(TextUtil.isNotEmpty(item.url)){
-//                        Intent intent = new Intent(mContext, clz);
-//                        intent.putExtra("url",item.url);
-//                        mContext.startActivity(intent);
-//                    }else {
-//                        Intent intent = new Intent(mContext, clz);
-//                        intent.putExtra("url","https://www.huya.com/g/lol");
-//                        mContext.startActivity(intent);
-//                    }
+                    if(TextUtil.isNotEmpty(item.id)){
+                        Intent intent = new Intent(mContext, GgBusinessListActivity.class);
+                        intent.putExtra("id",item.id);
+                        mContext.startActivity(intent);
+                    }
 
                 }
             });

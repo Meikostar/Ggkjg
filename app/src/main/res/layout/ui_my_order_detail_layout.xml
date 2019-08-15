@@ -177,8 +177,8 @@
 
                     <TextView
                         android:id="@+id/tv_detail_pay_money"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/bj_17dp"
+                        android:layout_height="@dimen/bj_17dp"
                         android:textColor="@color/my_color_d60029"
                         android:textSize="@dimen/wz_15sp"
                         android:drawableLeft="@mipmap/home_gold"

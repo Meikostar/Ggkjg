@@ -65,10 +65,8 @@ greendao {
 //    all*.exclude group: 'com.android.support', module: 'support-v4'
 //}
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     librarys.each { k, v -> implementation v }
-
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -86,36 +84,34 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     // add library for greendao
     implementation 'org.greenrobot:greendao:3.2.2'
-//    glide
+    //    glide
     implementation 'com.github.bumptech.glide:glide:4.3.1'
-//  ID注解获取 butterknife
+    //  ID注解获取 butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-//    标签布局
+    //    标签布局
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     //adapter 适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
-
     //加载libs *.jar
-    implementation files('libs/alipaySdk-20180403.jar')
     implementation files('libs/fastjson-1.2.54.jar')
     //产品规格控件
     implementation 'com.github.donkingliang:LabelsView:1.4.6'
     //扫一扫
     implementation 'com.github.yuzhiqiang1993:zxing:2.2.5'
     //圆角ImageView
-    implementation ('com.github.SheHuan:NiceImageView:1.0.5'){
+    implementation('com.github.SheHuan:NiceImageView:1.0.5') {
         exclude group: 'com.android.support'
     }
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     //微信分享和授权
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
-//    implementation 'com.github.donkingliang:ImageSelector:1.6.8'
-//    implementation 'com.yuyh.imgsel:library:2.0.6'
+    //    implementation 'com.github.donkingliang:ImageSelector:1.6.8'
+    //    implementation 'com.yuyh.imgsel:library:2.0.6'
     implementation project(path: ':imagepicker')
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-
     implementation 'com.facebook.stetho:stetho:1.3.1'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+    implementation files('libs/alipaySdk-20180403.jar')
 }

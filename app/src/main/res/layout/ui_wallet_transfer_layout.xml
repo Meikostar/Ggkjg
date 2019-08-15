@@ -77,7 +77,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/bj_10dp"
             android:layout_toRightOf="@id/tv_all_coin_title"
-            android:src="@mipmap/icon_gold_coin" />
+            android:src="@mipmap/home_gold" />
 
         <TextView
             android:id="@+id/tv_count_coin"

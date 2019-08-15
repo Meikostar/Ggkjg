@@ -13,6 +13,7 @@ import com.ggkjg.R;
 import com.ggkjg.base.BaseFragment;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.DataPageDto;
 import com.ggkjg.dto.DistributeDto;
 import com.ggkjg.dto.RecommendDto;
@@ -57,6 +58,12 @@ public class DistributeFragment extends BaseFragment {
     private String column="createTime";
     public void setColumn(String column){
         this.column=column;
+    }
+    private String mobileNo="";
+    public void setSearch(String content){
+        mobileNo=content;
+        findMyTeam(true);
+
     }
 
     public void setChooseAll(int state){
@@ -150,6 +157,21 @@ public class DistributeFragment extends BaseFragment {
             }
         });
     }
+
+    public boolean isChooseAll(){
+        int i=0;
+        List<RecommendDto> data = shopSpikeAdapter.getData();
+        for(RecommendDto dto:data){
+            if(dto.isChoose){
+                ++i;
+            }
+        }
+        if(i==data.size()){
+            return  true;
+        }else {
+            return  false;
+        }
+    }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -208,10 +230,15 @@ public class DistributeFragment extends BaseFragment {
         map.put("page", currentPage + "");
         map.put("rows", Constants.PAGE_SIZE + "");
         map.put("column", column);
+        if(TextUtil.isNotEmpty(mobileNo)){
+            map.put("mobileNo", mobileNo);
+        }
+
         DataManager.getInstance().findMyTeams(new DefaultSingleObserver<DataPageDto<RecommendDto>>() {
             @Override
             public void onSuccess(DataPageDto<RecommendDto> dataPageDto) {
                 dissLoadDialog();
+                mobileNo="";
                 if (dataPageDto != null) {
                     if (currentPage == Constants.PAGE_NUM) {
                         shopSpikeAdapter.setNewData(dataPageDto.getRows());
@@ -226,6 +253,7 @@ public class DistributeFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable throwable) {
+                mobileNo="";
                 dissLoadDialog();
             }
         }, map);

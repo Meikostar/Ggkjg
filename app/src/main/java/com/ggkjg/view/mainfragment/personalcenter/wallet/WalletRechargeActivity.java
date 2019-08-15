@@ -135,10 +135,10 @@ public class WalletRechargeActivity extends BaseActivity {
         }, currentPayWay + "", money);
     }
 
-    private void payOrderInfo(String order_no) {
-        HashMap<String, String> maps = new HashMap<>();
-        maps.put("order_no", order_no);
-        showLoadDialog();
+//    private void payOrderInfo(String order_no) {
+//        HashMap<String, String> maps = new HashMap<>();
+//        maps.put("order_no", order_no);
+//        showLoadDialog();
 //        DataManager.getInstance().payOrderInfo(new DefaultSingleObserver<RechargeOrderNoDto>() {
 //            @Override
 //            public void onSuccess(RechargeOrderNoDto orderNoDto) {
@@ -152,7 +152,7 @@ public class WalletRechargeActivity extends BaseActivity {
 //                ToastUtil.showToast(ApiException.getHttpExceptionMessage(throwable));
 //            }
 //        }, maps);
-    }
+//    }
 
     private void payZFBOrderInfo(String order_no) {
 

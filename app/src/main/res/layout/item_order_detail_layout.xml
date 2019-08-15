@@ -54,8 +54,8 @@
 
         <TextView
             android:id="@+id/tv_me_order_branch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/bj_17dp"
+            android:layout_height="@dimen/bj_17dp"
             android:layout_alignTop="@id/tv_me_order_number"
             android:layout_alignParentRight="true"
             android:textColor="@color/my_color_8b8b8b"

@@ -62,8 +62,8 @@
 
                         <ImageView
                             android:layout_marginLeft="15dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/bj_17dp"
+                            android:layout_height="@dimen/bj_17dp"
                             android:src="@mipmap/home_gold" />
                         <TextView
                             android:layout_marginLeft="3dp"
@@ -224,7 +224,7 @@
                 android:textSize="@dimen/wz_14sp" />
 
             <LinearLayout
-                android:visibility="gone"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/bj_15dp"

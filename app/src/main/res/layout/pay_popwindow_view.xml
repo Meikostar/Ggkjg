@@ -9,7 +9,7 @@
         android:background="@color/my_color_white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="286dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <RelativeLayout
 
@@ -41,6 +41,7 @@
 
 
         <LinearLayout
+
             android:id="@+id/ll_balance"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -74,8 +75,8 @@
                 android:clickable="false"
                 app:drawablechoose="@drawable/voucher_choose"
                 app:drawables="@drawable/voucher_unchoose"
-                app:canNoClick="false"
-                app:isCheckeds="true"
+                app:canNoClick="true"
+                app:isCheckeds="false"
 
                 />
         </LinearLayout>
@@ -117,8 +118,8 @@
                 android:clickable="false"
                 app:drawablechoose="@drawable/voucher_choose"
                 app:drawables="@drawable/voucher_unchoose"
-                app:canNoClick="false"
-                app:isCheckeds="true"
+                app:canNoClick="true"
+                app:isCheckeds="false"
 
                 />
         </LinearLayout>
@@ -160,8 +161,8 @@
                 android:clickable="false"
                 app:drawablechoose="@drawable/voucher_choose"
                 app:drawables="@drawable/voucher_unchoose"
-                app:canNoClick="false"
-                app:isCheckeds="true"
+                app:canNoClick="true"
+                app:isCheckeds="false"
 
                 />
         </LinearLayout>

@@ -23,7 +23,7 @@
             android:clickable="false"
             app:drawablechoose="@drawable/distribute_choose"
             app:drawables="@drawable/distbute_unchoose"
-            app:canNoClick="false"
+            app:canNoClick="true"
             app:isCheckeds="false"
 
             />
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
 
                 android:singleLine="true"
-                android:text="18166036858"
+                android:text=""
                 android:textColor="@color/my_color_333333"
                 android:textSize="@dimen/wz_15sp" />
 
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:singleLine="true"
-                android:text="普通会员"
+                android:text=""
                 android:textColor="@color/my_color_999999"
                 android:textSize="@dimen/wz_13sp" />
         </LinearLayout>
@@ -71,7 +71,7 @@
                 android:id="@+id/tv_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:maxWidth="150dp"
                 android:singleLine="true"
                 android:text="区域：未设置"
                 android:textColor="@color/my_color_999999"
@@ -94,7 +94,7 @@
                     android:id="@+id/tv_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"
+                    android:text=""
                     android:textColor="#fd2323"
                     android:textSize="16sp" />
             </LinearLayout>

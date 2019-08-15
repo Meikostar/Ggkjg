@@ -22,9 +22,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.alipay.sdk.app.statistic.c.e;
-import static com.alipay.sdk.app.statistic.c.i;
-import static com.alipay.sdk.app.statistic.c.s;
 
 
 /**

@@ -4,8 +4,10 @@ import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.AddreessDataDto;
 import com.ggkjg.dto.AddressDto;
 import com.ggkjg.dto.AdsDataDto;
+import com.ggkjg.dto.AdsDto;
 import com.ggkjg.dto.AgreeMentDto;
 import com.ggkjg.dto.AreaDataDto;
+import com.ggkjg.dto.ArticleDto;
 import com.ggkjg.dto.BoundsDataDto;
 import com.ggkjg.dto.BusinessDto;
 import com.ggkjg.dto.BusinessListDto;
@@ -151,8 +153,7 @@ public interface RetrofitService {
      * 商学院列表
      */
     @POST("silent/store/findCommercialCollegeList")
-    Single<HttpResult<BusinessListDto>> findCommercialCollegeList();
-
+    Single<HttpResult<BusinessListDto>> findCommercialCollegeList(@QueryMap HashMap<String, String> map);
     /**
      * 获取反馈类型
      */
@@ -663,6 +664,14 @@ public interface RetrofitService {
      */
     @POST("silent/member/findAgreeMent")
     Single<HttpResult<AgreeMentDto>> findAgreeMent();
+    /**
+     * 获取注册协议
+     *
+     * @return
+     */
+    @POST("silent/store/findCommercialCollegeDetail")
+    Single<HttpResult<ArticleDto>> findCommercialCollegeDetail(@Query("collegeInfoId") String collegeInfoId);
+
 
     /**
      * 获取分享参数

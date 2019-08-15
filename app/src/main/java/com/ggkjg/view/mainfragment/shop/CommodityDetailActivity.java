@@ -2,6 +2,7 @@ package com.ggkjg.view.mainfragment.shop;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.ShareSdkUtils;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TextUtil;
+import com.ggkjg.common.utils.TimeUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.common.utils.WebViewUtil;
 import com.ggkjg.dto.CommodityDetailAdsDto;
@@ -43,6 +46,7 @@ import com.ggkjg.view.widgets.DeliverDetailDialog;
 import com.ggkjg.view.widgets.ShareProductDialog;
 import com.ggkjg.view.widgets.ShopProductTypeDialog;
 import com.ggkjg.view.widgets.ShopSecurityDetailDialog;
+import com.ggkjg.view.widgets.autoview.ActionbarView;
 import com.shehuan.niv.NiceImageView;
 
 import java.io.Serializable;
@@ -52,6 +56,7 @@ import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 商品详细
@@ -61,6 +66,48 @@ import butterknife.BindView;
 public class CommodityDetailActivity extends BaseActivity implements BaseActivity.PermissionsListener {
     private static final String TAG = CommodityDetailActivity.class.getSimpleName();
     public static final String PRODUCT_ID = "product_id";//调用者传递的名字
+    @BindView(R.id.custom_action_bar)
+    ActionbarView customActionBar;
+    @BindView(R.id.rl_banner_vp_container)
+    RelativeLayout rlBannerVpContainer;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+    @BindView(R.id.ll_price)
+    LinearLayout llPrice;
+    @BindView(R.id.tv_tobuy)
+    TextView tvTobuy;
+    @BindView(R.id.tv_first_price)
+    TextView tvFirstPrice;
+    @BindView(R.id.tv_integer)
+    TextView tvInteger;
+    @BindView(R.id.tv_hour)
+    TextView tvHour;
+    @BindView(R.id.tv_minter)
+    TextView tvMinter;
+    @BindView(R.id.line)
+    View line;
+    @BindView(R.id.tv_second)
+    TextView tvSecond;
+    @BindView(R.id.tv_voucher_cout)
+    TextView tv_voucher_cout;
+    @BindView(R.id.ll_time)
+    LinearLayout llTime;
+    @BindView(R.id.ll_more)
+    LinearLayout llMore;
+    @BindView(R.id.ll_money)
+    LinearLayout llMoney;
+    @BindView(R.id.tv_commodity_info_type_v)
+    TextView tvCommodityInfoTypeV;
+    @BindView(R.id.tv_commodity_info_security_v)
+    TextView tvCommodityInfoSecurityV;
+    @BindView(R.id.tv_commodity_info_delivery_v)
+    TextView tvCommodityInfoDeliveryV;
+    @BindView(R.id.rl_commodity_comment)
+    RelativeLayout rl_commodity_comments;
+    @BindView(R.id.rl_ads_vp_container)
+    RelativeLayout rlAdsVpContainer;
+    @BindView(R.id.header_commodity_detail_bot_layout)
+    LinearLayout headerCommodityDetailBotLayout;
     private long product_id;//产品ID
 
     @BindView(R.id.tv_commodity_info_title)
@@ -109,8 +156,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
 
 
     //    评论view
-    @BindView(R.id.rl_commodity_comments)
-    RelativeLayout rl_commodity_comments;
+
     @BindView(R.id.ll_commodity_comments)
     LinearLayout ll_commodity_comments;
     @BindView(R.id.tv_evaluate_null)
@@ -540,7 +586,85 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
      *
      * @param commodityDetailDto
      */
+    private CountDownTimer countDownTimer;
     private void notifyData(CommodityDetailDto commodityDetailDto) {
+        long times=0;
+        if(commodityDetailDto.isGoodsSedKill){
+            llMoney.setVisibility(View.GONE);
+            llMore.setVisibility(View.VISIBLE);
+            if(commodityDetailDto.getGoodsInfo()!=null&&TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().startTime)){
+                long curTime=System.currentTimeMillis();
+                long starTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().startTime);
+                long endTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().endTime);
+
+                if(starTime>curTime){
+                    times=starTime-curTime;
+                    tvTobuy.setText("秒杀预告");
+                    tvInteger.setText("距开始时间");
+                    line.setVisibility(View.GONE);
+                    tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                    tvTobuy.setTextColor(getResources().getColor(R.color.my_color_green52e));
+                    tvHour.setTextColor(getResources().getColor(R.color.my_color_green52e));
+                    tvMinter.setTextColor(getResources().getColor(R.color.my_color_green52e));
+                    tvSecond.setTextColor(getResources().getColor(R.color.my_color_green52e));
+                    tvPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
+                    llMore.setBackgroundColor(getResources().getColor(R.color.my_color_green));
+
+                }else {
+
+
+                    times=endTime-curTime;
+                    tvTobuy.setText("港港秒杀");
+                    tvInteger.setText("距结束时间");
+                    line.setVisibility(View.VISIBLE);
+                    tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
+                    tvTobuy.setTextColor(getResources().getColor(R.color.my_color_f23));
+                    tvHour.setTextColor(getResources().getColor(R.color.my_color_f23));
+                    tvMinter.setTextColor(getResources().getColor(R.color.my_color_f23));
+                    tvSecond.setTextColor(getResources().getColor(R.color.my_color_f23));
+                    tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                    llMore.setBackgroundColor(getResources().getColor(R.color.my_color_f23));
+
+                }
+            }
+        }else {
+            llMoney.setVisibility(View.VISIBLE);
+            llMore.setVisibility(View.GONE);
+            if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().isConpon)&&commodityDetailDto.getGoodsInfo().isConpon.equals("1")){
+                tv_voucher_cout.setVisibility(View.VISIBLE);
+                tv_voucher_cout.setText("用券立减" +commodityDetailDto.getGoodsInfo().conponPrice);
+            }else {
+                tv_voucher_cout.setVisibility(View.VISIBLE);
+            }
+
+        }
+        if(countDownTimer!=null){
+            countDownTimer.cancel();
+        }
+
+        countDownTimer = new CountDownTimer(times, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                String timeFormat = TimeUtil.getTimeFormat(millisUntilFinished/1000);
+                String[] split = timeFormat.split(",");
+                if(tvHour!=null){
+                    tvHour.setText(split[1]);
+                    tvMinter.setText(split[2]);
+                    tvSecond.setText(split[3]);
+                }
+
+            }
+            @Override
+            public void onFinish() {
+
+                if(tvHour!=null){
+                    tvHour.setText("00");
+                    tvMinter.setText("00");
+                    tvSecond.setText("00");
+                }
+
+            }
+        }.start();
         if (commodityDetailDto.getBannerList() != null && !commodityDetailDto.getBannerList().isEmpty()) {
             onBannerSuccess(commodityDetailDto.getBannerList());
         }
@@ -552,13 +676,13 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         setCommodityDetailInfoDto(goodsInfo);
         tv_commodity_info_title.setText(goodsInfo.getGoodsName());
         tv_commodity_info_price.setText(goodsInfo.getGdPrice());
-        if(goodsInfo.getFreight() != null){
-            if(goodsInfo.getFreight().equals("0.00")){
+        if (goodsInfo.getFreight() != null) {
+            if (goodsInfo.getFreight().equals("0.00")) {
                 tv_commodity_info_courier.setText("快递费:计重");
-            }else {
+            } else {
                 tv_commodity_info_courier.setText("快递费:" + goodsInfo.getFreight());
             }
-        }else{
+        } else {
             tv_commodity_info_courier.setText("快递费:计重");
         }
         tv_commodity_info_sales.setText("销量:" + goodsInfo.getSalesToatl());
@@ -574,72 +698,72 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
      *
      * @param commodityDetailDto
      */
-    public void onEvaluationSuccess(CommodityDetailDto commodityDetailDto){
-          if(commodityDetailDto != null) {
-              ShopEvaluateRowsDto evaCon = commodityDetailDto.getEvaContent();
-              if (evaCon != null) {
-                  tv_evaluate_null.setVisibility(View.GONE);
-                  ll_evaluate_view.setVisibility(View.VISIBLE);
-                  if (commodityDetailDto.getEvaTotal() != null) {
-                      tv_commodity_comments_num.setText(String.format("评论(%s)", commodityDetailDto.getEvaTotal()));
-                  } else {
-                      tv_commodity_comments_num.setText("评论(0)");
-                  }
-                  GlideUtils.getInstances().loadRoundImg(CommodityDetailActivity.this, iv_me_user_icon, BuildConfig.BASE_URL + evaCon.getHeadImg());
-                  tv_commodity_comments_name.setText(evaCon.getNickName());
-                  tv_commodity_comments_msg.setText(evaCon.getContent());
-                  if (null != evaCon.getImgList() && !evaCon.getImgList().isEmpty()) {
-                      ll_commodity_comments_imgs.setVisibility(View.VISIBLE);
-                      switch (evaCon.getImgList().size() - 1) {
-                          case 0:
-                              iv_commodity_comments_img1.setVisibility(View.VISIBLE);
-                              iv_commodity_comments_img2.setVisibility(View.INVISIBLE);
-                              iv_commodity_comments_img3.setVisibility(View.INVISIBLE);
-                              GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img1,
-                                      BuildConfig.BASE_URL + evaCon.getImgList().get(0).getImgPath(), R.mipmap.img_default_1);
-                              break;
-                          case 1:
-                              iv_commodity_comments_img1.setVisibility(View.VISIBLE);
-                              iv_commodity_comments_img2.setVisibility(View.VISIBLE);
-                              iv_commodity_comments_img3.setVisibility(View.INVISIBLE);
-                              GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img1,
-                                      BuildConfig.BASE_URL + evaCon.getImgList().get(0).getImgPath(), R.mipmap.img_default_1);
-                              GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img2,
-                                      BuildConfig.BASE_URL + evaCon.getImgList().get(1).getImgPath(), R.mipmap.img_default_1);
-                              break;
-                          case 2:
-                              iv_commodity_comments_img1.setVisibility(View.VISIBLE);
-                              iv_commodity_comments_img2.setVisibility(View.VISIBLE);
-                              iv_commodity_comments_img3.setVisibility(View.VISIBLE);
-                              GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img1,
-                                      BuildConfig.BASE_URL + evaCon.getImgList().get(0).getImgPath(), R.mipmap.img_default_1);
-                              GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img2,
-                                      BuildConfig.BASE_URL + evaCon.getImgList().get(1).getImgPath(), R.mipmap.img_default_1);
-                              GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img3,
-                                      BuildConfig.BASE_URL + evaCon.getImgList().get(2).getImgPath(), R.mipmap.img_default_1);
-                              break;
-                      }
-                      bindClickEvent(iv_commodity_comments_img1, () -> {
-                          dealImagePreview(0, evaCon.getImgList());
-                      });
-                      bindClickEvent(iv_commodity_comments_img2, () -> {
-                          dealImagePreview(1, evaCon.getImgList());
-                      });
-                      bindClickEvent(iv_commodity_comments_img3, () -> {
-                          dealImagePreview(2, evaCon.getImgList());
-                      });
-                  } else {
-                      ll_commodity_comments_imgs.setVisibility(View.GONE);
-                      iv_commodity_comments_img1.setVisibility(View.GONE);
-                      iv_commodity_comments_img2.setVisibility(View.GONE);
-                      iv_commodity_comments_img3.setVisibility(View.GONE);
-                  }
-              } else {
-                  tv_evaluate_null.setVisibility(View.VISIBLE);
-                  ll_evaluate_view.setVisibility(View.GONE);
-                  ll_commodity_comments_imgs.setVisibility(View.GONE);
-              }
-          }
+    public void onEvaluationSuccess(CommodityDetailDto commodityDetailDto) {
+        if (commodityDetailDto != null) {
+            ShopEvaluateRowsDto evaCon = commodityDetailDto.getEvaContent();
+            if (evaCon != null) {
+                tv_evaluate_null.setVisibility(View.GONE);
+                ll_evaluate_view.setVisibility(View.VISIBLE);
+                if (commodityDetailDto.getEvaTotal() != null) {
+                    tv_commodity_comments_num.setText(String.format("评论(%s)", commodityDetailDto.getEvaTotal()));
+                } else {
+                    tv_commodity_comments_num.setText("评论(0)");
+                }
+                GlideUtils.getInstances().loadRoundImg(CommodityDetailActivity.this, iv_me_user_icon, BuildConfig.BASE_URL + evaCon.getHeadImg());
+                tv_commodity_comments_name.setText(evaCon.getNickName());
+                tv_commodity_comments_msg.setText(evaCon.getContent());
+                if (null != evaCon.getImgList() && !evaCon.getImgList().isEmpty()) {
+                    ll_commodity_comments_imgs.setVisibility(View.VISIBLE);
+                    switch (evaCon.getImgList().size() - 1) {
+                        case 0:
+                            iv_commodity_comments_img1.setVisibility(View.VISIBLE);
+                            iv_commodity_comments_img2.setVisibility(View.INVISIBLE);
+                            iv_commodity_comments_img3.setVisibility(View.INVISIBLE);
+                            GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img1,
+                                    BuildConfig.BASE_URL + evaCon.getImgList().get(0).getImgPath(), R.mipmap.img_default_1);
+                            break;
+                        case 1:
+                            iv_commodity_comments_img1.setVisibility(View.VISIBLE);
+                            iv_commodity_comments_img2.setVisibility(View.VISIBLE);
+                            iv_commodity_comments_img3.setVisibility(View.INVISIBLE);
+                            GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img1,
+                                    BuildConfig.BASE_URL + evaCon.getImgList().get(0).getImgPath(), R.mipmap.img_default_1);
+                            GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img2,
+                                    BuildConfig.BASE_URL + evaCon.getImgList().get(1).getImgPath(), R.mipmap.img_default_1);
+                            break;
+                        case 2:
+                            iv_commodity_comments_img1.setVisibility(View.VISIBLE);
+                            iv_commodity_comments_img2.setVisibility(View.VISIBLE);
+                            iv_commodity_comments_img3.setVisibility(View.VISIBLE);
+                            GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img1,
+                                    BuildConfig.BASE_URL + evaCon.getImgList().get(0).getImgPath(), R.mipmap.img_default_1);
+                            GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img2,
+                                    BuildConfig.BASE_URL + evaCon.getImgList().get(1).getImgPath(), R.mipmap.img_default_1);
+                            GlideUtils.getInstances().loadNormalImg(CommodityDetailActivity.this, iv_commodity_comments_img3,
+                                    BuildConfig.BASE_URL + evaCon.getImgList().get(2).getImgPath(), R.mipmap.img_default_1);
+                            break;
+                    }
+                    bindClickEvent(iv_commodity_comments_img1, () -> {
+                        dealImagePreview(0, evaCon.getImgList());
+                    });
+                    bindClickEvent(iv_commodity_comments_img2, () -> {
+                        dealImagePreview(1, evaCon.getImgList());
+                    });
+                    bindClickEvent(iv_commodity_comments_img3, () -> {
+                        dealImagePreview(2, evaCon.getImgList());
+                    });
+                } else {
+                    ll_commodity_comments_imgs.setVisibility(View.GONE);
+                    iv_commodity_comments_img1.setVisibility(View.GONE);
+                    iv_commodity_comments_img2.setVisibility(View.GONE);
+                    iv_commodity_comments_img3.setVisibility(View.GONE);
+                }
+            } else {
+                tv_evaluate_null.setVisibility(View.VISIBLE);
+                ll_evaluate_view.setVisibility(View.GONE);
+                ll_commodity_comments_imgs.setVisibility(View.GONE);
+            }
+        }
     }
 
     /**
@@ -709,4 +833,6 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         dissLoadDialog();
         WebViewUtil.destroyWebView(webView);
     }
+
+
 }

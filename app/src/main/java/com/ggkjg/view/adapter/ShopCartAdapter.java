@@ -29,6 +29,12 @@ public class ShopCartAdapter extends BaseQuickAdapter<ShopCartDto, BaseViewHolde
                 .addOnClickListener(R.id.increase)
                 .addOnClickListener(R.id.decrease)
                 .addOnClickListener(R.id.cb_item_shop_cart);
+        if(item.conponCount!=0){
+            helper.setVisible(R.id.ll_gq,true);
+            helper.setText(R.id.tv_voucher_cout,"x "+item.conponCount);
+        }else {
+            helper.setVisible(R.id.ll_gq,false);
+        }
         helper.setChecked(R.id.cb_item_shop_cart, item.isSelect());
         GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_item_shop_cart_cover), BuildConfig.BASE_IMAGE_URL + item.getGoodsImg(), R.mipmap.img_default_1);
 

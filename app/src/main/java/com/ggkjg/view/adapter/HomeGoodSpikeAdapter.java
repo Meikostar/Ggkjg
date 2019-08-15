@@ -1,6 +1,8 @@
 package com.ggkjg.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ggkjg.R;
@@ -15,6 +18,7 @@ import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.HomeDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 
 import java.util.List;
 
@@ -99,7 +103,19 @@ public class HomeGoodSpikeAdapter extends BaseAdapter {
             holder.line.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
             holder.tvPrice.setText(data.get(i).marketPrice);
         }
+        holder.ll_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(context, CommodityDetailActivity.class);
 
+                bundle.putLong(CommodityDetailActivity.PRODUCT_ID, Long.valueOf(data.get(i).id));
+                if (bundle != null) {
+                    intent.putExtras(bundle);
+                }
+                context.startActivity(intent);
+            }
+        });
         // PROFILE_ITEM item = list.get(i);
         return view;
     }
@@ -130,6 +146,8 @@ public class HomeGoodSpikeAdapter extends BaseAdapter {
         TextView tvPrice;
         @BindView(R.id.line)
         View line;
+        @BindView(R.id.ll_bg)
+        LinearLayout ll_bg;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

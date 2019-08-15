@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ggkjg.R;
@@ -13,8 +17,10 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
+import com.ggkjg.dto.AdsDto;
 import com.ggkjg.dto.TimeDataDto;
 import com.ggkjg.dto.VoucherDto;
+import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.adapter.FragmentViewPagerAdapter;
@@ -53,7 +59,10 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
     @BindView(R.id.mcb_chos)
     MCheckBox mcbChoose;
     @BindView(R.id.tv_send)
-    TextView tvSend;
+    Button tvSend;
+    @BindView(R.id.ll_bg)
+    LinearLayout ll_bg;
+
     private int currentPage = Constants.PAGE_NUM;
 
     private String conponBaseId;
@@ -66,42 +75,83 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
         bindClickEvent(tvPerson, () -> {
             selection(1, true);
         });
-        bindClickEvent(mcbChoose, () -> {
-            if(poi==0){
-                if(mcbChoose.isCheck()){
-                    spikeFragment.setChooseAll(0);
-                }else {
-                    spikeFragment.setChooseAll(1);
-                }
+        mcbChoose.setOnCheckClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(poi==0){
+                    if(mcbChoose.isCheck()){
+                        spikeFragment.setChooseAll(0);
+                    }else {
+                        spikeFragment.setChooseAll(1);
+                    }
 
-            }else {
-                if(mcbChoose.isCheck()){
-                    spikeFragment1.setChooseAll(0);
                 }else {
-                    spikeFragment1.setChooseAll(1);
-                }
+                    if(mcbChoose.isCheck()){
+                        spikeFragment1.setChooseAll(0);
+                    }else {
+                        spikeFragment1.setChooseAll(1);
+                    }
 
-            }
-            if(mcbChoose.isCheck()){
-                mcbChoose.setChecked(false);
-            }else {
-                mcbChoose.setChecked(true);
+                }
+                if(mcbChoose.isCheck()){
+                    mcbChoose.setChecked(false);
+                }else {
+                    mcbChoose.setChecked(true);
+                }
             }
         });
 
-        bindClickEvent(tvSend, () -> {
-            if(poi==0){
-                 ids = spikeFragment.getIds();
-            }else {
-                 ids = spikeFragment1.getIds();
+        tvSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(poi==0){
+                    ids = spikeFragment.getIds();
+                }else {
+                    ids = spikeFragment1.getIds();
+                }
+                if(TextUtil.isEmpty(ids)){
+                    ToastUtil.showToast("你还未选择派发成员");
+                    return;
+                }
+                disTribute();
             }
-            if(TextUtil.isEmpty(ids)){
-                ToastUtil.showToast("你还未选择派发成员");
-                return;
-            }
-
         });
 
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(TextUtil.isNotEmpty(charSequence.toString())){
+                    if(charSequence.toString().length()==11){
+                        if(poi==0){
+                            spikeFragment.setSearch(charSequence.toString());
+                        }else {
+                            spikeFragment1.setSearch(charSequence.toString());
+                        }
+                    }else if(charSequence.toString().length()>11){
+                        ToastUtil.showToast("你输入的内容过长");
+                    }
+                    ll_bg.setVisibility(View.GONE);
+
+                }else {
+                    if(poi==0){
+                        spikeFragment.setSearch(charSequence.toString());
+                    }else {
+                        spikeFragment1.setSearch(charSequence.toString());
+                    }
+                    ll_bg.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
@@ -158,6 +208,15 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
 
             @Override
             public void onError(Throwable throwable) {
+                String message=null;
+                if(throwable != null && throwable instanceof ApiException){
+                    message = ((ApiException)throwable).getErrorMsg();
+                }
+                if(message!=null){
+                    ToastUtil.showToast("派发成功");
+                    finish();
+                }
+
                 dissLoadDialog();
 
             }
@@ -176,6 +235,13 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
                 if (isShow) {
                     viewpagerMain.setCurrentItem(0, false);
                 }
+                if(spikeFragment!=null){
+                    if(spikeFragment.isChooseAll()){
+                        mcbChoose.setChecked(true);
+                    }else {
+                        mcbChoose.setChecked(false);
+                    }
+                }
 
                 break;
             case 1:
@@ -188,6 +254,14 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
                 if (isShow) {
                     viewpagerMain.setCurrentItem(1, false);
                 }
+                if(spikeFragment1!=null){
+                    if(spikeFragment1.isChooseAll()){
+                        mcbChoose.setChecked(true);
+                    }else {
+                        mcbChoose.setChecked(false);
+                    }
+                }
+
                 break;
 
         }

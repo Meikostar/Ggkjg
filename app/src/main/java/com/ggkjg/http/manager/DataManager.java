@@ -8,8 +8,10 @@ import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.AddreessDataDto;
 import com.ggkjg.dto.AddressDto;
 import com.ggkjg.dto.AdsDataDto;
+import com.ggkjg.dto.AdsDto;
 import com.ggkjg.dto.AgreeMentDto;
 import com.ggkjg.dto.AreaDataDto;
+import com.ggkjg.dto.ArticleDto;
 import com.ggkjg.dto.BoundsDataDto;
 import com.ggkjg.dto.BrowerDto;
 import com.ggkjg.dto.BusinessDto;
@@ -206,12 +208,12 @@ public class DataManager {
     }
 
     /**
-     * 商学院首页
+     * 商学院列表
      *
      * @param observer 由调用者传过来的观察者对象
      */
-    public void findCommercialCollegeList(DefaultSingleObserver<BusinessListDto> observer) {
-        Single<BusinessListDto> observable = retrofitService.findCommercialCollegeList()
+    public void findCommercialCollegeList(DefaultSingleObserver<BusinessListDto> observer, HashMap<String, String> map) {
+        Single<BusinessListDto> observable = retrofitService.findCommercialCollegeList(map)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
@@ -1061,6 +1063,17 @@ public class DataManager {
                 .map(new HttpResultMapper.HttpResultData(null));
         subscribe(observable, observer);
     }
+    /**
+     * 文章详情
+     *
+     * @param observer 由调用者传过来的观察者对象
+     */
+    public void findCommercialCollegeDetail(DefaultSingleObserver<ArticleDto> observer,String id) {
+        Single<ArticleDto> observable = retrofitService.findCommercialCollegeDetail(id)
+                .map(new HttpResultMapper.HttpResultData(null));
+        subscribe(observable, observer);
+    }
+
 
     /**
      * 获取分享参数

@@ -74,6 +74,8 @@ public class VoucherProductListActivity extends BaseActivity {
     @BindView(R.id.recy_shop_product_list)
     RecyclerView recyclerView;
 
+    @BindView(R.id.ll_bg)
+    LinearLayout llbg;
     public static final String ACTION_SEARCH_KEY = "activity_action_search_key"; //调用者传参名字
     @BindView(R.id.acb_status_bar)
     ImageView acbStatusBar;
@@ -104,7 +106,7 @@ public class VoucherProductListActivity extends BaseActivity {
     @Override
     public void initData() {
         searchKey = getIntent().getStringExtra(ACTION_SEARCH_KEY);
-        mCategoryId = getIntent().getExtras().getInt(PRODUCT_TYPE);
+        mCategoryId = getIntent().getIntExtra(PRODUCT_TYPE,0);
         mParamsMaps = new HashMap<>();
         mParamsMaps.put("rows", Constants.PAGE_SIZE);
 
@@ -170,7 +172,10 @@ public class VoucherProductListActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(TextUtil.isNotEmpty(charSequence.toString())){
+                    llbg.setVisibility(View.GONE);
                     searchKey=charSequence.toString();
+                }else {
+                    llbg.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -197,12 +202,7 @@ public class VoucherProductListActivity extends BaseActivity {
             });
             dialog.show();
         });
-        actionbar.setImageAction(R.mipmap.shop_product_search_icon, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoActivity(SearchShopProduct.class);
-            }
-        });
+
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

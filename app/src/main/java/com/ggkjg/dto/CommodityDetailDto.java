@@ -15,6 +15,7 @@ public class CommodityDetailDto implements Serializable {
     private ShopEvaluateRowsDto evaContent;
     private String evaTotal;
     private int isFavorite;
+    public boolean isGoodsSedKill;
 
     public List<CommodityDetailBannerDto> getBannerList() {
         return bannerList;

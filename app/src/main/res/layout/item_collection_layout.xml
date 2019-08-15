@@ -41,12 +41,12 @@
 
             <TextView
                 android:id="@+id/tv_coin_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/bj_17dp"
+                android:layout_height="@dimen/bj_17dp"
                 android:layout_below="@id/tv_good_des"
                 android:layout_marginTop="@dimen/bj_15dp"
                 android:layout_toRightOf="@id/img_good_logo"
-                android:drawableLeft="@mipmap/icon_gold_coin"
+                android:drawableLeft="@mipmap/home_gold"
                 android:drawablePadding="@dimen/bj_5dp"
                 android:textColor="@color/my_color_D13229"
                 android:textSize="@dimen/wz_13sp" />

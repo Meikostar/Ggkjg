@@ -345,6 +345,12 @@
             android:name=".view.mainfragment.message.AgreementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
+        <activity
+            android:name=".view.mainfragment.spike.ArticleActivity"
+            android:label="文章详情"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
 
         <!--微信分享回调 -->
         <activity
@@ -358,6 +364,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".view.mainfragment.ALiPayActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <!--支付宝支付页面-->
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,21 +24,34 @@ import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.LogUtil;
+import com.ggkjg.common.utils.MD5Utils;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
+import com.ggkjg.common.utils.pay.PayResultListener;
+import com.ggkjg.common.utils.pay.PayUtils;
+import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.AddressDto;
 import com.ggkjg.dto.CartAtrrDto;
 import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.OrderPreviewSellersDto;
+import com.ggkjg.dto.PayOrderDto;
+import com.ggkjg.dto.RechargeDto;
 import com.ggkjg.dto.ShopCartDto;
+import com.ggkjg.dto.UserInfoDto;
 import com.ggkjg.http.manager.DataManager;
+import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.adapter.GoodsOrderAdapter;
+import com.ggkjg.view.adapter.PayOrderAdapter;
 import com.ggkjg.view.adapter.PopVoucherAdapter;
 import com.ggkjg.view.mainfragment.personalcenter.GoodsAddressActivity;
+import com.ggkjg.view.mainfragment.settings.SetPayPwdActivity;
+import com.ggkjg.view.widgets.InputPwdDialog;
 import com.ggkjg.view.widgets.MCheckBox;
 import com.ggkjg.view.widgets.OrderChooseAddressDialog;
 import com.ggkjg.view.widgets.PhotoPopupWindow;
+import com.ggkjg.view.widgets.RechargeDialog;
 import com.ggkjg.view.widgets.autoview.ActionbarView;
 import com.ggkjg.view.widgets.autoview.ObservableScrollView;
 import com.ggkjg.view.widgets.autoview.SuperExpandableListView;
@@ -80,6 +94,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
     ObservableScrollView svConfirmOrder;
     @BindView(R.id.tv_confirm_order_goods_bottom_view)
     LinearLayout tvConfirmOrderGoodsBottomView;
+    @BindView(R.id.tv_first)
+    TextView tvFirst;
+    @BindView(R.id.tv_second)
+    TextView tvSecond;
     private List<ShopCartDto> selectProduct;
     @BindView(R.id.iv_confirm_order_address_add)
     ImageView iv_confirm_order_address_add;
@@ -155,60 +173,74 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 
         dealSelLevel();
     }
+
     private View mView;
     private Context mContext;
     private RecyclerView recyclerView;
     private Button btSure;
+    private TextView tv_title;
     private ImageView iv_close;
 
 
-    private List<ShopCartDto> datas=new ArrayList<>();
     private PopVoucherAdapter popadapter;
+    private List<CartAtrrDto> conponList;
 
     public void showPopWindows() {
-        datas.clear();
-         if(mView==null){
-             mView = LayoutInflater.from(this).inflate(R.layout.chat_voucher_popwindow_view, null);
-             recyclerView = mView.findViewById(R.id.recy_voucher);
-             btSure = mView.findViewById(R.id.bt_sure);
-             iv_close = mView.findViewById(R.id.iv_close);
-             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true) {
-                 @Override
-                 public boolean canScrollVertically() {
-                     return true;
-                 }
-             };
-             recyclerView.setLayoutManager(linearLayoutManager);
 
-             popadapter=new PopVoucherAdapter(null);
-             recyclerView.setAdapter(popadapter);
-             btSure.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     mWindowAddPhoto.dismiss();
-                 }
-             });
-             iv_close.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     mWindowAddPhoto.dismiss();
-                 }
-             });
-             recyclerView.setAdapter(popadapter);
-             datas.add(new ShopCartDto());
-             datas.add(new ShopCartDto());
-             datas.add(new ShopCartDto());
-             datas.add(new ShopCartDto());
-             datas.add(new ShopCartDto());
-             popadapter.setNewData(datas);
-             mWindowAddPhoto = new PhotoPopupWindow(this).bindView(mView);
-             mWindowAddPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
-         }else {
-             mWindowAddPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
-         }
+        if (mView == null) {
+            mView = LayoutInflater.from(this).inflate(R.layout.chat_voucher_popwindow_view, null);
+            recyclerView = mView.findViewById(R.id.recy_voucher);
+            btSure = mView.findViewById(R.id.bt_sure);
+            tv_title = mView.findViewById(R.id.tv_title);
+            iv_close = mView.findViewById(R.id.iv_close);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true) {
+                @Override
+                public boolean canScrollVertically() {
+                    return true;
+                }
+            };
+            recyclerView.setLayoutManager(linearLayoutManager);
+
+            popadapter = new PopVoucherAdapter(null);
+            popadapter.setTotal(total);
+            tv_title.setText("港券("+conponList.size()+")");
+            popadapter.setChooseListener(new PopVoucherAdapter.ChooseListener() {
+                @Override
+                public void choose() {
+                    List<CartAtrrDto> data = popadapter.getData();
+                    for (CartAtrrDto dto : data) {
+                        if (dto.isChoose) {
+                            tvPriceSum.setText("-" + dto.subPrice);
+                            tv_confirm_order_total_money.setText(total - Double.valueOf(dto.subPrice) + "");
+                        }
+                    }
+                }
+            });
+            recyclerView.setAdapter(popadapter);
+            btSure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWindowAddPhoto.dismiss();
+                }
+            });
+            iv_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWindowAddPhoto.dismiss();
+                }
+            });
+            recyclerView.setAdapter(popadapter);
+
+            popadapter.setNewData(conponList);
+            mWindowAddPhoto = new PhotoPopupWindow(this).bindView(mView);
+            mWindowAddPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+        } else {
+            mWindowAddPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+        }
 
 
     }
+
     private View view;
     private PhotoPopupWindow mWindowpayPhoto;
     private LinearLayout llBalance;
@@ -217,43 +249,127 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
     private MCheckBox mcbBalance;
     private MCheckBox mcbZfb;
     private MCheckBox mcbWx;
+    private double total;
+    private double totals;
+    public void setChoose(int state){
+        switch (state){
+            case 0:
+                mcbBalance.setChecked(true);
+                mcbZfb.setChecked(false);
+                mcbWx.setChecked(false);
+                break;
+
+            case 1:
+                mcbBalance.setChecked(false);
+                mcbZfb.setChecked(true);
+                mcbWx.setChecked(false);
+                break;
+            case 2:
+                mcbBalance.setChecked(false);
+                mcbZfb.setChecked(false);
+                mcbWx.setChecked(true);
+                break;
+        }
+    }
+    private int state;
+    private PayOrderDto balance;
+    private PayOrderDto zfb;
+    private PayOrderDto wx;
     public void showPopPayWindows() {
-        datas.clear();
-         if(view==null){
-             view = LayoutInflater.from(this).inflate(R.layout.pay_popwindow_view, null);
 
-             btSure = view.findViewById(R.id.bt_sure);
-             iv_close = view.findViewById(R.id.iv_close);
-             llBalance = view.findViewById(R.id.ll_balance);
-             llZfb = view.findViewById(R.id.ll_zfb);
-             llWx = view.findViewById(R.id.ll_wx);
-             mcbBalance = view.findViewById(R.id.mcb_balance);
-             mcbZfb = view.findViewById(R.id.mcb_zfb);
-             mcbWx= view.findViewById(R.id.mcb_wx);
+        if (view == null) {
+            view = LayoutInflater.from(this).inflate(R.layout.pay_popwindow_view, null);
 
+            btSure = view.findViewById(R.id.bt_sure);
+            iv_close = view.findViewById(R.id.iv_close);
+            llBalance = view.findViewById(R.id.ll_balance);
+            llZfb = view.findViewById(R.id.ll_zfb);
+            llWx = view.findViewById(R.id.ll_wx);
+            mcbBalance = view.findViewById(R.id.mcb_balance);
+            mcbZfb = view.findViewById(R.id.mcb_zfb);
+            mcbWx = view.findViewById(R.id.mcb_wx);
+            for(PayOrderDto payOrderDto:payOrderDtos){
+                if(payOrderDto.getPaymentName().equals("余额")){
+                    if(payOrderDto.getEnableFlag().equals("0")){
+                            llBalance.setVisibility(View.GONE);
+                    }
+                    balance=payOrderDto;
+                }else if(payOrderDto.getPaymentName().equals("微信")){
+                    if(payOrderDto.getEnableFlag().equals("0")){
+                            llWx.setVisibility(View.GONE);
+                    }
+                    wx=payOrderDto;
+                }else if(payOrderDto.getPaymentName().equals("支付宝")){
+                    if(payOrderDto.getEnableFlag().equals("0")){
+                            llZfb.setVisibility(View.GONE);
 
-             btSure.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     mWindowpayPhoto.dismiss();
-                 }
-             });
-             iv_close.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                mWindowpayPhoto.dismiss();
-                 }
-             });
+                    }
+                    zfb=payOrderDto;
+                }
 
-             mWindowpayPhoto = new PhotoPopupWindow(this).bindView(view);
-             mWindowpayPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
-         }else {
-             mWindowpayPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
-         }
+            }
+            llBalance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setChoose(0);
+                    state=0;
+                }
+            });
+            llWx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    state=1;
+                    setChoose(1);
+                }
+            });
+            llZfb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    state=2;
+                    setChoose(2);
+                }
+            });
+            btSure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (state){
+                        case 0:
+                            getMemberBaseInfo(new InputPwdDialog.InputPasswordListener() {
+                                @Override
+                                public void callbackPassword(String password) {
+                                    submitOrder(balance.getId() + "", password,balance.getPaymentCode());
+                                }
+                            });
+                            break;
+
+                        case 1:
+                            submitOrder(wx.getId() + "", "",wx.getPaymentCode());
+                            break;
+                        case 2:
+                            submitOrder(zfb.getId() + "", "",zfb.getPaymentCode());
+                            break;
+                    }
+                    mWindowpayPhoto.dismiss();
+                }
+            });
+            iv_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWindowpayPhoto.dismiss();
+                }
+            });
+
+            mWindowpayPhoto = new PhotoPopupWindow(this).bindView(view);
+            mWindowpayPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+        } else {
+            mWindowpayPhoto.showAtLocation(tv_zt_address, Gravity.BOTTOM, 0, 0);
+        }
 
 
     }
+
     private PhotoPopupWindow mWindowAddPhoto;
+
     @Override
     public void initData() {
         findDefaultReceiptAddr();
@@ -312,7 +428,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             gotoActivity(GoodsAddressActivity.class, false, bundle, Constants.INTENT_REQUESTCODE_SEL_ADDRESS);
         });
         bindClickEvent(butSubmit, () -> {
-            showPopPayWindows();
+
             if (iv_confirm_order_address_add.getVisibility() == View.VISIBLE) {
                 ToastUtil.showToast("请添加收货地址");
             } else {
@@ -356,7 +472,23 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         });
 
         bindClickEvent(rlOffer, () -> {
-            showPopWindows();
+            if (conponList != null) {
+                showPopWindows();
+            }
+
+        });
+        bindClickEvent(ivAdd, () -> {
+           if(ivAdd.isCheck()){
+               tv_confirm_order_total_money.setText(Double.valueOf(tv_confirm_order_total_money.getText().toString())-Double.valueOf(addPrice)+"");
+               total = totals-addPrice;
+               ivAdd.setChecked(false);
+           }else {
+               total = totals+addPrice;
+               tv_confirm_order_total_money.setText(Double.valueOf(tv_confirm_order_total_money.getText().toString())+Double.valueOf(addPrice)+"");
+
+               ivAdd.setChecked(true);
+           }
+
         });
 
         bindClickEvent(layout_choose_address, () -> {
@@ -392,7 +524,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             rl_address_info.setVisibility(View.GONE);
         }
     }
-
+    private double addPrice;
     /**
      * 获取商品配送方式，重量，快递费，商品总价
      */
@@ -401,11 +533,42 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         DataManager.getInstance().calculateBill(new DefaultSingleObserver<CartAtrrDto>() {
             @Override
             public void onSuccess(CartAtrrDto object) {
-                LogUtil.i(TAG, "--RxLog-Thread: onSuccess()" + object.getWeight() + object.getGdPrice());
-                tv_confirm_order_courier_num.setText(object.getFreight());
-                tv_confirm_order_goods_total_money.setText(object.getGdPrice());
-                tv_confirm_order_total_money.setText(object.getGdPrice());
-                tv_confirm_order_goods_total_weight.setText(object.getWeight() + "");
+                if (object != null) {
+                    if (TextUtil.isNotEmpty(object.sumFreight)) {
+                        tv_confirm_order_courier_num.setText(object.sumFreight);
+                    }
+                    if (TextUtil.isNotEmpty(object.sumgdPrice)) {
+                        tv_confirm_order_goods_total_money.setText(object.sumgdPrice);
+
+                        if(ivAdd.isCheck()){
+                            if(object.conponBase!=null){
+                                tv_confirm_order_total_money.setText(Double.valueOf(object.sumgdPrice)+Double.valueOf(object.conponBase.addPrice)+"");
+                                total = Double.valueOf(object.sumgdPrice)+Double.valueOf(object.conponBase.addPrice);
+                            }
+
+                        }else {
+                            tv_confirm_order_total_money.setText(object.sumgdPrice);
+                            total = Double.valueOf(object.sumgdPrice);
+                        }
+                        totals = Double.valueOf(object.sumgdPrice);
+
+                    }
+                    if (TextUtil.isNotEmpty(object.sumWeight)) {
+                        tv_confirm_order_goods_total_weight.setText(object.sumWeight + "");
+                    }
+
+                    if (object.conponList != null) {
+                        conponList = object.conponList;
+                    }
+                    if(object.conponBase!=null){
+                        addPrice=Double.valueOf(object.conponBase.addPrice);
+                        tvFirst.setText(object.conponBase.addPrice+"");
+                        tvSecond.setText("(满"+object.conponBase.fullPrice+"减"+object.conponBase.subPrice+")");
+                    }
+
+
+                }
+
                 dissLoadDialog();
             }
 
@@ -467,11 +630,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             public void onSuccess(ConfirmOrderDto object) {
                 LogUtil.i(TAG, "--RxLog-Thread: addOrder onSuccess()");
                 dissLoadDialog();
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.ORDER_ID, object.getOrderId() + "");
-                bundle.putString(Constants.ORDER_NO, object.getOrderNo());
-                bundle.putString(Constants.ORDER_MONEY, object.getRealOrderMoney());
-                gotoActivity(PayOrderActivity.class, true, bundle);//支付方式
+//                Bundle bundle = new Bundle();
+//                bundle.putString(Constants.ORDER_ID, object.getOrderId() + "");
+//                bundle.putString(Constants.ORDER_NO, object.getOrderNo());
+//                bundle.putString(Constants.ORDER_MONEY, object.getRealOrderMoney());
+//                gotoActivity(PayOrderActivity.class, true, bundle);//支付方式
+                showPopPayWindows();
             }
 
             @Override
@@ -481,7 +645,17 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             }
         }, map);
     }
-
+    private List<PayOrderDto> payOrderDtos;
+    private void findPaymentList() {
+        DataManager.getInstance().findPaymentList(new DefaultSingleObserver<List<PayOrderDto>>() {
+            @Override
+            public void onSuccess(List<PayOrderDto> payOrderDtoList) {
+               if(payOrderDtoList!=null){
+                   payOrderDtos=payOrderDtoList;
+               }
+            }
+        });
+    }
     private void dealSelLevel() {
         for (int i = 0; i < imgLevel.length; i++) {
             if (selLevel == i) {
@@ -507,10 +681,118 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         tv_zt_address.setText(chooseAddressStr);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
+    /**
+     * 余额支付时，查询是否设置支付密码
+     */
+    private void getMemberBaseInfo(InputPwdDialog.InputPasswordListener listener) {
+        showLoadDialog();
+        DataManager.getInstance().getMemberBaseInfo(new DefaultSingleObserver<UserInfoDto>() {
+            @Override
+            public void onSuccess(UserInfoDto userInfoDto) {
+                dissLoadDialog();
+                if (!TextUtils.isEmpty(userInfoDto.getTradePwd())) {
+                    InputPwdDialog inputPasswordDialog = new InputPwdDialog(ConfirmOrderActivity.this, listener);
+                    inputPasswordDialog.show();
+                } else {
+                    startActivity(new Intent(ConfirmOrderActivity.this, SetPayPwdActivity.class));
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        });
     }
+
+    /**
+     * 余额支付
+     */
+    private void submitOrder(String payMentId, String tradePwd, String payType) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        map.put("orderNo", orderNo);
+        //map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
+        map.put("payMentId", payMentId);
+        map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
+        DataManager.getInstance().submitOrder(new DefaultSingleObserver<HttpResult<RechargeDto>>() {
+            @Override
+            public void onSuccess(HttpResult<RechargeDto> httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+                    if ("gd".equals(payType)) {
+                        setResult(Activity.RESULT_OK);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.ORDER_MONEY, realOrderMoney);
+                        bundle.putString(Constants.ORDER_ID, orderId);
+                        gotoActivity(PaySuccessActivity.class, true, bundle);
+                    } else if ("wx".equals(payType)) {
+
+                    }else if ("zfb".equals(payType)) {
+                        if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
+                            PayUtils.getInstances().zfbPaySync(ConfirmOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
+                                @Override
+                                public void zfbPayOk(boolean payOk) {
+                                    showTipDialog(payOk);
+                                }
+
+                                @Override
+                                public void wxPayOk(boolean payOk) {
+
+                                }
+                            });
+                        }
+
+                    }
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getMsg());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        }, map);
+    }
+
+    String orderId, orderNo, realOrderMoney, GdBalance;
+    private void getWalletBalance() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+            @Override
+            public void onSuccess(AccountBalanceDto object) {
+                if (object != null) {
+                    GdBalance = object.getAvailAmount();
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+        }, 1);
+    }
+
+    private void showTipDialog(boolean isSuccess) {
+        if (isSuccess) {
+            setResult(Activity.RESULT_OK);
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.ORDER_MONEY, realOrderMoney);
+            bundle.putString(Constants.ORDER_ID, orderId);
+            gotoActivity(PaySuccessActivity.class, true, bundle);
+        } else {
+            tipDialog = new RechargeDialog(ConfirmOrderActivity.this, Constants.RECHARGE_TYPE_FAIL);
+        }
+        tipDialog.show();
+    }
+
+    private RechargeDialog tipDialog;
 }

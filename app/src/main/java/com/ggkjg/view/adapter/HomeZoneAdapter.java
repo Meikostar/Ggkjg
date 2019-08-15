@@ -2,6 +2,8 @@ package com.ggkjg.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.HomeDto;
 import com.ggkjg.dto.HomeGoodsIndexDto;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 
 import java.util.List;
 
@@ -100,6 +103,19 @@ public class HomeZoneAdapter extends BaseAdapter {
         }else {
             holder.llZone.setVisibility(View.GONE);
         }
+        holder.ll_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(context,CommodityDetailActivity.class);
+
+                bundle.putLong(CommodityDetailActivity.PRODUCT_ID, Long.valueOf(data.get(i).id));
+                if (bundle != null) {
+                    intent.putExtras(bundle);
+                }
+                context.startActivity(intent);
+            }
+        });
         // PROFILE_ITEM item = list.get(i);
         return view;
     }
@@ -124,6 +140,8 @@ public class HomeZoneAdapter extends BaseAdapter {
         ImageView tvItemHomeGoodShopImg;
         @BindView(R.id.ll_zone)
         LinearLayout llZone;
+        @BindView(R.id.ll_bg)
+        LinearLayout ll_bg;
         @BindView(R.id.tv_title)
         TextView tvTitle;
         @BindView(R.id.tv_cout)
