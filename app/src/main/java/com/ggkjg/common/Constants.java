@@ -71,6 +71,14 @@ public class Constants {
      */
     public static final String RECHARGE_TYPE_FAIL = "type_fail";
     /**
+     * 支付成功
+     */
+    public static final String PAY_TYPE_SUCCESS = "pay_success";
+    /**
+     * 支付失败
+     */
+    public static final String PAY_TYPE_FAIL = "pay_fail";
+    /**
      * 地址是否编辑
      */
     public static final String INTENT_ADDRESS_ISEDIT = "area_isEdit";

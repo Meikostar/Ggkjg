@@ -15,6 +15,7 @@ public class SpikeDto implements Serializable {
     public SpikeDto sedKillTime;
     public SpikeDto page;
    public String packList;
+   public boolean isLast;
    public String gdPrice;
    public String marketPrice;
    public String threeCatsId;
@@ -32,7 +33,7 @@ public class SpikeDto implements Serializable {
    public String guarantee;
    public String visitTotal;
    public String freightType;
-   public String stockTotal;
+   public int stockTotal;
    public String salesToatl;
    public String freight;
    public String deliver;

@@ -56,7 +56,7 @@ public class ArticleActivity extends BaseActivity {
             public void onSuccess(ArticleDto object) {
                 if (object != null) {
                     actionbar.setTitle(object.cmsTitle);
-                    WebViewUtil.loadHtml(webView, "<p style='text-align: center;'>注册协议</p><p>&nbsp; 注册协议测试测试，</p>");
+                    WebViewUtil.loadHtml(webView, object.cmsContent);
                 } else {
                     ToastUtil.showToast("未知错误");
                 }

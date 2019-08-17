@@ -16,6 +16,7 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.MD5Utils;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.common.utils.pay.PayResultListener;
 import com.ggkjg.common.utils.pay.PayUtils;
@@ -44,7 +45,7 @@ public class PayOrderActivity extends BaseActivity {
     @BindView(R.id.btn_confirm)
     TextView btnConfim;
     PayOrderAdapter mAdapter;
-    String orderId, orderNo, realOrderMoney, GdBalance;
+    String orderId, orderNo, realOrderMoney, GdBalance,state;
     private RechargeDialog tipDialog;
     @Override
     public void initListener() {
@@ -66,8 +67,12 @@ public class PayOrderActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             orderId = bundle.getString(Constants.ORDER_ID);
+            state = bundle.getString("state");
             orderNo = bundle.getString(Constants.ORDER_NO);
             realOrderMoney = bundle.getString(Constants.ORDER_MONEY);
+            if(TextUtil.isNotEmpty(state)){
+                HintType=Constants.PAY_TYPE_FAIL;
+            }
         }
 
     }
@@ -222,7 +227,7 @@ public class PayOrderActivity extends BaseActivity {
             }
         }, 1);
     }
-
+   private String HintType=Constants.RECHARGE_TYPE_FAIL;
     private void showTipDialog(boolean isSuccess) {
         if (isSuccess) {
             setResult(Activity.RESULT_OK);
@@ -231,7 +236,7 @@ public class PayOrderActivity extends BaseActivity {
             bundle.putString(Constants.ORDER_ID, orderId);
             gotoActivity(PaySuccessActivity.class, true, bundle);
         } else {
-            tipDialog = new RechargeDialog(PayOrderActivity.this, Constants.RECHARGE_TYPE_FAIL);
+            tipDialog = new RechargeDialog(PayOrderActivity.this,HintType );
         }
         tipDialog.show();
     }

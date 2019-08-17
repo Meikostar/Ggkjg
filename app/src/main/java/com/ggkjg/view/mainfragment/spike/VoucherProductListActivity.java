@@ -20,6 +20,7 @@ import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
 import com.ggkjg.common.utils.TextUtil;
+import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.CommodityDetailInfoDto;
 import com.ggkjg.dto.CommodityDetailListDto;
 import com.ggkjg.http.manager.DataManager;
@@ -46,9 +47,11 @@ public class VoucherProductListActivity extends BaseActivity {
     private static final String TAG = VoucherProductListActivity.class.getSimpleName();
     @BindView(R.id.refreshLayout)
     SuperSwipeRefreshLayout refreshLayout;
-
     @BindView(R.id.tv_shop_product_1)
     TextView tv_shop_product_1;
+    @BindView(R.id.tv_search)
+    TextView tv_search;
+
 
     @BindView(R.id.tv_shop_product_2)
     TextView tv_shop_product_2;
@@ -97,7 +100,7 @@ public class VoucherProductListActivity extends BaseActivity {
     public void initView() {
 
         StatusBarUtils.StatusBarLightMode(this);
-        recyclerView.addItemDecoration(new RecyclerItemDecoration(3, 2));
+        recyclerView.addItemDecoration(new RecyclerItemDecoration(0, 2));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         mAdapter = new ProductListAdapter();
         recyclerView.setAdapter(mAdapter);
@@ -134,6 +137,7 @@ public class VoucherProductListActivity extends BaseActivity {
                 } else {
                     EmptyView emptyView = new EmptyView(VoucherProductListActivity.this);
                     if (!TextUtils.isEmpty(searchKey)) {
+                        mAdapter.setNewData(data.getRows());
                         emptyView.setTvEmptyTip(String.format("没搜索到%s相关数据", searchKey));
                     } else {
                         emptyView.setTvEmptyTip("暂无商品数据");
@@ -157,6 +161,17 @@ public class VoucherProductListActivity extends BaseActivity {
     @Override
     public void initListener() {
 
+        tv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(TextUtil.isNotEmpty(searchKey)){
+                    getProductListData();
+                }else {
+                    ToastUtil.showToast("请输入关键词");
+                }
+
+            }
+        });
         bindClickEvent(tv_shop_product_1, () -> {
             setTopTitlesView(tv_shop_product_1);
         });
@@ -175,6 +190,8 @@ public class VoucherProductListActivity extends BaseActivity {
                     llbg.setVisibility(View.GONE);
                     searchKey=charSequence.toString();
                 }else {
+                    searchKey="";
+                    getProductListData();
                     llbg.setVisibility(View.VISIBLE);
                 }
             }

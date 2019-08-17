@@ -8,6 +8,7 @@
     android:paddingBottom="1dp">
 
     <LinearLayout
+        android:layout_weight="1"
         android:id="@+id/ll_item_shop_cart_content_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -132,20 +133,12 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/right_item_shop_cart_menu"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+    <View
+        android:layout_marginRight="@dimen/bj_14dp"
+        android:layout_marginLeft="@dimen/bj_14dp"
+        android:id="@+id/lines"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee"/>
 
-        <TextView
-            android:id="@+id/tv_item_shop_cart_delete"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:background="@color/my_color_E5E5E5"
-            android:gravity="center"
-            android:text="删除"
-            android:textColor="@color/my_color_black"
-            android:textSize="@dimen/wz_14sp" />
-    </LinearLayout>
 </LinearLayout>

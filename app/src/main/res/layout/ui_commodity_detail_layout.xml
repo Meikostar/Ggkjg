@@ -105,7 +105,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="￥298"
+                            android:text=""
                             android:textColor="@color/my_color_white"
                             android:textSize="@dimen/wz_11sp" />
                         <View

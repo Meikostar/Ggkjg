@@ -23,6 +23,7 @@
     <color name="my_color_00AAED">#00AAED</color>
     <color name="my_color_blue">#008cd6</color>
     <color name="my_color_f6f6f6">#f6f6f6</color>
+    <color name="my_color_bg">#f6f6f6</color>
     <color name="my_color_F5FB0A">#F5FB0A</color>
     <color name="my_color_799DFF">#799DFF</color>
     <color name="my_color_E5E5E5">#E5E5E5</color>
@@ -33,6 +34,7 @@
     <color name="my_color_afafaf">#afafaf</color>
     <color name="my_color_d3d3d3">#d3d3d3</color>
     <color name="my_color_999999">#999999</color>
+    <color name="my_color_line">#eeeeee</color>
     <color name="my_color_f2f2f2">#f2f2f2</color>
     <color name="my_color_5CB146">#5CB146</color>
     <color name="my_color_green">#2dba6c</color>

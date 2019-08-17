@@ -59,19 +59,28 @@
                 android:text="X1"
                 android:textColor="@color/my_color_696969"
                 android:textSize="@dimen/wz_11sp" />
-
-            <TextView
-                android:id="@+id/tv_goods_order_price"
-                android:layout_width="@dimen/bj_17dp"
-                android:layout_height="@dimen/bj_17dp"
+            <LinearLayout
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="@dimen/bj_10dp"
-                android:drawableLeft="@mipmap/home_gold"
-                android:drawablePadding="@dimen/bj_5dp"
-                android:text="0.00"
-                android:textColor="@color/my_color_FB0000"
-                android:textSize="@dimen/wz_15sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="@dimen/bj_17dp"
+                    android:layout_height="@dimen/bj_17dp"
+                    android:src="@mipmap/home_gold"
+                    android:layout_marginRight="@dimen/bj_5dp"/>
+                <TextView
+                    android:id="@+id/tv_goods_order_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
+                    android:textColor="@color/my_color_FB0000"
+                    android:textSize="@dimen/wz_15sp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_goods_order_type"

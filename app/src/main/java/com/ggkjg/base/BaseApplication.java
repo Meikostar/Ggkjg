@@ -4,10 +4,19 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
+import com.ggkjg.common.Constants;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.db.DaoManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cn.udesk.UdeskSDKManager;
+import cn.udesk.config.UdeskConfig;
+import udesk.core.UdeskConst;
+
 
 /**
  * Created by dahai on 2018/4/11.
@@ -32,6 +41,9 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         //GreenDao数据库管理初始化
+        UdeskSDKManager.getInstance().initApiKey(this, "b.ng.2aa6.com","c83493630ab4134046357585e25cc3eb","e74387aa0a787b71");
+
+
         DaoManager.getInstance().init(this);
         Stetho.initializeWithDefaults(this); //调试接口
     }

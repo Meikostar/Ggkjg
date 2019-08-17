@@ -4,9 +4,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.CallPhoneUtils;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
+import com.ggkjg.common.utils.ScreenSizeUtil;
 import com.ggkjg.common.utils.ShareSdkUtils;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.TextUtil;
@@ -592,11 +595,29 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         if(commodityDetailDto.isGoodsSedKill){
             llMoney.setVisibility(View.GONE);
             llMore.setVisibility(View.VISIBLE);
-            if(commodityDetailDto.getGoodsInfo()!=null&&TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().startTime)){
+            if(commodityDetailDto.getGoodsInfo()!=null){
                 long curTime=System.currentTimeMillis();
-                long starTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().startTime);
-                long endTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().endTime);
+                long starTime=0;
+                long endTime=0;
+                if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().startTime)){
+                     starTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().startTime);
+                }
+                if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().startTime)){
+                     endTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().endTime);
+                }
 
+                  if(starTime==0){
+                      if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
+                          tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                      }else {
+                          tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                      }
+                      if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getMarketPrice())){
+                          tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
+                      }
+
+
+                  }
                 if(starTime>curTime){
                     times=starTime-curTime;
                     tvTobuy.setText("秒杀预告");
@@ -622,7 +643,11 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     tvHour.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvMinter.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvSecond.setTextColor(getResources().getColor(R.color.my_color_f23));
-                    tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                    if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
+                        tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                    }else {
+                        tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                    }
                     llMore.setBackgroundColor(getResources().getColor(R.color.my_color_f23));
 
                 }
@@ -665,6 +690,18 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
 
             }
         }.start();
+        if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getMarketPrice())){
+            String name = commodityDetailDto.getGoodsInfo().getMarketPrice();
+            TextPaint textPaint = new TextPaint();
+            textPaint.setTextSize(12);
+            int with = (int) textPaint.measureText(name);
+            FrameLayout.LayoutParams linearParams =(FrameLayout.LayoutParams) line.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
+            linearParams.width = ScreenSizeUtil.dp2px(with-4);// 控件的宽强制设成30
+
+            line.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+        }
+
+
         if (commodityDetailDto.getBannerList() != null && !commodityDetailDto.getBannerList().isEmpty()) {
             onBannerSuccess(commodityDetailDto.getBannerList());
         }

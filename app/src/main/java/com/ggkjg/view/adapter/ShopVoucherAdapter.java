@@ -1,5 +1,6 @@
 package com.ggkjg.view.adapter;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.TimeUtil;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.dto.VoucherDto;
+import com.ggkjg.view.mainfragment.spike.VoucherProductListActivity;
 import com.ggkjg.view.widgets.SaleProgressView;
 
 import java.util.List;
@@ -52,7 +54,8 @@ public class ShopVoucherAdapter extends BaseQuickAdapter<VoucherDto, BaseViewHol
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(mContext, VoucherProductListActivity.class);
+                    mContext.startActivity(intent);
                 }
             });
 

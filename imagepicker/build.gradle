@@ -1,14 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion 16
+        targetSdkVersion 26
+
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -21,8 +20,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:25.3.1'
-    implementation 'com.android.support:recyclerview-v7:25.3.1'
+
+    implementation "com.android.support:appcompat-v7:${supportLibrary}"
+    implementation "com.android.support:recyclerview-v7:${supportLibrary}"
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
 }
 

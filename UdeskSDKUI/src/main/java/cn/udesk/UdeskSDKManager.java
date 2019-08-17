@@ -40,12 +40,12 @@ public class UdeskSDKManager {
     /**
      * udesk系统创建应用生成的App Id
      */
-    public static String app_Id = "";
+    public static String app_Id = "e74387aa0a787b71";
 
     /**
      * udesk系统创建应用生成的App Key
      */
-    public static String app_Key = "";
+    public static String app_Key = "c83493630ab4134046357585e25cc3eb";
 
     /**
      * 用户唯一的标识

@@ -52,6 +52,14 @@ public class RechargeDialog extends Dialog {
             imgLogo.setImageResource(R.mipmap.icon_recharge_fail);
             tvTip.setText("充值失败");
             tvTip.setTextColor(mContext.getResources().getColor(R.color.my_color_8b8b8b));
+        }else if (Constants.PAY_TYPE_FAIL.equals(type)) {
+            imgLogo.setImageResource(R.mipmap.icon_recharge_fail);
+            tvTip.setText("支付失败");
+            tvTip.setTextColor(mContext.getResources().getColor(R.color.my_color_8b8b8b));
+        }else if (Constants.PAY_TYPE_SUCCESS.equals(type)) {
+            imgLogo.setImageResource(R.mipmap.icon_recharge_success);
+            tvTip.setText("支付成功");
+            tvTip.setTextColor(mContext.getResources().getColor(R.color.my_color_8b8b8b));
         }
         if (!TextUtils.isEmpty(tip)) {
             tvTip.setText(tip);

@@ -24,8 +24,10 @@ import com.ggkjg.R;
 import com.ggkjg.base.BaseFragment;
 import com.ggkjg.base.BuildConfig;
 import com.ggkjg.common.Constants;
+import com.ggkjg.common.utils.CreatUdeskStyle;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
+import com.ggkjg.common.utils.ScreenSizeUtil;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.TimeUtil;
@@ -59,11 +61,16 @@ import com.ggkjg.view.widgets.RecyclerItemDecoration;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
 import com.ggkjg.view.widgets.autoview.EmptyView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.udesk.UdeskSDKManager;
+import cn.udesk.config.UdeskConfig;
+import udesk.core.UdeskConst;
 
 /**
  * 首页
@@ -220,7 +227,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
 
     private void iniGridView(final List<HomeDto> list) {
 
-        int length = 96;  //定义一个长度
+        int length = 100;  //定义一个长度
         int size = 0;  //得到集合长度
         //获得屏幕分辨路
         DisplayMetrics dm = new DisplayMetrics();
@@ -238,7 +245,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         params.setMargins(10, 0, 0, 0);
         gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         gridView.setColumnWidth(itemWidth); // 设置列表项宽
-        gridView.setHorizontalSpacing(10); // 设置列表项水平间距
+        gridView.setHorizontalSpacing(ScreenSizeUtil.dp2px(10)   ); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(list.size()); // 设置列数量=列表集合数
         goodGabAdapter.setData(list);
@@ -272,7 +279,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         params.setMargins(10, 0, 0, 0);
         gridViewGg.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         gridViewGg.setColumnWidth(itemWidth); // 设置列表项宽
-        gridViewGg.setHorizontalSpacing(10); // 设置列表项水平间距
+        gridViewGg.setHorizontalSpacing(ScreenSizeUtil.dp2px(10)); // 设置列表项水平间距
         gridViewGg.setStretchMode(GridView.NO_STRETCH);
         gridViewGg.setNumColumns(list.size()); // 设置列数量=列表集合数
         zoneAdapter.setData(list);
@@ -394,7 +401,26 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             getActivity().sendBroadcast(intent);
         }, 2500);
         bindClickEvent(iv_top_message, () -> {
-            gotoActivity(MessageCenterActivity.class);
+            String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
+            String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
+            String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
+            if(TextUtil.isNotEmpty(shiroToken)){
+                String sdktoken = shiroToken;
+                Map<String, String> info = new HashMap<String, String>();
+                info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, sdktoken);
+                //以下信息是可选
+                info.put(UdeskConst.UdeskUserInfo.NICK_NAME,nickName);
+//            info.put(UdeskConst.UdeskUserInfo.EMAIL,"0631@163.com");
+                info.put(UdeskConst.UdeskUserInfo.CELLPHONE,mobileNO);
+//            info.put(UdeskConst.UdeskUserInfo.DESCRIPTION,"描述信息")
+
+
+                UdeskConfig.Builder builder = new UdeskConfig.Builder();
+                builder.setDefualtUserInfo(info);
+                UdeskSDKManager.getInstance().entryChat(getActivity(), builder.build(), shiroToken);
+            }
+
+//            gotoActivity(MessageCenterActivity.class);
         });
         setScrollListener(Constants.PAGE_SIZE);
 

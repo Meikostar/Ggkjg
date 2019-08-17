@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -170,7 +171,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         StatusBarUtils.StatusBarLightMode(this);
         imgLevel = new ImageView[]{img_level_1, img_level_2};
         tvLevel = new TextView[]{tv_level_1, tv_level_2};
-
+        findPaymentList();
+        getWalletBalance();
         dealSelLevel();
     }
 
@@ -190,6 +192,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         if (mView == null) {
             mView = LayoutInflater.from(this).inflate(R.layout.chat_voucher_popwindow_view, null);
             recyclerView = mView.findViewById(R.id.recy_voucher);
+            recyclerView.setKeepScreenOn(true);
             btSure = mView.findViewById(R.id.bt_sure);
             tv_title = mView.findViewById(R.id.tv_title);
             iv_close = mView.findViewById(R.id.iv_close);
@@ -210,6 +213,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     List<CartAtrrDto> data = popadapter.getData();
                     for (CartAtrrDto dto : data) {
                         if (dto.isChoose) {
+                            tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_D13229));
                             tvPriceSum.setText("-" + dto.subPrice);
                             tv_confirm_order_total_money.setText(total - Double.valueOf(dto.subPrice) + "");
                         }
@@ -261,13 +265,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 
             case 1:
                 mcbBalance.setChecked(false);
-                mcbZfb.setChecked(true);
-                mcbWx.setChecked(false);
+                mcbZfb.setChecked(false);
+                mcbWx.setChecked(true);
                 break;
             case 2:
                 mcbBalance.setChecked(false);
-                mcbZfb.setChecked(false);
-                mcbWx.setChecked(true);
+                mcbZfb.setChecked(true);
+                mcbWx.setChecked(false);
                 break;
         }
     }
@@ -337,6 +341,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                             getMemberBaseInfo(new InputPwdDialog.InputPasswordListener() {
                                 @Override
                                 public void callbackPassword(String password) {
+                                    if(Double.valueOf(GdBalance)<Double.valueOf(tv_confirm_order_total_money.getText().toString())){
+                                        ToastUtil.showToast("余额不足");
+                                        return;
+                                    }
                                     submitOrder(balance.getId() + "", password,balance.getPaymentCode());
                                 }
                             });
@@ -428,7 +436,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             gotoActivity(GoodsAddressActivity.class, false, bundle, Constants.INTENT_REQUESTCODE_SEL_ADDRESS);
         });
         bindClickEvent(butSubmit, () -> {
-
+            if(!ivAgree.isCheck()){
+                ToastUtil.showToast("请同意协议");
+                return;
+            }
             if (iv_confirm_order_address_add.getVisibility() == View.VISIBLE) {
                 ToastUtil.showToast("请添加收货地址");
             } else {
@@ -539,6 +550,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     }
                     if (TextUtil.isNotEmpty(object.sumgdPrice)) {
                         tv_confirm_order_goods_total_money.setText(object.sumgdPrice);
+                        tv_confirm_order_total_money.setText(object.sumgdPrice);
 
                         if(ivAdd.isCheck()){
                             if(object.conponBase!=null){
@@ -556,9 +568,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     if (TextUtil.isNotEmpty(object.sumWeight)) {
                         tv_confirm_order_goods_total_weight.setText(object.sumWeight + "");
                     }
-
+                    tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
                     if (object.conponList != null) {
+                        tvPriceSum.setText("有券可用" );
+
                         conponList = object.conponList;
+                    }else {
+                        tvPriceSum.setText("无可用" );
                     }
                     if(object.conponBase!=null){
                         addPrice=Double.valueOf(object.conponBase.addPrice);
@@ -608,6 +624,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
      * @param tradePwd 交易密码
      */
     private void addOrder(String cartIds, String tradePwd) {
+        if(createOrder){
+            showPopPayWindows();
+            return;
+        }
         HashMap<String, String> map = new HashMap<>();
         map.put("cartId", cartIds);//购物车ID
 //      map.put("tradePwd", tradePwd);//交易密码
@@ -629,6 +649,10 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             @Override
             public void onSuccess(ConfirmOrderDto object) {
                 LogUtil.i(TAG, "--RxLog-Thread: addOrder onSuccess()");
+                createOrder=true;
+                orderId=object.getOrderId()+"";
+                orderNo=object.getOrderNo()+"";
+                realOrderMoney=object.getRealOrderMoney()+"";
                 dissLoadDialog();
 //                Bundle bundle = new Bundle();
 //                bundle.putString(Constants.ORDER_ID, object.getOrderId() + "");
@@ -645,6 +669,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             }
         }, map);
     }
+    private boolean createOrder;
     private List<PayOrderDto> payOrderDtos;
     private void findPaymentList() {
         DataManager.getInstance().findPaymentList(new DefaultSingleObserver<List<PayOrderDto>>() {
@@ -711,12 +736,18 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
      * 余额支付
      */
     private void submitOrder(String payMentId, String tradePwd, String payType) {
+
         HashMap<String, String> map = new HashMap<>();
         map.put("orderId", orderId);
         map.put("orderNo", orderNo);
-        //map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
+//        map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
         map.put("payMentId", payMentId);
-        map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
+        if(TextUtil.isNotEmpty(tradePwd)){
+            map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
+        }else {
+            map.put("tradePwd", "");
+        }
+
         DataManager.getInstance().submitOrder(new DefaultSingleObserver<HttpResult<RechargeDto>>() {
             @Override
             public void onSuccess(HttpResult<RechargeDto> httpResult) {
@@ -729,7 +760,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                         bundle.putString(Constants.ORDER_ID, orderId);
                         gotoActivity(PaySuccessActivity.class, true, bundle);
                     } else if ("wx".equals(payType)) {
-
+                       PayUtils.getInstances().WXPay(ConfirmOrderActivity.this,httpResult.getData());
                     }else if ("zfb".equals(payType)) {
                         if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
                             PayUtils.getInstances().zfbPaySync(ConfirmOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
@@ -764,7 +795,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         }, map);
     }
 
-    String orderId, orderNo, realOrderMoney, GdBalance;
+   public   String orderId, orderNo, realOrderMoney, GdBalance;
     private void getWalletBalance() {
         DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
             @Override
@@ -777,6 +808,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 
             @Override
             public void onError(Throwable throwable) {
+                Log.e("error",throwable.toString());
             }
         }, 1);
     }
@@ -789,7 +821,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             bundle.putString(Constants.ORDER_ID, orderId);
             gotoActivity(PaySuccessActivity.class, true, bundle);
         } else {
-            tipDialog = new RechargeDialog(ConfirmOrderActivity.this, Constants.RECHARGE_TYPE_FAIL);
+            tipDialog = new RechargeDialog(ConfirmOrderActivity.this, Constants.PAY_TYPE_FAIL);
         }
         tipDialog.show();
     }

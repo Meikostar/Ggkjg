@@ -1,6 +1,8 @@
 package com.ggkjg.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.ggkjg.R;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.SpikeDto;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 import com.ggkjg.view.widgets.SaleProgressView;
 
 import java.text.DecimalFormat;
@@ -43,7 +46,10 @@ public class ShopSpikeAdapter extends BaseQuickAdapter<SpikeDto, BaseViewHolder>
     @Override
     protected void convert(BaseViewHolder helper, SpikeDto item) {
         SaleProgressView spv = helper.getView(R.id.spv);
-        spv.setTotalAndCurrentCount(100, item.sold);
+
+            spv.setTotalAndCurrentCount(item.stockTotal, item.sold);
+
+
         ImageView imageView = helper.getView(R.id.iv_item_shop_cart_cover);
         TextView tvTitle = helper.getView(R.id.tv_title);
         TextView tvDiscount = helper.getView(R.id.tv_discount);
@@ -51,7 +57,26 @@ public class ShopSpikeAdapter extends BaseQuickAdapter<SpikeDto, BaseViewHolder>
         TextView tvFirstPrice = helper.getView(R.id.tv_first_price);
         TextView tvTobuy = helper.getView(R.id.tv_tobuy);
         View line = helper.getView(R.id.line);
+        View lines = helper.getView(R.id.lines);
+        if(item.isLast){
+            lines.setVisibility(View.GONE);
+        }else {
+            lines.setVisibility(View.VISIBLE);
+        }
         GlideUtils.getInstances().loadNormalImg(mContext, imageView, item.goodsImg);
+        tvTobuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(mContext, CommodityDetailActivity.class);
+
+                bundle.putLong(CommodityDetailActivity.PRODUCT_ID, Long.valueOf(item.id));
+                if (bundle != null) {
+                    intent.putExtras(bundle);
+                }
+                mContext.startActivity(intent);
+            }
+        });
         if (TextUtil.isNotEmpty(item.goodsName)) {
             tvTitle.setText(item.goodsName);
         }
@@ -65,7 +90,7 @@ public class ShopSpikeAdapter extends BaseQuickAdapter<SpikeDto, BaseViewHolder>
             int with = (int) textPaint.measureText(name);
             FrameLayout.LayoutParams linearParams =(FrameLayout.LayoutParams) line.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
 
-            linearParams.width = with+5;// 控件的宽强制设成30
+            linearParams.width = with+15;// 控件的宽强制设成30
 
             line.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
             tvFirstPrice.setText(item.marketPrice);

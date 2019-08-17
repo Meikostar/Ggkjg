@@ -151,6 +151,7 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
             @Override
             public void onSuccess(SpikeDto objects) {
                 if (objects != null && objects.page != null&&objects.page.records!=null) {
+                    objects.page.records.get(objects.page.records.size()-1).isLast=true;
                     shopSpikeAdapter.setNewData(objects.page.records);
                 }
                 if(objects!=null&&objects.sedKillTimes!=null){

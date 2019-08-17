@@ -51,18 +51,28 @@
             android:textColor="@color/my_color_050000"
             android:textSize="@dimen/wz_12sp"
             />
-
-        <TextView
-            android:id="@+id/tv_me_order_branch"
-            android:layout_width="@dimen/bj_17dp"
-            android:layout_height="@dimen/bj_17dp"
+        <LinearLayout
             android:layout_alignTop="@id/tv_me_order_number"
             android:layout_alignParentRight="true"
-            android:textColor="@color/my_color_8b8b8b"
-            android:textSize="@dimen/wz_12sp"
-            android:drawableLeft="@mipmap/home_gold"
-            android:drawablePadding="@dimen/bj_5dp"
-          />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/bj_13dp"
+                android:layout_height="@dimen/bj_13dp"
+                android:src="@mipmap/home_gold"
+                android:layout_marginRight="@dimen/bj_6dp"/>
+            <TextView
+                android:id="@+id/tv_me_order_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/my_color_8b8b8b"
+                android:textSize="@dimen/wz_12sp"
+                />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <ImageView style="@style/line_1" />

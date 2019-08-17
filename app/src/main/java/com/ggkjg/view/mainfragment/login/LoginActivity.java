@@ -29,7 +29,13 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
+import cn.udesk.UdeskSDKManager;
+import cn.udesk.config.UdeskConfig;
+import udesk.core.UdeskConst;
 
 /**
  * 商城快讯
@@ -166,6 +172,19 @@ public class LoginActivity extends BaseActivity {
             Constants.getInstance().save(Constants.USER_MEMBER_LEVEL, loginDto.getMemberLevel());
             Constants.getInstance().save(Constants.USER_AUTH_STATE, loginDto.getAuthState());
             Constants.getInstance().save(Constants.SYS_PATH, loginDto.getSysPath());
+//            String sdktoken = loginDto.getJSESSIONID_SHIRO();
+//            Map<String, String> info = new HashMap<String, String>();
+//            info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, sdktoken);
+//            //以下信息是可选
+//            info.put(UdeskConst.UdeskUserInfo.NICK_NAME,loginDto.getNickName());
+////            info.put(UdeskConst.UdeskUserInfo.EMAIL,"0631@163.com");
+//            info.put(UdeskConst.UdeskUserInfo.CELLPHONE,loginDto.getMobileNo());
+////            info.put(UdeskConst.UdeskUserInfo.DESCRIPTION,"描述信息")
+//
+//
+//            UdeskConfig.Builder builder = new UdeskConfig.Builder();
+//            builder.setDefualtUserInfo(info);
+//            UdeskSDKManager.getInstance().entryChat(getApplicationContext(), builder.build(), sdktoken);
         }
         Intent intent = new Intent();
         intent.putExtra(MainActivity.LOGIN_PAGE_INDEX, page_index);

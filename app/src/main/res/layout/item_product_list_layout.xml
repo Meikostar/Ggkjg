@@ -8,11 +8,12 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="187dp">
         <ImageView
+            android:scaleType="fitXY"
             android:id="@+id/iv_item_product_img"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="187dp"
             android:src="@mipmap/img_default_6" />
         <LinearLayout
             android:visibility="gone"
@@ -44,6 +45,7 @@
 
     </FrameLayout>
     <TextView
+        android:layout_marginTop="@dimen/bj_5dp"
         android:id="@+id/tv_item_product_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

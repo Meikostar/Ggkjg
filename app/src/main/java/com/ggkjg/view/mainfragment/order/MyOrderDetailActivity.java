@@ -257,6 +257,7 @@ public class MyOrderDetailActivity extends BaseActivity {
             case Constants.PAY_MONEY:
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants.ORDER_ID, mMyOrderDto.getId());
+                bundle.putString("state", "1");
                 bundle.putString(Constants.ORDER_NO, mMyOrderDto.getOrderNo());
                 bundle.putString(Constants.ORDER_MONEY, mMyOrderDto.getRealOrderMoney());
                 gotoActivity(PayOrderActivity.class, false, bundle, Constants.INTENT_REQUESTCODE_PAY);
@@ -438,10 +439,10 @@ public class MyOrderDetailActivity extends BaseActivity {
 
     private void showTipDialog(boolean isSuccess) {
         if (isSuccess) {
-            tipDialog = new RechargeDialog(MyOrderDetailActivity.this, Constants.RECHARGE_TYPE_SUCCESS);
+            tipDialog = new RechargeDialog(MyOrderDetailActivity.this, Constants.PAY_TYPE_SUCCESS);
             tipDialog.setTip("支付成功");
         } else {
-            tipDialog = new RechargeDialog(MyOrderDetailActivity.this, Constants.RECHARGE_TYPE_FAIL);
+            tipDialog = new RechargeDialog(MyOrderDetailActivity.this, Constants.PAY_TYPE_FAIL);
             tipDialog.setTip("支付失败");
         }
         tipDialog.show();
