@@ -472,10 +472,11 @@ public class DataManager {
     /**
      * 秒杀
      */
-    public void findGoodsSedKill(DefaultSingleObserver<SpikeDto> observer  , int page, int rows) {
+    public void findGoodsSedKill(DefaultSingleObserver<SpikeDto> observer  , int page, int rows,String killTimeId) {
         HashMap<String, String> map = new HashMap<>();
         map.put("page", page + "");
         map.put("rows", rows + "");
+        map.put("killTimeId", killTimeId + "");
         Single<SpikeDto> observable = retrofitService.findGoodsSedKill(map)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);

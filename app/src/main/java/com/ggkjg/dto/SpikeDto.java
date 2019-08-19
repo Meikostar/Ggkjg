@@ -62,7 +62,7 @@ public class SpikeDto implements Serializable {
     public String endTime;
     public String modifyTime;
     public String salesTime;
-    public String total;
+    public long total;
     public String size;
     public String current;
     public String pages;

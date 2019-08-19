@@ -4,11 +4,13 @@ package com.ggkjg.base;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +20,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.ggkjg.R;
 import com.ggkjg.common.utils.StatusBarCompat;
@@ -283,7 +286,25 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
         loadingDialog.show();
     }
-
+    /**
+     * 关闭键盘
+     */
+    public void closeKeyBoard() {
+        try {
+            if(this.getCurrentFocus() == null){
+                return;
+            }
+            IBinder iBinder = this.getCurrentFocus().getWindowToken();
+            if (iBinder == null) {
+                return;
+            }
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(iBinder, InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     protected void dissLoadDialog() {
         if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.cancelDialog();

@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ggkjg.R;
 import com.ggkjg.base.BuildConfig;
 import com.ggkjg.common.utils.GlideUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.db.SeachHistotyDBUtil;
 import com.ggkjg.db.bean.SearchHistory;
 import com.ggkjg.dto.FloorBean;
@@ -52,6 +54,15 @@ public class HomeAdapter extends BaseQuickAdapter<GoodsPushRowsDto, BaseViewHold
                     gotoActivity(CommodityDetailActivity.class, bundle);
                 }
             });
+            LinearLayout view = helper.getView(R.id.ll_zone);
+            if(item.isConpon.equals("1")){
+                view.setVisibility(View.VISIBLE);
+                if(TextUtil.isNotEmpty(item.conponPrice)){
+                    helper.setText(R.id.tv_cout,Double.valueOf(item.conponPrice).intValue()+"港券");
+                }
+            }else {
+                view.setVisibility(View.GONE);
+            }
         }
     }
 

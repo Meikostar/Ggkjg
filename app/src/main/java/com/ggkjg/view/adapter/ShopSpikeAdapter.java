@@ -110,7 +110,7 @@ public class ShopSpikeAdapter extends BaseQuickAdapter<SpikeDto, BaseViewHolder>
                 tvTobuy.setBackgroundColor(mContext.getResources().getColor(R.color.my_color_blue));
             }else if(state==2){
                 tvTobuy.setText("去抢购");
-                tvTobuy.setBackgroundColor(mContext.getResources().getColor(R.color.my_color_blue));
+                tvTobuy.setBackgroundColor(mContext.getResources().getColor(R.color.my_color_999999));
             }else {
                 tvTobuy.setText("去看看");
                 tvTobuy.setBackgroundColor(mContext.getResources().getColor(R.color.my_color_green));

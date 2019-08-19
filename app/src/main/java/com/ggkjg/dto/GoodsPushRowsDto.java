@@ -12,6 +12,8 @@ public class GoodsPushRowsDto implements Serializable  {
     private String barCode;
     private String goodsSn;
     private String productNo;
+    public String conponPrice;
+    public String isConpon;
     private String goodsName;
     private String goodsImg;
     private String marketPrice;

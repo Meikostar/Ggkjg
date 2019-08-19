@@ -745,7 +745,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         if(TextUtil.isNotEmpty(tradePwd)){
             map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
         }else {
-            map.put("tradePwd", "");
+//            map.put("tradePwd", "");
         }
 
         DataManager.getInstance().submitOrder(new DefaultSingleObserver<HttpResult<RechargeDto>>() {

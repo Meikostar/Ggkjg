@@ -13,7 +13,15 @@ public class CommodityDetailDto implements Serializable {
     private List<CommodityDetailAdsDto> adsList;
     private CommodityDetailInfoDto goodsInfo;
     private ShopEvaluateRowsDto evaContent;
+
     private String evaTotal;
+    public String id;
+    public String goodsId;
+    public String startTime;
+    public String endTime;
+    public String sedKillTimeId;
+
+    public CommodityDetailDto sedKillTime;
     private int isFavorite;
     public boolean isGoodsSedKill;
 

@@ -11,12 +11,13 @@ public class CommodityDetailInfoDto implements Serializable {
     private long id;
     private String barCode;
     private String goodsSn;
-    public String isConpon;
+
     private String productNo;
     private String goodsName;
     private String goodsImg;
     private String marketPrice;
     public String conponPrice;
+    public String isConpon;
     private String gdPrice;
     private long oneCatsId;
     private long twoCatsId;

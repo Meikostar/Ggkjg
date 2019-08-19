@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.udesk.UdeskSDKManager;
 import cn.udesk.config.UdeskConfig;
+import udesk.core.UdeskCallBack;
 import udesk.core.UdeskConst;
+import udesk.core.UdeskHttpFacade;
 
 /**
  * 首页
@@ -404,6 +407,9 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
             String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
             String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
+
+
+
             if(TextUtil.isNotEmpty(shiroToken)){
                 String sdktoken = shiroToken;
                 Map<String, String> info = new HashMap<String, String>();
@@ -417,7 +423,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
 
                 UdeskConfig.Builder builder = new UdeskConfig.Builder();
                 builder.setDefualtUserInfo(info);
-                UdeskSDKManager.getInstance().entryChat(getActivity(), builder.build(), shiroToken);
+                UdeskSDKManager.getInstance().entryChat(getActivity(), CreatUdeskStyle.makeBuilder(getActivity()).build(), shiroToken);
             }
 
 //            gotoActivity(MessageCenterActivity.class);

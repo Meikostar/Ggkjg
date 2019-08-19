@@ -3,6 +3,7 @@
     android:id="@+id/common_refresh"
     android:layout_width="match_parent"
     android:background="@color/my_color_f6f6f6"
+    android:descendantFocusability="blocksDescendants"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView

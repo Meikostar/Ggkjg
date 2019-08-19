@@ -121,12 +121,15 @@ public class VoucherProductListActivity extends BaseActivity {
         mParamsMaps.put("isConpon", 1);
         if (TextUtil.isNotEmpty(searchKey)) {
             mParamsMaps.put("goodsName", searchKey);
+        }else {
+            mParamsMaps.remove("goodsName");
         }
 
         DataManager.getInstance().findGoodsList(mParamsMaps, new DefaultSingleObserver<CommodityDetailListDto>() {
             @Override
             public void onSuccess(CommodityDetailListDto data) {
                 if (null != data.getRows() && !data.getRows().isEmpty()) {
+                    closeKeyBoard();
                     if (mCurrentPage == 1) {
                         mAdapter.setNewData(data.getRows());
                         refreshLayout.setRefreshing(false);

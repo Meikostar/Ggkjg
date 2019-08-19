@@ -18,6 +18,7 @@ import com.ggkjg.base.BaseActivity;
 import com.ggkjg.base.BuildConfig;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.CallPhoneUtils;
+import com.ggkjg.common.utils.CreatUdeskStyle;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.ScreenSizeUtil;
@@ -56,10 +57,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.udesk.UdeskSDKManager;
+import cn.udesk.config.UdeskConfig;
+import udesk.core.UdeskConst;
 
 /**
  * 商品详细
@@ -246,6 +251,28 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             }
         });
         bindClickEvent(tv_commodity_cart, () -> {
+            String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
+            String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
+            String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
+
+
+
+            if(TextUtil.isNotEmpty(shiroToken)){
+                String sdktoken = shiroToken;
+                Map<String, String> info = new HashMap<String, String>();
+                info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, sdktoken);
+                //以下信息是可选
+                info.put(UdeskConst.UdeskUserInfo.NICK_NAME,nickName);
+//            info.put(UdeskConst.UdeskUserInfo.EMAIL,"0631@163.com");
+                info.put(UdeskConst.UdeskUserInfo.CELLPHONE,mobileNO);
+//            info.put(UdeskConst.UdeskUserInfo.DESCRIPTION,"描述信息")
+
+
+                UdeskConfig.Builder builder = new UdeskConfig.Builder();
+                builder.setDefualtUserInfo(info);
+                UdeskSDKManager.getInstance().entryChat(CommodityDetailActivity.this, CreatUdeskStyle.makeBuilder(CommodityDetailActivity.this).build(), shiroToken);
+            }
+
             if (Constants.getInstance().isLogin()) {
                 finishAll();
                 Bundle bundle = new Bundle();
@@ -605,6 +632,13 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                 if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().startTime)){
                      endTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().endTime);
                 }
+                if(commodityDetailDto.sedKillTime!=null&&commodityDetailDto.sedKillTime.startTime!=null){
+                    starTime=TimeUtil.getStringToDate(commodityDetailDto.sedKillTime.startTime);
+
+                }
+                if(commodityDetailDto.sedKillTime!=null&&commodityDetailDto.sedKillTime.endTime!=null){
+                    endTime=TimeUtil.getStringToDate(commodityDetailDto.sedKillTime.endTime);
+                }
 
                   if(starTime==0){
                       if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
@@ -623,12 +657,17 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     tvTobuy.setText("秒杀预告");
                     tvInteger.setText("距开始时间");
                     line.setVisibility(View.GONE);
-                    tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().activePrice);
+
                     tvTobuy.setTextColor(getResources().getColor(R.color.my_color_green52e));
                     tvHour.setTextColor(getResources().getColor(R.color.my_color_green52e));
                     tvMinter.setTextColor(getResources().getColor(R.color.my_color_green52e));
                     tvSecond.setTextColor(getResources().getColor(R.color.my_color_green52e));
                     tvPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
+                    if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
+                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                    }else {
+                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                    }
                     llMore.setBackgroundColor(getResources().getColor(R.color.my_color_green));
 
                 }else {

@@ -50,7 +50,7 @@
                android:layout_height="28dp"
                android:background="@null"
                android:singleLine="true"
-               android:textColor="@color/my_color_333333"
+               android:textColor="@color/my_color_aaaaaa"
                android:textSize="14sp" />
            <LinearLayout
                android:layout_width="wrap_content"

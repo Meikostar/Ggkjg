@@ -24,6 +24,7 @@ import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.adapter.ShopSpikeAdapter;
 import com.ggkjg.view.widgets.LoadingDialog;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
+import com.ggkjg.view.widgets.autoview.EmptyView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -89,6 +90,7 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
         loadingDialog = LoadingDialog.show(getActivity());
         loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.setCallbackListener(this);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
@@ -150,9 +152,21 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
         DataManager.getInstance().findGoodsSedKill(new DefaultSingleObserver<SpikeDto>() {
             @Override
             public void onSuccess(SpikeDto objects) {
-                if (objects != null && objects.page != null&&objects.page.records!=null) {
+                if (objects != null && objects.page != null&&objects.page.records!=null&&objects.page.records.size()>0) {
                     objects.page.records.get(objects.page.records.size()-1).isLast=true;
-                    shopSpikeAdapter.setNewData(objects.page.records);
+                    if (currentPage <= Constants.PAGE_NUM) {
+                        shopSpikeAdapter.setNewData(objects.page.records);
+                    } else {
+                        shopSpikeAdapter.addData(objects.page.records);
+                    }
+
+                    swipeRefreshLayoutUtil.isMoreDate(currentPage, rows, 0);
+
+                }else {
+                    swipeRefreshLayoutUtil.isMoreDate(currentPage, rows, 0);
+                    EmptyView emptyView = new EmptyView(getActivity());
+                    emptyView.setTvEmptyTip("暂无推荐商品");
+                    shopSpikeAdapter.setEmptyView(emptyView);
                 }
                 if(objects!=null&&objects.sedKillTimes!=null){
                     SpikeDto object=null;
@@ -223,7 +237,7 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
                     loadingDialog.setLoadinglevel(++loadinglevel);
                 }
             }
-        }, currentPage, rows);
+        }, currentPage, rows,id);
     }
 
     @Override
@@ -236,11 +250,22 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
     @Override
     public void onResume() {
         selectList.clear();
-        findShoppingCartList();
+
 
         super.onResume();
     }
+    @Override
+    protected void dissLoadDialog() {
+        super.dissLoadDialog();
+        if (swipeRefreshLayout != null) {
+            if(loadingDialog!=null&&swipeRefreshLayout!=null){
+                loadingDialog.cancelDialog();
+                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setLoadMore(false);
+            }
 
+        }
+    }
     @Override
     protected void initListener() {
 
@@ -256,25 +281,7 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
     }
 
 
-    /**
-     * 获取购物车列表
-     */
-    private void findShoppingCartList() {
-        showLoadDialog();
-        DataManager.getInstance().findShoppingCartList(new DefaultSingleObserver<List<ShopCartDto>>() {
-            @Override
-            public void onSuccess(List<ShopCartDto> shopCartDtoList) {
-                dissLoadDialog();
 
-
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                dissLoadDialog();
-            }
-        });
-    }
 
 
     @Override

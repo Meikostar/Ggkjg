@@ -8,6 +8,8 @@ import com.ggkjg.R;
 import com.ggkjg.common.Constants;
 import com.yzq.zxinglibrary.common.Constant;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import cn.udesk.UdeskSDKManager;
@@ -20,9 +22,26 @@ import cn.udesk.callback.IUdeskStructMessageCallBack;
 import cn.udesk.config.UdeskConfig;
 import cn.udesk.model.NavigationMode;
 import cn.udesk.presenter.ChatActivityPresenter;
+import udesk.core.UdeskConst;
 
 public class CreatUdeskStyle {
     public static UdeskConfig.Builder makeBuilder(Context context) {
+        String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
+        String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
+        String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
+        Map<String, String> info = new HashMap<String, String>();
+        if(TextUtil.isNotEmpty(shiroToken)){
+            String sdktoken = shiroToken;
+
+            info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, sdktoken);
+            //以下信息是可选
+            info.put(UdeskConst.UdeskUserInfo.NICK_NAME,nickName);
+//            info.put(UdeskConst.UdeskUserInfo.EMAIL,"0631@163.com");
+            info.put(UdeskConst.UdeskUserInfo.CELLPHONE,mobileNO);
+//            info.put(UdeskConst.UdeskUserInfo.DESCRIPTION,"描述信息")
+
+
+        }
         UdeskConfig.Builder builder = new UdeskConfig.Builder();
         builder.setUdeskTitlebarBgResId(R.color.udesk_titlebar_bg1) //设置标题栏TitleBar的背景色
                 .setUdeskTitlebarTextLeftRightResId(R.color.udesk_color_navi_text1) //设置标题栏TitleBar，左右两侧文字的颜色
@@ -37,7 +56,7 @@ public class CreatUdeskStyle {
                 .setUdeskCommitysubtitleColorResId(R.color.udesk_color_im_commondity_subtitle1)// 商品咨询页面中，商品介绍子Title的字样颜色
                 .setUdeskCommityLinkColorResId(R.color.udesk_color_im_commondity_link1) //商品咨询页面中，发送链接的字样颜色
                 .setUserSDkPush(true) // 配置 是否使用推送服务  true 表示使用  false表示不使用
-                .setOnlyUseRobot(false)//配置是否只使用机器人功能 只使用机器人功能,只使用机器人功能;  其它功能不使用。
+                .setOnlyUseRobot(true)//配置是否只使用机器人功能 只使用机器人功能,只使用机器人功能;  其它功能不使用。
                 .setUdeskQuenuMode(false? UdeskConfig.UdeskQuenuFlag.FORCE_QUIT : UdeskConfig.UdeskQuenuFlag.Mark)  //  配置放弃排队的策略
                 .setUseVoice(true) // 是否使用录音功能  true表示使用 false表示不使用
                 .setUsephoto(true) //是否使用发送图片的功能  true表示使用 false表示不使用
@@ -50,10 +69,10 @@ public class CreatUdeskStyle {
                 .setUseSmallVideo(true)  //设置是否需要小视频的功能 rue表示使用 false表示不使用
                 .setScaleImg(true) //上传图片是否使用原图 还是缩率图
                 .setScaleMax(1024) // 缩放图 设置最大值，如果超出则压缩，否则不压缩
-                .setOrientation(true ? UdeskConfig.OrientationValue.landscape :
+                .setOrientation(false ? UdeskConfig.OrientationValue.landscape :
                         (true ? UdeskConfig.OrientationValue.user : UdeskConfig.OrientationValue.portrait)) //设置默认屏幕显示习惯
                 .setUserForm(true) //在没有请求到管理员在后端对sdk使用配置下，在默认的情况下，是否需要表单留言，true需要， false 不需要
-//                .setDefualtUserInfo(getDefualtUserInfo()) // 创建用户基本信息
+                .setDefualtUserInfo(info) // 创建用户基本信息
 //                .setDefinedUserTextField(getDefinedUserTextField()) //创建用户自定义的文本信息
 //                .setDefinedUserRoplist(getDefinedUserRoplist()) //创建用户自定义的列表信息
 //                .setUpdateDefualtUserInfo(getUpdateDefualtUserInfo()) // 设置更新用户的基本信息

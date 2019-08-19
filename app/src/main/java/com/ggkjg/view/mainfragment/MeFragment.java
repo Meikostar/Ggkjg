@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -78,9 +79,9 @@ public class MeFragment extends BaseFragment {
     @BindView(R.id.rl_me_item_mycc)
     RelativeLayout rl_me_item_mycc;
     @BindView(R.id.rl_voucher)
-    RelativeLayout rl_voucher;
+    LinearLayout rl_voucher;
     @BindView(R.id.rl_business)
-    RelativeLayout rl_business;
+    LinearLayout rl_business;
 
     @BindView(R.id.rl_me_item_reward)
     RelativeLayout rl_me_item_reward;
