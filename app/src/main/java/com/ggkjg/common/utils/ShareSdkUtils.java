@@ -44,14 +44,14 @@ public class ShareSdkUtils {
     public static ShareSdkUtils getInstances() {
         return shareSdkUtils;
     }
-
+    private    Dialog shareDialog;
     public void showShareDialog(Activity context, String title, String description, String imgUrl, String pageUrl) {
         this.context = context;
         this.title = title;
         this.description = description;
         this.imgUrl = imgUrl;
         this.pageUrl = pageUrl;
-        final Dialog shareDialog = new Dialog(context, R.style.dialog_with_alpha);
+        shareDialog= new Dialog(context, R.style.dialog_with_alpha);
         shareDialog.setContentView(R.layout.dialog_share_layout);
         Window window = shareDialog.getWindow();
         // 控制对话框在屏幕底部显示
@@ -80,6 +80,11 @@ public class ShareSdkUtils {
         });
         shareDialog.show();
 
+    }
+    public void dissMiss(){
+        if(shareDialog!=null){
+            shareDialog.dismiss();
+        }
     }
 
     private void sendToWeaChat(final boolean isTimelineCb) {

@@ -5,6 +5,7 @@ public class MoneyRecordItemDto {
     String transferRemark;
     String transferState;
     String transferAmount;
+    public String fundType;
 
     public String getTransferTime() {
         return transferTime;

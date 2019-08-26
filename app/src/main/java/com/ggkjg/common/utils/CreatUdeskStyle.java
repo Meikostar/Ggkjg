@@ -21,11 +21,13 @@ import cn.udesk.callback.IUdeskFormCallBack;
 import cn.udesk.callback.IUdeskStructMessageCallBack;
 import cn.udesk.config.UdeskConfig;
 import cn.udesk.model.NavigationMode;
+import cn.udesk.model.UdeskCommodityItem;
 import cn.udesk.presenter.ChatActivityPresenter;
 import udesk.core.UdeskConst;
 
 public class CreatUdeskStyle {
-    public static UdeskConfig.Builder makeBuilder(Context context) {
+
+    public static UdeskConfig.Builder makeBuilder(Context context,UdeskCommodityItem item)  {
         String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
         String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
         String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
@@ -55,8 +57,8 @@ public class CreatUdeskStyle {
                 .setUdeskCommityTitleColorResId(R.color.udesk_color_im_commondity_title1) // 商品介绍Title的字样颜色
                 .setUdeskCommitysubtitleColorResId(R.color.udesk_color_im_commondity_subtitle1)// 商品咨询页面中，商品介绍子Title的字样颜色
                 .setUdeskCommityLinkColorResId(R.color.udesk_color_im_commondity_link1) //商品咨询页面中，发送链接的字样颜色
-                .setUserSDkPush(true) // 配置 是否使用推送服务  true 表示使用  false表示不使用
-                .setOnlyUseRobot(true)//配置是否只使用机器人功能 只使用机器人功能,只使用机器人功能;  其它功能不使用。
+                .setUserSDkPush(false) // 配置 是否使用推送服务  true 表示使用  false表示不使用
+                .setOnlyUseRobot(false)//配置是否只使用机器人功能 只使用机器人功能,只使用机器人功能;  其它功能不使用。
                 .setUdeskQuenuMode(false? UdeskConfig.UdeskQuenuFlag.FORCE_QUIT : UdeskConfig.UdeskQuenuFlag.Mark)  //  配置放弃排队的策略
                 .setUseVoice(true) // 是否使用录音功能  true表示使用 false表示不使用
                 .setUsephoto(true) //是否使用发送图片的功能  true表示使用 false表示不使用
@@ -66,7 +68,7 @@ public class CreatUdeskStyle {
                 .setUseEmotion(true) //是否使用表情 true表示使用 false表示不使用
                 .setUseMore(true) // 是否使用更多控件 展示出更多功能选项 true表示使用 false表示不使用
                 .setUseNavigationSurvy(true) //设置是否使用导航UI中的满意度评价UI rue表示使用 false表示不使用
-                .setUseSmallVideo(true)  //设置是否需要小视频的功能 rue表示使用 false表示不使用
+                .setUseSmallVideo(false)  //设置是否需要小视频的功能 rue表示使用 false表示不使用
                 .setScaleImg(true) //上传图片是否使用原图 还是缩率图
                 .setScaleMax(1024) // 缩放图 设置最大值，如果超出则压缩，否则不压缩
                 .setOrientation(false ? UdeskConfig.OrientationValue.landscape :
@@ -82,7 +84,7 @@ public class CreatUdeskStyle {
                 .setCustomerUrl(Constants.getInstance().getString(Constants.USER_HEAD_IMG, "")) //设置客户的头像地址
                 .setRobot_modelKey("6395") // udesk 机器人配置插件 对应的Id值
                 .setConcatRobotUrlWithCustomerInfo("")
-                .setCommodity(null)//配置发送商品链接的mode
+                .setCommodity(item)//配置发送商品链接的mode
 //                .setExtreFunctions(getExtraFunctions(), new IFunctionItemClickCallBack() {
 //                    @Override
 //                    public void callBack(Context context, ChatActivityPresenter mPresenter, int id, String name) {

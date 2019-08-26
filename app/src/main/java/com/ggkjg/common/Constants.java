@@ -113,7 +113,9 @@ public class Constants {
     /**
      * 微信 WX_APP_ID
      */
-    public static final String WX_APP_ID = "wx71ff9cd3b8cb4dd0";
+//    public static final String WX_APP_ID = "wx71ff9cd3b8cb4dd0";
+    public static final String WX_APP_ID = "wx7f15f82d4ef1b563";
+
 
     /**
      * 保持cookie key

@@ -165,7 +165,7 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
                 }else {
                     swipeRefreshLayoutUtil.isMoreDate(currentPage, rows, 0);
                     EmptyView emptyView = new EmptyView(getActivity());
-                    emptyView.setTvEmptyTip("暂无推荐商品");
+                    emptyView.setTvEmptyTip("暂无秒杀商品");
                     shopSpikeAdapter.setEmptyView(emptyView);
                 }
                 if(objects!=null&&objects.sedKillTimes!=null){
@@ -193,7 +193,9 @@ public class SpikeFragment extends BaseFragment implements LoadingDialog.Loading
                         tvState.setText("距开始");
                         times= TimeUtil.getStringToDate(object.startTime)-System.currentTimeMillis();
                     }else {
-                        llMore.setVisibility(View.GONE);
+                        llMore.setVisibility(View.VISIBLE);
+                        tvInteger.setText("抢购中 先下单先得哦");
+                        tvState.setText("已结束");
                     }
                     if(state!=2){
                         countDownTimer = new CountDownTimer(times, 1000) {

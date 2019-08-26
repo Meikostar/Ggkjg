@@ -199,6 +199,7 @@ public class UserInfoSetActivity extends BaseActivity {
             ToastUtil.showToast("上传头像失败");
             return;
         }
+
         showLoadDialog();
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), compressedImage);
         MultipartBody.Part part = MultipartBody.Part.createFormData("imgFile", file.getName(), requestBody);
@@ -207,7 +208,7 @@ public class UserInfoSetActivity extends BaseActivity {
             public void onSuccess(HttpResult<Object> httpResult) {
                 dissLoadDialog();
                 if (httpResult != null && httpResult.getStatus() == 1) {
-                    GlideUtils.getInstances().loadNormalImg(UserInfoSetActivity.this, img_user_header, imgPath);
+                    loadData();
                     ToastUtil.showToast("上传成功");
                 } else {
                     if (httpResult != null) {

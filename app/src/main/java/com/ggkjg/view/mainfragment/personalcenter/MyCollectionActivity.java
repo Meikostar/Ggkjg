@@ -105,12 +105,12 @@ public class MyCollectionActivity extends BaseActivity {
      */
     private void findQualityGoodsList() {
         showLoadDialog();
-        DataManager.getInstance().findQualityList(new DefaultSingleObserver<List<GoodsPushRowsDto>>() {
+        DataManager.getInstance().findQualityList(new DefaultSingleObserver<GoodsPushDto>() {
             @Override
-            public void onSuccess(List<GoodsPushRowsDto> object) {
+            public void onSuccess(GoodsPushDto object) {
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
-                if (object != null && !object.isEmpty()) {
-                    pushAdapter.setNewData(object);
+                if (object != null && object.getRows()!=null) {
+                    pushAdapter.setNewData(object.getRows());
                 } else {
                     EmptyView emptyView = new EmptyView(MyCollectionActivity.this);
                     emptyView.setTvEmptyTip("暂无推荐商品");

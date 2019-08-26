@@ -21,6 +21,7 @@ public class ShopCartDto  implements Serializable {
     private String goodsName;
     private int cartNum;
     public int conponCount;
+    public int stockTotal;
     private double gdPrice;
     private double weight;
     private boolean isSelect; //是否选中

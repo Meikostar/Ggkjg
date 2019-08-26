@@ -351,7 +351,7 @@
                         android:layout_width="@dimen/bj_20dp"
                         android:layout_height="@dimen/bj_20dp"
                         android:layout_marginRight="14dp"
-                        android:src="@drawable/mine_gq"/>
+                        android:src="@drawable/mine_sxy"/>
                     <TextView
                         android:layout_weight="1"
                         android:layout_width="wrap_content"

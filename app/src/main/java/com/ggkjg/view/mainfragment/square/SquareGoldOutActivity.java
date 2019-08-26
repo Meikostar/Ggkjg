@@ -17,6 +17,7 @@ import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -78,11 +79,11 @@ public class SquareGoldOutActivity extends BaseActivity {
 
     private void findAccountBalance() {
         showLoadDialog();
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
-                if (object != null) {
-                    btn_gold_out_fundAmount.setText(object.getAvailAmount());
+            public void onSuccess(List<AccountBalanceDto> object) {
+                if (object != null&&object.size()>0) {
+                    btn_gold_out_fundAmount.setText(object.get(0).getAvailAmount());
                 }
                 dissLoadDialog();
             }
@@ -91,7 +92,7 @@ public class SquareGoldOutActivity extends BaseActivity {
             public void onError(Throwable throwable) {
                 dissLoadDialog();
             }
-        }, 1);
+        }, 1+"");
     }
 
 

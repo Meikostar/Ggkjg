@@ -41,7 +41,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         //GreenDao数据库管理初始化
-        UdeskSDKManager.getInstance().initApiKey(this, "","c83493630ab4134046357585e25cc3eb","e74387aa0a787b71");
+        UdeskSDKManager.getInstance().initApiKey(this, "ggkjds.s2.udesk.cn","c83493630ab4134046357585e25cc3eb","e74387aa0a787b71");
 
 
         DaoManager.getInstance().init(this);

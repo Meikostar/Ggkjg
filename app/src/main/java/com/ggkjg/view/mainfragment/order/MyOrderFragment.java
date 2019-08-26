@@ -132,11 +132,11 @@ public class MyOrderFragment extends BaseFragment {
      * 获取精品推荐
      */
     private void findQualityGoodsList() {
-        DataManager.getInstance().findQualityList(new DefaultSingleObserver<List<GoodsPushRowsDto>>() {
+        DataManager.getInstance().findQualityList(new DefaultSingleObserver<GoodsPushDto>() {
             @Override
-            public void onSuccess(List<GoodsPushRowsDto> object) {
-                if (object != null && !object.isEmpty()) {
-                    pushAdapter.setNewData(object);
+            public void onSuccess(GoodsPushDto object) {
+                if (object != null && object.getRows()!=null) {
+                    pushAdapter.setNewData(object.getRows());
                 } else {
                     EmptyView emptyView = new EmptyView(getActivity());
                     emptyView.setTvEmptyTip("暂无推荐商品");

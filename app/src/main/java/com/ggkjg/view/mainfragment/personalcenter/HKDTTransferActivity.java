@@ -20,6 +20,7 @@ import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.widgets.TransferDialog;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -90,11 +91,11 @@ public class HKDTTransferActivity extends BaseActivity {
             showLoadDialog();
         }
 
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
-                if (object != null) {
-                    mBalance = object.getAvailAmount();
+            public void onSuccess(List<AccountBalanceDto> object) {
+                if (object != null&&object.size()>0) {
+                    mBalance = object.get(0).getAvailAmount();
                     tv_balance.setText(mBalance);
                 }
                 dissLoadDialog();
@@ -104,7 +105,7 @@ public class HKDTTransferActivity extends BaseActivity {
             public void onError(Throwable throwable) {
                 dissLoadDialog();
             }
-        }, fundType);
+        }, fundType+"");
     }
 
 

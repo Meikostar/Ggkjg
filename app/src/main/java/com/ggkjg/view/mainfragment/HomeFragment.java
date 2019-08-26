@@ -1,5 +1,6 @@
 package com.ggkjg.view.mainfragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -15,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseFragment;
@@ -33,6 +36,7 @@ import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.TimeUtil;
 import com.ggkjg.dto.GoodsPushDto;
+import com.ggkjg.dto.GoodsPushRowsDto;
 import com.ggkjg.dto.HomeActiveIndexDto;
 import com.ggkjg.dto.HomeAdsDto;
 import com.ggkjg.dto.HomeCategoryIndexDto;
@@ -61,6 +65,10 @@ import com.ggkjg.view.widgets.LoadingDialog;
 import com.ggkjg.view.widgets.RecyclerItemDecoration;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
 import com.ggkjg.view.widgets.autoview.EmptyView;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.HashMap;
 import java.util.List;
@@ -120,7 +128,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     @BindView(R.id.grid_gg)
     GridView gridViewGg;
 
-    private List<HomeActiveIndexDto> homeActiveIndexDtos;
+    private List<GoodsPushRowsDto> homeActiveIndexDtos;
     @BindView(R.id.iv_home_img1)
     ImageView iv_home_img1;
     @BindView(R.id.iv_home_img2)
@@ -133,12 +141,11 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     ImageView iv_home_img5;
     @BindView(R.id.iv_home_img6)
     ImageView iv_home_img6;
+    @BindView(R.id.banner)
+    Banner banner;
 
-    @BindView(R.id.home_vp_container)
-    ViewPager homeVpContainer;
     Unbinder unbinder;
-    @BindView(R.id.home_ll_indicators)
-    LinearLayout homeLlIndicators;
+
     @BindView(R.id.ll_zone)
     LinearLayout ll_zone;
 
@@ -148,6 +155,9 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     ImageView ivAdTwo;
     @BindView(R.id.iv_ad_three)
     ImageView ivAdThree;
+    @BindView(R.id.h_scroll)
+    HorizontalScrollView  mScrollView;
+
 
     private LoadingDialog loadingDialog;
     private int loadinglevel = 0;
@@ -210,12 +220,37 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         findActiveIndex();
         findAdsList();
         findQualityGoodsList(false, currentPage, Constants.PAGE_SIZE);
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                SlidersDto slidersDto=datas.get(position);
+                if (!TextUtils.isEmpty(slidersDto.getClickType())) {
+                    switch(slidersDto.getClickType()){
+                        case "1":
+                            if(!TextUtils.isEmpty(slidersDto.getClickUrl())) {
+                                startActivityProductList(Integer.valueOf(slidersDto.getClickUrl()));
+                                Log.i("hahahah","返回来的数据是" + Integer.valueOf(slidersDto.getClickUrl()));
+                            }
+                            break;
+                        case "2":
+                            if(!TextUtils.isEmpty(slidersDto.getClickUrl())) {
+                                startActivityCommodityDetail(Long.valueOf(slidersDto.getClickUrl()));
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            }
+        });
     }
 
     private void findAdsList() {
         DataManager.getInstance().findHomeAdsList(new DefaultSingleObserver<List<HomeAdsDto>>() {
             @Override
             public void onSuccess(List<HomeAdsDto> data) {
+
                 setAds(data);
                 loadingDialog.setLoadinglevel(++loadinglevel);
             }
@@ -227,7 +262,45 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         });
     }
 
+    public class GlideImageLoader extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            SlidersDto slidersDto= (SlidersDto) path;
+            String  imgStr = slidersDto.getImgUrl();
+            if(imgStr != null){
+                if(imgStr.contains("http://")){
+                    GlideUtils.getInstances().loadNormalImg(getActivity(), imageView, imgStr,R.mipmap.img_default_2);
+                } else{
+                    GlideUtils.getInstances().loadNormalImg(getActivity(), imageView, BuildConfig.BASE_IMAGE_URL + imgStr,R.mipmap.img_default_2);
+                }
+            }
 
+
+
+
+        }
+    }
+    private void startBanner(List<SlidersDto> data) {
+        //设置banner样式(显示圆形指示器)
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        //设置指示器位置（指示器居右）
+        banner.setIndicatorGravity(BannerConfig.CENTER);
+
+        //设置图片加载器
+        banner.setImageLoader(new GlideImageLoader());
+        //设置图片集合
+        banner.setImages(data);
+        //设置banner动画效果
+//        banner.setBannerAnimation(Transformer.DepthPage);
+        //设置标题集合（当banner样式有显示title时）
+//        banner.setBannerTitles(titles);
+        //设置自动轮播，默认为true
+        banner.isAutoPlay(true);
+        //设置轮播时间
+        banner.setDelayTime(3000);
+        //banner设置方法全部调用完毕时最后调用
+        banner.start();
+    }
     private void iniGridView(final List<HomeDto> list) {
 
         int length = 100;  //定义一个长度
@@ -240,7 +313,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;
 
-        int gridviewWidth = (int) (list.size() * (length + 5) * density);
+        int gridviewWidth = (int) (list.size() * (length + 15) * density);
         int itemWidth = (int) (length * density);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -248,7 +321,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         params.setMargins(10, 0, 0, 0);
         gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         gridView.setColumnWidth(itemWidth); // 设置列表项宽
-        gridView.setHorizontalSpacing(ScreenSizeUtil.dp2px(10)   ); // 设置列表项水平间距
+        gridView.setHorizontalSpacing(ScreenSizeUtil.dp2px(10)); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(list.size()); // 设置列数量=列表集合数
         goodGabAdapter.setData(list);
@@ -274,7 +347,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         float density = dm.density;
 
-        int gridviewWidth = (int) (list.size() * (length + 5) * density);
+        int gridviewWidth = (int) (list.size() * (length + 15) * density);
         int itemWidth = (int) (length * density);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -302,15 +375,16 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
      *
      * @param data
      */
+    private List<SlidersDto> datas;
     private void setAds(List<HomeAdsDto> data) {
         for (int i = 0; i < data.size(); i++) {
             List<SlidersDto> adsList = data.get(i).getAdsList();
             switch (i) {
                 case 0:
-                    LoopViewPagerAdapter loopViewPagerAdapter = new LoopViewPagerAdapter(getActivity(), homeVpContainer, homeLlIndicators);
-                    homeVpContainer.setAdapter(loopViewPagerAdapter);
-                    loopViewPagerAdapter.setList(adsList);
-                    homeVpContainer.addOnPageChangeListener(loopViewPagerAdapter);
+                    datas=adsList;
+                    startBanner(adsList);
+//                    LoopViewPagerAdapter loopViewPagerAdapter = new LoopViewPagerAdapter(getActivity(), homeVpContainer, homeLlIndicators);
+
                     break;
                 case 1:
                     if (adsList.size() > 0) {
@@ -340,27 +414,51 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     @Override
     protected void initListener() {
         bindClickEvent(iv_home_img1, () -> {
-            startActivityCommodityDetail(homeActiveIndexDtos.get(0).getCiteId());
+            if(homeActiveIndexDtos==null){
+                return;
+            }
+            startActivityCommodityDetail(homeActiveIndexDtos.get(0).getId());
         });
         bindClickEvent(iv_home_img2, () -> {
-            startActivityCommodityDetail(homeActiveIndexDtos.get(1).getCiteId());
+            if(homeActiveIndexDtos==null){
+                return;
+            }
+            startActivityCommodityDetail(homeActiveIndexDtos.get(1).getId());
         });
         bindClickEvent(iv_home_img3, () -> {
-            startActivityCommodityDetail(homeActiveIndexDtos.get(2).getCiteId());
+            if(homeActiveIndexDtos==null){
+                return;
+            }
+            startActivityCommodityDetail(homeActiveIndexDtos.get(2).getId());
         });
         bindClickEvent(iv_home_img4, () -> {
-            startActivityCommodityDetail(homeActiveIndexDtos.get(3).getCiteId());
+            if(homeActiveIndexDtos==null){
+                return;
+            }
+            startActivityCommodityDetail(homeActiveIndexDtos.get(3).getId());
         });
         bindClickEvent(iv_home_img5, () -> {
-            startActivityCommodityDetail(homeActiveIndexDtos.get(4).getCiteId());
+            if(homeActiveIndexDtos==null){
+                return;
+            }
+            startActivityCommodityDetail(homeActiveIndexDtos.get(4).getId());
         });
         bindClickEvent(ivAdOne, () -> {
+            if(homeActiveIndexDtos==null){
+                return;
+            }
             adClick(adOneSlider);
         });
         bindClickEvent(ivAdTwo, () -> {
+            if(homeActiveIndexDtos==null){
+                return;
+            }
             adClick(adTwoSlider);
         });
         bindClickEvent(ivAdThree, () -> {
+            if(homeActiveIndexDtos==null){
+                return;
+            }
             adClick(adThreeSlider);
         });
 
@@ -404,29 +502,8 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             getActivity().sendBroadcast(intent);
         }, 2500);
         bindClickEvent(iv_top_message, () -> {
-            String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
-            String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
-            String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
 
-
-
-            if(TextUtil.isNotEmpty(shiroToken)){
-                String sdktoken = shiroToken;
-                Map<String, String> info = new HashMap<String, String>();
-                info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, sdktoken);
-                //以下信息是可选
-                info.put(UdeskConst.UdeskUserInfo.NICK_NAME,nickName);
-//            info.put(UdeskConst.UdeskUserInfo.EMAIL,"0631@163.com");
-                info.put(UdeskConst.UdeskUserInfo.CELLPHONE,mobileNO);
-//            info.put(UdeskConst.UdeskUserInfo.DESCRIPTION,"描述信息")
-
-
-                UdeskConfig.Builder builder = new UdeskConfig.Builder();
-                builder.setDefualtUserInfo(info);
-                UdeskSDKManager.getInstance().entryChat(getActivity(), CreatUdeskStyle.makeBuilder(getActivity()).build(), shiroToken);
-            }
-
-//            gotoActivity(MessageCenterActivity.class);
+            gotoActivity(MessageCenterActivity.class);
         });
         setScrollListener(Constants.PAGE_SIZE);
 
@@ -570,8 +647,11 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
                 }
                 if(object!=null&&object.goodsSedKill!=null&&object.goodsSedKill.records!=null){
                     if(object.goodsSedKill.records.size()==0){
-//                        gridView.setVisibility(View.GONE);
+                        mScrollView.setVisibility(View.GONE);
+                        llMore.setVisibility(View.GONE);
                     }else {
+                        mScrollView.setVisibility(View.VISIBLE);
+                        llMore.setVisibility(View.VISIBLE);
                         iniGridView(object.goodsSedKill.records);
                         gridView.setVisibility(View.VISIBLE);
                     }
@@ -676,14 +756,13 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
      * 获取首页活动商品
      */
     private void findActiveIndex() {
-        DataManager.getInstance().findActiveIndex(new DefaultSingleObserver<List<HomeActiveIndexDto>>() {
+        DataManager.getInstance().findActiveIndex(new DefaultSingleObserver<GoodsPushDto>() {
             @Override
-            public void onSuccess(List<HomeActiveIndexDto> object) {
-                homeActiveIndexDtos = object;
-                LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
-                if (object != null && !object.isEmpty()) {
-                    for (int i = 0; i < object.size(); i++) {
-                        String imgUrl = BuildConfig.BASE_IMAGE_URL + object.get(i).getIcon();
+            public void onSuccess(GoodsPushDto object) {
+                if(object!=null&&object.getRows()!=null){
+                    homeActiveIndexDtos = object.getRows();
+                    for (int i = 0; i < object.getRows().size(); i++) {
+                        String imgUrl = BuildConfig.BASE_IMAGE_URL + object.getRows().get(i).getGoodsImg();
                         switch (i) {
                             case 0:
                                 GlideUtils.getInstances().loadNormalImg(getActivity(), iv_home_img1, imgUrl, R.mipmap.img_default_6);
@@ -706,6 +785,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
                         }
                     }
                 }
+
                 loadingDialog.setLoadinglevel(++loadinglevel);
             }
 

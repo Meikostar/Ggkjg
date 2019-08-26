@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.LogUtil;
+import com.ggkjg.db.bean.WEIXINREQ;
 import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.AddreessDataDto;
 import com.ggkjg.dto.AddressDto;
@@ -292,8 +293,8 @@ public class DataManager {
      * @param observer
      * @param fundType 资金类型 1-港豆 2-MYCC 3-HKDT
      */
-    public void findAccountBalance(DefaultSingleObserver<AccountBalanceDto> observer, int fundType) {
-        Single<AccountBalanceDto> observable = retrofitService.findAccountBalance(fundType)
+    public void findAccountBalance(DefaultSingleObserver<List<AccountBalanceDto>> observer, String fundType) {
+        Single<List<AccountBalanceDto>> observable = retrofitService.findAccountBalance(fundType)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
@@ -486,8 +487,8 @@ public class DataManager {
     /**
      * 获取首页活动商品
      */
-    public void findActiveIndex(DefaultSingleObserver<List<HomeActiveIndexDto>> observer) {
-        Single<List<HomeActiveIndexDto>> observable = retrofitService.findActiveIndex()
+    public void findActiveIndex(DefaultSingleObserver<GoodsPushDto> observer) {
+        Single<GoodsPushDto> observable = retrofitService.findActiveIndex()
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
@@ -495,8 +496,8 @@ public class DataManager {
     /**
      * 获取精品推荐
      */
-    public void findQualityList(DefaultSingleObserver<List<GoodsPushRowsDto>> observer) {
-        Single<List<GoodsPushRowsDto>> observable = retrofitService.findQualityList()
+    public void findQualityList(DefaultSingleObserver<GoodsPushDto> observer) {
+        Single<GoodsPushDto> observable = retrofitService.findQualityList()
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
@@ -814,6 +815,16 @@ public class DataManager {
                 .map(new HttpResultMapper.HttpResultOtheData<>(null));
         subscribe(observable, observer);
     }
+    /**
+     * 订单支付
+     *
+     * @param observer
+     */
+    public void submitWxOrder(DefaultSingleObserver<HttpResult<WEIXINREQ>> observer, HashMap<String, String> map) {
+        Single<HttpResult<WEIXINREQ>> observable = retrofitService.submitWxOrder(map)
+                .map(new HttpResultMapper.HttpResultOtheData<>(null));
+        subscribe(observable, observer);
+    }
 
     /**
      * 上传头像
@@ -1118,6 +1129,11 @@ public class DataManager {
      */
     public void memberRecharge(DefaultSingleObserver<RechargeDto> observer, String paymentId, String pamentAmount) {
         Single<RechargeDto> observable = retrofitService.memberRecharge(paymentId, pamentAmount)
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+    public void memberWxRecharge(DefaultSingleObserver<HttpResult<WEIXINREQ>> observer, String paymentId, String pamentAmount) {
+        Single<HttpResult<WEIXINREQ>> observable = retrofitService.memberWxRecharge(paymentId, pamentAmount)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }

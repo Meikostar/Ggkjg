@@ -1,5 +1,6 @@
 package com.ggkjg.http;
 
+import com.ggkjg.db.bean.WEIXINREQ;
 import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.AddreessDataDto;
 import com.ggkjg.dto.AddressDto;
@@ -207,7 +208,7 @@ public interface RetrofitService {
      * 获取账户余额
      */
     @POST("noSilent/member/findAccountBalance")
-    Single<HttpResult<AccountBalanceDto>> findAccountBalance(@Query("fundType") int fundType);
+    Single<HttpResult<List<AccountBalanceDto>>> findAccountBalance(@Query("fundType") String fundType);
 
     /**
      * 修改昵称
@@ -315,14 +316,14 @@ public interface RetrofitService {
     /**
      * 获取首页活动商品
      */
-    @POST("silent/store/findActiveIndex")
-    Single<HttpResult<List<HomeActiveIndexDto>>> findActiveIndex();
+    @POST("silent/store/findQualityGoodsList")
+    Single<HttpResult<GoodsPushDto>> findActiveIndex();
 
     /**
      * 获取精品推荐
      */
-    @POST("silent/store/findQualityList")
-    Single<HttpResult<List<GoodsPushRowsDto>>> findQualityList();
+    @POST("silent/store/findQualityGoodsList")
+    Single<HttpResult<GoodsPushDto>> findQualityList();
 
     /**
      * 获取精品推荐(分页)
@@ -499,6 +500,11 @@ public interface RetrofitService {
      */
     @POST("noSilent/store/submitOrder")
     Single<HttpResult<RechargeDto>> submitOrder(@QueryMap HashMap<String, String> map);
+    /**
+     * 订单支付
+     */
+    @POST("noSilent/store/submitOrder")
+    Single<HttpResult<WEIXINREQ>> submitWxOrder(@QueryMap HashMap<String, String> map);
 
     /**
      * 上传头像
@@ -708,6 +714,8 @@ public interface RetrofitService {
      */
     @POST("noSilent/fund/memberRecharge")
     Single<HttpResult<RechargeDto>> memberRecharge(@Query("paymentId") String paymentId, @Query("pamentAmount") String pamentAmount);
+    @POST("noSilent/fund/memberRecharge")
+    Single<HttpResult<HttpResult<WEIXINREQ>>> memberWxRecharge(@Query("paymentId") String paymentId, @Query("pamentAmount") String pamentAmount);
 
     /**
      * 获取图片请求接口地址

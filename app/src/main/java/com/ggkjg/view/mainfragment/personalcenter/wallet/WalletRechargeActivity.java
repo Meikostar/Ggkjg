@@ -15,14 +15,19 @@ import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.InstallWeChatOrAliPay;
 import com.ggkjg.common.utils.LogUtil;
+import com.ggkjg.common.utils.MD5Utils;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.common.utils.pay.PayResultListener;
 import com.ggkjg.common.utils.pay.PayUtils;
+import com.ggkjg.db.bean.WEIXINREQ;
 import com.ggkjg.dto.RechargeDto;
 import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
+import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
+import com.ggkjg.view.mainfragment.order.PayOrderActivity;
 import com.ggkjg.view.widgets.RechargeDialog;
 
 import java.util.HashMap;
@@ -67,11 +72,17 @@ public class WalletRechargeActivity extends BaseActivity {
                 ToastUtil.showToast("请安装微信");
                 return;
             }
+
             if (currentPayWay == ZFB_PAY && !InstallWeChatOrAliPay.getInstance().checkAliPayInstalled(this)) {
                 ToastUtil.showToast("请安装支付宝");
                 return;
             }
-            getRechargeOrder(moneyStr);
+            if(currentPayWay==WX_PAY){
+                submitWxOrder(moneyStr);
+            }else {
+                getRechargeOrder(moneyStr);
+            }
+
 //            showTipDialog();
         });
         bindClickEvent(ll_recharge_weixin, () -> {
@@ -112,7 +123,34 @@ public class WalletRechargeActivity extends BaseActivity {
         }
         tipDialog.show();
     }
+    private void submitWxOrder(String money) {
 
+        DataManager.getInstance().memberWxRecharge(new DefaultSingleObserver<HttpResult<WEIXINREQ>>() {
+            @Override
+            public void onSuccess(HttpResult<WEIXINREQ>  httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+
+                    PayUtils.getInstances().WXPay(WalletRechargeActivity.this, httpResult.getData());
+
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getMsg());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+                ToastUtil.showToast(ApiException.getShowToast(throwable));
+            }
+        }, currentPayWay + "", money);
+    }
     private void getRechargeOrder(String money) {
         showLoadDialog();
         DataManager.getInstance().memberRecharge(new DefaultSingleObserver<RechargeDto>() {

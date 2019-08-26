@@ -24,6 +24,7 @@ import com.ggkjg.view.mainfragment.settings.SetPayPwdActivity;
 import com.ggkjg.view.widgets.InputPwdDialog;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -79,11 +80,11 @@ public class WalletTransferActivity extends BaseActivity {
             showLoadDialog();
         }
 
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
-                if (object != null) {
-                    gdCount = object.getAvailAmount();
+            public void onSuccess(List<AccountBalanceDto> object) {
+                if (object != null&&object.size()>0) {
+                    gdCount = object.get(0).getAvailAmount();
                     tv_count_coin.setText(gdCount);
                 }
                 dissLoadDialog();
@@ -93,7 +94,7 @@ public class WalletTransferActivity extends BaseActivity {
             public void onError(Throwable throwable) {
                 dissLoadDialog();
             }
-        }, 1);
+        }, 1+"");
     }
 
     private void dealConfirm() {

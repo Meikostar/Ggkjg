@@ -31,6 +31,7 @@ import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.common.utils.pay.PayResultListener;
 import com.ggkjg.common.utils.pay.PayUtils;
+import com.ggkjg.db.bean.WEIXINREQ;
 import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.AddressDto;
 import com.ggkjg.dto.CartAtrrDto;
@@ -351,7 +352,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                             break;
 
                         case 1:
-                            submitOrder(wx.getId() + "", "",wx.getPaymentCode());
+                            submitWxOrder(wx.getId() + "", "",wx.getPaymentCode());
                             break;
                         case 2:
                             submitOrder(zfb.getId() + "", "",zfb.getPaymentCode());
@@ -511,11 +512,20 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == Activity.RESULT_OK && requestCode == Constants.INTENT_REQUESTCODE_SEL_ADDRESS && data != null) {
-            Serializable serializable = data.getSerializableExtra("result");
-            if (serializable != null) {
-                AddressDto addressDto = (AddressDto) serializable;
-                initAddress(addressDto);
+            if (requestCode == RQ_WEIXIN_PAY) {
+                ToastUtil.showToast("支付成功");
+                finish();
+                //           if (requestCode == RQ_WEIXIN_PAY) {
+                //                RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.CHAEGE_SUCCESS,""));
+                //            }
+            }else {
+                Serializable serializable = data.getSerializableExtra("result");
+                if (serializable != null) {
+                    AddressDto addressDto = (AddressDto) serializable;
+                    initAddress(addressDto);
+                }
             }
+
         }
     }
 
@@ -732,6 +742,11 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         });
     }
 
+
+
+    private int RQ_WEIXIN_PAY = 12;
+    private int RQ_PAYPAL_PAY = 16;
+    private int RQ_ALIPAY_PAY = 10;
     /**
      * 余额支付
      */
@@ -760,7 +775,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                         bundle.putString(Constants.ORDER_ID, orderId);
                         gotoActivity(PaySuccessActivity.class, true, bundle);
                     } else if ("wx".equals(payType)) {
-                       PayUtils.getInstances().WXPay(ConfirmOrderActivity.this,httpResult.getData());
+//                       PayUtils.getInstances().WXPay(ConfirmOrderActivity.this,(WEIXINREQ) httpResult.getData());
                     }else if ("zfb".equals(payType)) {
                         if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
                             PayUtils.getInstances().zfbPaySync(ConfirmOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
@@ -794,14 +809,54 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             }
         }, map);
     }
+    /**
+     * 余额支付
+     */
+    private void submitWxOrder(String payMentId, String tradePwd, String payType) {
 
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        map.put("orderNo", orderNo);
+        //        map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
+        map.put("payMentId", payMentId);
+        if(TextUtil.isNotEmpty(tradePwd)){
+            map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
+        }else {
+            //            map.put("tradePwd", "");
+        }
+
+        DataManager.getInstance().submitWxOrder(new DefaultSingleObserver<HttpResult<WEIXINREQ>>() {
+            @Override
+            public void onSuccess(HttpResult<WEIXINREQ> httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+
+                        PayUtils.getInstances().WXPay(ConfirmOrderActivity.this, httpResult.getData());
+
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getMsg());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        }, map);
+    }
    public   String orderId, orderNo, realOrderMoney, GdBalance;
     private void getWalletBalance() {
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
-                if (object != null) {
-                    GdBalance = object.getAvailAmount();
+            public void onSuccess(List<AccountBalanceDto> object) {
+                if (object != null&&object.size()>0) {
+                    GdBalance = object.get(0).getAvailAmount();
 
                 }
             }
@@ -810,7 +865,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             public void onError(Throwable throwable) {
                 Log.e("error",throwable.toString());
             }
-        }, 1);
+        }, 1+"");
     }
 
     private void showTipDialog(boolean isSuccess) {

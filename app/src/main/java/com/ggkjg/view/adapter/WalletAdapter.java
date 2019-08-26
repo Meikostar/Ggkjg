@@ -26,9 +26,17 @@ public class WalletAdapter extends BaseQuickAdapter<MoneyRecordItemDto, BaseView
             helper.setText(R.id.tv_money, "+" + item.getTransferAmount())
                     .setTextColor(R.id.tv_money, mContext.getResources().getColor(R.color.my_color_14CA2E));
         } else {
-            helper.setText(R.id.tv_money, item.getTransferAmount())
-                    .setTextColor(R.id.tv_money, mContext.getResources().getColor(R.color.my_color_212121));
+            helper.setText(R.id.tv_money, "-" +item.getTransferAmount())
+                    .setTextColor(R.id.tv_money, mContext.getResources().getColor(R.color.my_color_fc262b));
             ;
+        }
+        if ("1".equals(item.fundType)) {
+            helper.setText(R.id.tv_type, "通用账户" );
+
+        } else  if ("4".equals(item.fundType)){
+            helper.setText(R.id.tv_type, "专用账户");
+
+
         }
 
     }

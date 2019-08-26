@@ -3,6 +3,7 @@ package com.ggkjg.view.mainfragment.order;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,7 +21,9 @@ import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.common.utils.pay.PayResultListener;
 import com.ggkjg.common.utils.pay.PayUtils;
+import com.ggkjg.db.bean.WEIXINREQ;
 import com.ggkjg.dto.AccountBalanceDto;
+import com.ggkjg.dto.AddressDto;
 import com.ggkjg.dto.PayOrderDto;
 import com.ggkjg.dto.RechargeDto;
 import com.ggkjg.dto.UserInfoDto;
@@ -34,6 +37,7 @@ import com.ggkjg.view.mainfragment.settings.SetPayPwdActivity;
 import com.ggkjg.view.widgets.InputPwdDialog;
 import com.ggkjg.view.widgets.RechargeDialog;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -119,7 +123,7 @@ public class PayOrderActivity extends BaseActivity {
                     });
                     break;
                 case "wx":
-                    submitOrder(item.getId() + "", "",item.getPaymentCode());
+                    submitWxOrder(item.getId() + "", "",item.getPaymentCode());
                     break;
                 case "zfb":
                     submitOrder(item.getId() + "", "",item.getPaymentCode());
@@ -127,7 +131,47 @@ public class PayOrderActivity extends BaseActivity {
             }
         }
     }
+    /**
+     * 余额支付
+     */
+    private void submitWxOrder(String payMentId, String tradePwd, String payType) {
 
+        HashMap<String, String> map = new HashMap<>();
+        map.put("orderId", orderId);
+        map.put("orderNo", orderNo);
+        //        map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
+        map.put("payMentId", payMentId);
+        if(TextUtil.isNotEmpty(tradePwd)){
+            map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
+        }else {
+            //            map.put("tradePwd", "");
+        }
+
+        DataManager.getInstance().submitWxOrder(new DefaultSingleObserver<HttpResult<WEIXINREQ>>() {
+            @Override
+            public void onSuccess(HttpResult<WEIXINREQ> httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+
+                    PayUtils.getInstances().WXPay(PayOrderActivity.this, httpResult.getData());
+
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getMsg());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        }, map);
+    }
     /**
      * 余额支付时，查询是否设置支付密码
      */
@@ -210,12 +254,26 @@ public class PayOrderActivity extends BaseActivity {
         }, map);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == Constants.INTENT_REQUESTCODE_SEL_ADDRESS && data != null) {
+            if (requestCode == 12) {
+                ToastUtil.showToast("支付成功");
+                finish();
+                //           if (requestCode == RQ_WEIXIN_PAY) {
+                //                RxBus.getInstance().send(SubscriptionBean.createSendBean(SubscriptionBean.CHAEGE_SUCCESS,""));
+                //            }
+            }
+
+        }
+    }
+
     private void getWalletBalance() {
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
-                if (object != null) {
-                    GdBalance = object.getAvailAmount();
+            public void onSuccess(List<AccountBalanceDto> object) {
+                if (object != null&&object.size()>0) {
+                    GdBalance = object.get(0).getAvailAmount();
                     if (mAdapter != null) {
                         mAdapter.setMoney(GdBalance);
                     }
@@ -225,7 +283,7 @@ public class PayOrderActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
             }
-        }, 1);
+        }, 1+"");
     }
    private String HintType=Constants.RECHARGE_TYPE_FAIL;
     private void showTipDialog(boolean isSuccess) {

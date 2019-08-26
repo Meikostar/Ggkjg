@@ -19,6 +19,7 @@ import com.ggkjg.view.mainfragment.order.MyOrderFragment;
 import com.ggkjg.view.widgets.TabEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -106,12 +107,12 @@ public class MYCCActivity extends BaseActivity {
 
     private void getMYCCBalance() {
         showLoadDialog();
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
+            public void onSuccess(List<AccountBalanceDto> object) {
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
-                if (object != null) {
-                    tv_gold_coin.setText(object.getAvailAmount());
+                if (object != null&&object.size()>0) {
+                    tv_gold_coin.setText(object.get(0).getAvailAmount());
                 }
                 dissLoadDialog();
             }
@@ -121,7 +122,7 @@ public class MYCCActivity extends BaseActivity {
                 LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
                 dissLoadDialog();
             }
-        }, 2);
+        }, 2+"");
     }
 
 

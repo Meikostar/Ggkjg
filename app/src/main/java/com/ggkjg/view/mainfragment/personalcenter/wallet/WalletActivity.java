@@ -1,6 +1,7 @@
 package com.ggkjg.view.mainfragment.personalcenter.wallet;
 
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,18 +18,16 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
-import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.MemberLevelDto;
 import com.ggkjg.dto.MyccRecordDto;
-import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
-import com.ggkjg.view.adapter.MYCCRecordAdapter;
 import com.ggkjg.view.adapter.PopWalletFilterAdapter;
 import com.ggkjg.view.adapter.WalletAdapter;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
+import com.ggkjg.view.widgets.autoview.ActionbarView;
 import com.ggkjg.view.widgets.autoview.EmptyView;
 
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -44,25 +44,44 @@ import butterknife.BindView;
 public class WalletActivity extends BaseActivity {
     private static final String TAG = WalletActivity.class.getSimpleName();
     @BindView(R.id.tv_gold_coin)
-    TextView tv_gold_coin;
+    TextView     tv_gold_coin;
     @BindView(R.id.ll_recharge)
     LinearLayout ll_recharge;
     @BindView(R.id.ll_change)
     LinearLayout ll_change;
-    @BindView(R.id.btn_filter)
-    TextView btn_filter;
+
     @BindView(R.id.recy_wallet)
-    RecyclerView recyclerView;
+    RecyclerView            recyclerView;
     @BindView(R.id.ll_filter)
-    LinearLayout ll_filter;
+    LinearLayout            ll_filter;
     @BindView(R.id.refresh)
     SuperSwipeRefreshLayout swipeRefreshLayout;
     SwipeRefreshLayoutUtil mSwipeRefreshLayoutUtil;
-    WalletAdapter mAdapter;
-    int mCurrentPage = Constants.PAGE_NUM;
-    String type = "";
-    View contentView;
-    PopupWindow window;
+    WalletAdapter          mAdapter;
+    int                    mCurrentPage = Constants.PAGE_NUM;
+    String                 type         = "";
+    View                   contentView;
+    PopupWindow            window;
+    @BindView(R.id.custom_action_bar)
+    ActionbarView customActionBar;
+    @BindView(R.id.tv_bean_title)
+    TextView      tvBeanTitle;
+    @BindView(R.id.tv_all)
+    TextView      tvAll;
+    @BindView(R.id.tv_sr)
+    TextView      tvSr;
+    @BindView(R.id.tv_zc)
+    TextView      tvZc;
+    @BindView(R.id.tv_ty)
+    TextView      tvTy;
+    @BindView(R.id.tv_zy)
+    TextView      tvZy;
+    @BindView(R.id.line1)
+    View          line1;
+    @BindView(R.id.line2)
+    View          line2;
+    @BindView(R.id.line3)
+    View          line3;
 
     @Override
     public int getLayoutId() {
@@ -95,20 +114,76 @@ public class WalletActivity extends BaseActivity {
         bindClickEvent(ll_change, () -> {
             gotoActivity(WalletTransferActivity.class);
         });
-        bindClickEvent(btn_filter, () -> {
-            filterView();
+        //        bindClickEvent(btn_filter, () -> {
+        //                    filterView();
+        //        });
+        bindClickEvent(tvAll, () -> {
+            selectPotiion(0);
+            mCurrentPage = Constants.PAGE_NUM;
+            type = "";
+            loadData(true);
+        });
+        bindClickEvent(tvSr, () -> {
+            selectPotiion(1);
+            mCurrentPage = Constants.PAGE_NUM;
+            type = "1";
+            loadData(true);
+        });
+        bindClickEvent(tvZc, () -> {
+            selectPotiion(2);
+            mCurrentPage = Constants.PAGE_NUM;
+            type = "2";
+            loadData(true);
         });
         setListener();
+
+    }
+
+    public void selectPotiion(int poiton) {
+        switch (poiton) {
+            case 0:
+                line1.setVisibility(View.VISIBLE);
+                line2.setVisibility(View.GONE);
+                line3.setVisibility(View.GONE);
+                tvAll.setTextColor(getResources().getColor(R.color.my_color_FB0000));
+                tvSr.setTextColor(getResources().getColor(R.color.my_color_212121));
+                tvZc.setTextColor(getResources().getColor(R.color.my_color_212121));
+                break;
+
+            case 1:
+                line1.setVisibility(View.GONE);
+                line2.setVisibility(View.VISIBLE);
+                line3.setVisibility(View.GONE);
+                tvAll.setTextColor(getResources().getColor(R.color.my_color_212121));
+                tvSr.setTextColor(getResources().getColor(R.color.my_color_FB0000));
+                tvZc.setTextColor(getResources().getColor(R.color.my_color_212121));
+                break;
+
+            case 2:
+                line1.setVisibility(View.GONE);
+                line2.setVisibility(View.GONE);
+                line3.setVisibility(View.VISIBLE);
+                tvAll.setTextColor(getResources().getColor(R.color.my_color_212121));
+                tvSr.setTextColor(getResources().getColor(R.color.my_color_212121));
+                tvZc.setTextColor(getResources().getColor(R.color.my_color_FB0000));
+                break;
+        }
+
     }
 
     private void getWalletBalance() {
         showLoadDialog();
-        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<AccountBalanceDto>() {
+        DataManager.getInstance().findAccountBalance(new DefaultSingleObserver<List<AccountBalanceDto>>() {
             @Override
-            public void onSuccess(AccountBalanceDto object) {
+            public void onSuccess(List<AccountBalanceDto> object) {
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess() = ");
-                if (object != null) {
-                    tv_gold_coin.setText(object.getAvailAmount());
+                if (object != null && object.size() > 0) {
+                    if(object.size()==2){
+                        tvTy.setText(object.get(0).getAvailAmount());
+                        tvZy.setText(object.get(1).getAvailAmount());
+                        tv_gold_coin.setText(Double.valueOf(object.get(0).getAvailAmount())+Double.valueOf(object.get(0).getAvailAmount())+"");
+                    }
+
                 }
                 dissLoadDialog();
             }
@@ -118,7 +193,7 @@ public class WalletActivity extends BaseActivity {
                 LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
                 dissLoadDialog();
             }
-        }, 1);
+        }, "1,4");
     }
 
     private void filterView() {
@@ -246,4 +321,7 @@ public class WalletActivity extends BaseActivity {
             swipeRefreshLayout.setLoadMore(false);
         }
     }
+
+
+
 }

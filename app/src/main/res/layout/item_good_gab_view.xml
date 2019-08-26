@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
+    android:layout_width="102dp"
     android:gravity="center_horizontal"
     android:layout_height="153dp"
     android:background="@color/my_color_white"
     android:id="@+id/ll_bg"
     android:orientation="vertical">
     <FrameLayout
-        android:layout_width="@dimen/bj_96dp"
-        android:layout_height="@dimen/bj_96dp">
+        android:layout_width="@dimen/bj_99dp"
+        android:layout_height="@dimen/bj_99dp">
         <ImageView
             android:id="@+id/tv_item_home_good_shop_img"
-            android:layout_width="@dimen/bj_96dp"
-            android:layout_height="@dimen/bj_96dp"
+            android:layout_width="@dimen/bj_99dp"
+            android:layout_height="@dimen/bj_99dp"
             android:src="@mipmap/img_default_5" />
 
     </FrameLayout>
@@ -37,7 +37,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="2dp"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:layout_gravity="center_vertical"
@@ -52,9 +52,9 @@
             android:singleLine="true"
             android:text="10000"
             android:textColor="@color/my_color_F32F12"
-            android:textSize="@dimen/wz_14sp" />
+            android:textSize="13.5sp" />
         <FrameLayout
-           android:layout_marginRight="4dp"
+           android:layout_marginRight="2dp"
             android:layout_gravity="center_vertical|right"
             android:layout_marginLeft="1dp"
             android:layout_width="wrap_content"
@@ -65,7 +65,6 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/bj_3dp"
                 android:singleLine="true"
                 android:layout_gravity="right"
                 android:text=""

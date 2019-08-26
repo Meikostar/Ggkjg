@@ -1,5 +1,6 @@
 package com.ggkjg.view.mainfragment.shop;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -64,6 +65,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.udesk.UdeskSDKManager;
 import cn.udesk.config.UdeskConfig;
+import cn.udesk.model.UdeskCommodityItem;
 import udesk.core.UdeskConst;
 
 /**
@@ -225,6 +227,13 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     ShareProductDialog dialog = new ShareProductDialog(CommodityDetailActivity.this, productImg, shareImgUrl);
                     dialog.setCanceledOnTouchOutside(true);
                     dialog.show();
+
+                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            ShareSdkUtils.getInstances().dissMiss();
+                        }
+                    });
                     findShareParam();
                 } else {
                     gotoActivity(LoginActivity.class);
@@ -232,16 +241,35 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             }
         });
         bindClickEvent(tv_commodity_service, () -> {
-            if (!isPermissioin(CALL_PHONE)) {
-                checkPermissioin(CALL_PHONE);
-                setPermissionsListener(this::callbackPermissions);
-            } else {
-                if (!TextUtils.isEmpty(servicePhoneNum)) {
-                    CallPhoneUtils.diallPhone(this, servicePhoneNum);
-                } else {
-                    ToastUtil.showToast("未知客户电话");
-                }
+            String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
+
+            if(TextUtil.isNotEmpty(shiroToken)){
+                CommodityDetailInfoDto goodsInfo = mCommodityDetailDto.getGoodsInfo();
+                //创建咨询对象的实例
+                UdeskCommodityItem item = new UdeskCommodityItem();
+                // 咨询对象主标题
+                item.setTitle(goodsInfo.getGoodsName());
+                //咨询对象描述
+                item.setSubTitle(goodsInfo.getGdPrice());
+                //左侧图片
+                item.setThumbHttpUrl(url);
+                // 咨询对象网络链接
+                item.setCommodityUrl("https://detail.tmall.com/item.htm?spm=a1z10.3746-b.w4946-14396547293.1.4PUcgZ&id=529634221064&sku_properties=-1:-1");
+
+
+
+                UdeskSDKManager.getInstance().entryChat(CommodityDetailActivity.this, CreatUdeskStyle.makeBuilder(CommodityDetailActivity.this,item).build(), shiroToken);
             }
+//            if (!isPermissioin(CALL_PHONE)) {
+//                checkPermissioin(CALL_PHONE);
+//                setPermissionsListener(this::callbackPermissions);
+//            } else {
+//                if (!TextUtils.isEmpty(servicePhoneNum)) {
+//                    CallPhoneUtils.diallPhone(this, servicePhoneNum);
+//                } else {
+//                    ToastUtil.showToast("未知客户电话");
+//                }
+//            }
         });
         bindClickEvent(tv_commodity_collection, () -> {
             if (Constants.getInstance().isLogin()) {
@@ -251,27 +279,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             }
         });
         bindClickEvent(tv_commodity_cart, () -> {
-            String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
-            String mobileNO = Constants.getInstance().getString(Constants.USER_PHONE, "");
-            String nickName = Constants.getInstance().getString(Constants.USER_NICK_NAME, "");
 
-
-
-            if(TextUtil.isNotEmpty(shiroToken)){
-                String sdktoken = shiroToken;
-                Map<String, String> info = new HashMap<String, String>();
-                info.put(UdeskConst.UdeskUserInfo.USER_SDK_TOKEN, sdktoken);
-                //以下信息是可选
-                info.put(UdeskConst.UdeskUserInfo.NICK_NAME,nickName);
-//            info.put(UdeskConst.UdeskUserInfo.EMAIL,"0631@163.com");
-                info.put(UdeskConst.UdeskUserInfo.CELLPHONE,mobileNO);
-//            info.put(UdeskConst.UdeskUserInfo.DESCRIPTION,"描述信息")
-
-
-                UdeskConfig.Builder builder = new UdeskConfig.Builder();
-                builder.setDefualtUserInfo(info);
-                UdeskSDKManager.getInstance().entryChat(CommodityDetailActivity.this, CreatUdeskStyle.makeBuilder(CommodityDetailActivity.this).build(), shiroToken);
-            }
 
             if (Constants.getInstance().isLogin()) {
                 finishAll();
@@ -841,7 +849,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             }
         }
     }
-
+     private String url;
     /**
      * 顶部海报
      *
@@ -849,6 +857,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
      */
     public void onBannerSuccess(List<CommodityDetailBannerDto> bannerList) {
         List<SlidersDto> slidersDtos = new ArrayList<>();
+        int i=0;
         for (CommodityDetailBannerDto item : bannerList) {
             SlidersDto slidersDto = new SlidersDto();
             slidersDto.setId(item.getId());
@@ -860,6 +869,10 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             slidersDto.setModifyTime(item.getModifyTime());
             slidersDto.setEnableFlag(item.getEnableFlag());
             slidersDtos.add(slidersDto);
+            if(i==0){
+                url=BuildConfig.BASE_IMAGE_URL + item.getImgPath();
+            }
+            i++;
         }
         LoopViewPagerAdapter loopViewPagerAdapter = new LoopViewPagerAdapter(this, banner_vp_container, banner_ll_indicators);
         banner_vp_container.setAdapter(loopViewPagerAdapter);

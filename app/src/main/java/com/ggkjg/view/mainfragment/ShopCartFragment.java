@@ -17,6 +17,7 @@ import com.ggkjg.base.BaseFragment;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.ToastUtil;
+import com.ggkjg.dto.GoodsPushDto;
 import com.ggkjg.dto.GoodsPushRowsDto;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.http.error.ApiException;
@@ -188,12 +189,12 @@ public class ShopCartFragment extends BaseFragment {
      */
     private void findQualityGoodsList() {
         showLoadDialog();
-        DataManager.getInstance().findQualityList(new DefaultSingleObserver<List<GoodsPushRowsDto>>() {
+        DataManager.getInstance().findQualityList(new DefaultSingleObserver<GoodsPushDto>() {
             @Override
-            public void onSuccess(List<GoodsPushRowsDto> object) {
+            public void onSuccess(GoodsPushDto object) {
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
-                if (object != null && !object.isEmpty()) {
-                    pushAdapter.setNewData(object);
+                if (object != null && object.getRows()!=null&&object.getRows().size()>0) {
+                    pushAdapter.setNewData(object.getRows());
                 } else {
                     EmptyView emptyView = new EmptyView(getActivity());
                     emptyView.setTvEmptyTip("暂无推荐商品");
@@ -286,7 +287,7 @@ public class ShopCartFragment extends BaseFragment {
         }, cartId, cartNum);
     }
 
-    private void setCommodityCountDecrease(ShopCartDto item) {
+    private void  setCommodityCountDecrease(ShopCartDto item) {
         int count = item.getCartNum();
         if (count <= 1) {
             count = 1;
@@ -298,8 +299,8 @@ public class ShopCartFragment extends BaseFragment {
 
     private void setCommodityCountIncrease(ShopCartDto item) {
         int count = item.getCartNum();
-        if (count >= item.getStockName()) {//getStock()库存数量
-            count = item.getStockName();
+        if (count >= item.stockTotal) {//getStock()库存数量
+            count = item.stockTotal;
             ToastUtil.showToast("库存不足");
         } else {
             ++count;

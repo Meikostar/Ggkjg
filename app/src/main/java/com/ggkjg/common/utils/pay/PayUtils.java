@@ -1,12 +1,17 @@
 package com.ggkjg.common.utils.pay;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
+import com.ggkjg.common.utils.InstallWeChatOrAliPay;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.RxAsyncTask;
+import com.ggkjg.common.utils.ToastUtil;
+import com.ggkjg.db.bean.WEIXINREQ;
 import com.ggkjg.dto.RechargeDto;
+import com.ggkjg.wxapi.WXPayEntryActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -34,27 +39,30 @@ public class PayUtils {
         return payUtils;
     }
 
-    public void WXPay(Activity context, RechargeDto orderNoDto) {
-
+    public void WXPay(Activity context, WEIXINREQ orderNoDto) {
+        Intent intent = new Intent(context, WXPayEntryActivity.class);
+        intent.putExtra("weixinreq", orderNoDto);
+        context.startActivityForResult(intent, 12);
+        //
 //        if (!InstallWeChatOrAliPay.getInstance().isWeixinAvilible(context)) {
 //            ToastUtil.showToast("请先安装微信");
 //            return;
 //        }
 //        api = WXAPIFactory.createWXAPI(context, null);
-//        api.registerApp(orderNoDto.getAppid());
+//        api.registerApp(orderNoDto.appid);
 //        PayReq req = new PayReq();
 //        //req.appId = "wxff73fc06e1d70439";  // 测试用appId
-//        req.appId = orderNoDto.getAppid();
-//        req.partnerId = orderNoDto.getPartnerid();
-//        req.prepayId = orderNoDto.getPrepayid();
-//        req.nonceStr = orderNoDto.getNoncestr();
-//        req.timeStamp = orderNoDto.getTimestamp();
-//        req.packageValue = orderNoDto.getPackageValue();
+//        req.appId = orderNoDto.appid;
+//        req.partnerId = orderNoDto.partnerid;
+//        req.prepayId = orderNoDto.prepayid;
+//        req.nonceStr = orderNoDto.noncestr;
+//        req.timeStamp = orderNoDto.timestamp;
+//        req.packageValue = "Sign=WXPay";
 ////        req.signType = orderNoDto.getSignType();
-//        req.sign = orderNoDto.getSign();
-        //req.extData = "app data"; // optional
-        // String trade_sn = json.getString("out_trade_no");
-        // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+//        req.sign = orderNoDto.sign;
+//        req.extData = "app data"; // optional
+////         String trade_sn = json.getString("out_trade_no");
+////         在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
 //        boolean checkArgs = req.checkArgs();
 //        boolean sendReq = api.sendReq(req);
 //        LogUtil.i(TAG, sendReq + "-----" + checkArgs + "--------");
