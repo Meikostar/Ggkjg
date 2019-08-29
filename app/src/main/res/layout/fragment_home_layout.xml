@@ -8,7 +8,7 @@
 
     <include layout="@layout/header_home_top_search_layout" />
 
-    <com.ggkjg.view.widgets.SuperSwipeRefreshLayout
+    <com.ggkjg.view.widgets.NewSwipeRefreshLayout
         android:id="@+id/refresh_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +34,7 @@
                     app:indicator_margin="4dp"
                     app:indicator_width="6dp"
                     app:image_scale_type="fit_xy"
-                    app:is_auto_play="true"/>
+                    android:focusable="true"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bj_105dp"
@@ -428,5 +428,5 @@
                     android:background="@color/my_color_EBEBEB" />
             </LinearLayout>
         </com.ggkjg.view.widgets.autoview.ObservableScrollView>
-    </com.ggkjg.view.widgets.SuperSwipeRefreshLayout>
+    </com.ggkjg.view.widgets.NewSwipeRefreshLayout>
 </LinearLayout>

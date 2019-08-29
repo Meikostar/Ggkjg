@@ -19,6 +19,7 @@ import com.ggkjg.dto.CommodityDetailDto;
 import com.ggkjg.dto.CommodityDetailListDto;
 import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.DataPageDto;
+import com.ggkjg.dto.DetailDto;
 import com.ggkjg.dto.DistributeDto;
 import com.ggkjg.dto.FavoriteStateDto;
 import com.ggkjg.dto.FeedBackTypeDto;
@@ -270,6 +271,8 @@ public interface RetrofitService {
     @POST("noSilent/store/takeList")
     Single<HttpResult<List<ChooseAddressDto>>> takeList();
 
+
+
     /**
      * 获取会员等级
      */
@@ -426,6 +429,12 @@ public interface RetrofitService {
     @POST("noSilent/store/addShoppingCart")
     Single<HttpResult<Object>> addShoppingCart(@Query("goodsId") long cartId, @Query("specId") long specId, @Query("cartNum") int cartNum);
 
+
+    /**
+     * 获取会员二维码路径
+     */
+    @POST("cmsinfo/cmsinfo/CmsInfo/readDetail")
+    Single<HttpResult<DetailDto>> readDetail(@Query("id") String id);
 
     /**
      * 获取会员二维码路径
@@ -714,8 +723,10 @@ public interface RetrofitService {
      */
     @POST("noSilent/fund/memberRecharge")
     Single<HttpResult<RechargeDto>> memberRecharge(@Query("paymentId") String paymentId, @Query("pamentAmount") String pamentAmount);
+
+
     @POST("noSilent/fund/memberRecharge")
-    Single<HttpResult<HttpResult<WEIXINREQ>>> memberWxRecharge(@Query("paymentId") String paymentId, @Query("pamentAmount") String pamentAmount);
+    Single<HttpResult<WEIXINREQ>> memberWxRecharge(@Query("paymentId") String paymentId, @Query("pamentAmount") String pamentAmount);
 
     /**
      * 获取图片请求接口地址

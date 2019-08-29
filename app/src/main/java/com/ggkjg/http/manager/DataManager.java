@@ -24,6 +24,7 @@ import com.ggkjg.dto.CommodityDetailDto;
 import com.ggkjg.dto.CommodityDetailListDto;
 import com.ggkjg.dto.ConfirmOrderDto;
 import com.ggkjg.dto.DataPageDto;
+import com.ggkjg.dto.DetailDto;
 import com.ggkjg.dto.DistributeDto;
 import com.ggkjg.dto.FavoriteStateDto;
 import com.ggkjg.dto.FeedBackTypeDto;
@@ -696,6 +697,12 @@ public class DataManager {
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
+    public void readDetail(DefaultSingleObserver<DetailDto> observer, String referralCode) {
+        Single<DetailDto> observable = retrofitService.readDetail(referralCode)
+                .map(new HttpResultMapper.HttpResultData<>(null));
+        subscribe(observable, observer);
+    }
+
 
     /**
      * 获取支付方式
@@ -1134,8 +1141,9 @@ public class DataManager {
     }
     public void memberWxRecharge(DefaultSingleObserver<HttpResult<WEIXINREQ>> observer, String paymentId, String pamentAmount) {
         Single<HttpResult<WEIXINREQ>> observable = retrofitService.memberWxRecharge(paymentId, pamentAmount)
-                .map(new HttpResultMapper.HttpResultData<>(null));
+                .map(new HttpResultMapper.HttpResultOtheData<>(null));
         subscribe(observable, observer);
+
     }
 
     /**

@@ -3,6 +3,7 @@ package com.ggkjg.common.utils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -44,8 +45,10 @@ public class ShareSdkUtils {
     public static ShareSdkUtils getInstances() {
         return shareSdkUtils;
     }
-    private    Dialog shareDialog;
-    public void showShareDialog(Activity context, String title, String description, String imgUrl, String pageUrl) {
+    public     Dialog shareDialog;
+    public void showShareDialog(Activity context, String title, String description, String imgUrl, String pageUrl,onCancelDissListener listener) {
+
+        mListener=listener;
         this.context = context;
         this.title = title;
         this.description = description;
@@ -68,19 +71,45 @@ public class ShareSdkUtils {
 
 
         bindClickEvent(ll_share_wx, () -> {
+            if(mListener!=null){
+                mListener.cancels();
+            }
             shareDialog.dismiss();
             sendToWeaChat(false);
         });
         bindClickEvent(ll_share_wx_friend, () -> {
+            if(mListener!=null){
+                mListener.cancels();
+            }
             shareDialog.dismiss();
             sendToWeaChat(true);
         });
-        bindClickEvent(tv_cancel, () -> {
-            shareDialog.dismiss();
+        tv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener!=null){
+                    mListener.cancels();
+                }
+                shareDialog.dismiss();
+            }
         });
+
         shareDialog.show();
+        shareDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(mListener!=null){
+                    mListener.cancels();
+                }
+            }
+        });
 
     }
+    public interface  onCancelDissListener{
+        void  cancels();
+    }
+    public onCancelDissListener mListener;
+
     public void dissMiss(){
         if(shareDialog!=null){
             shareDialog.dismiss();

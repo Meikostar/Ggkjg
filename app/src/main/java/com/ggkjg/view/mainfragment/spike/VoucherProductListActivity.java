@@ -265,7 +265,7 @@ public class VoucherProductListActivity extends BaseActivity {
                 tv_shop_product_4.setSelected(false);
                 iv_shop_product_3.setTag("priceSelect");
                 iv_shop_product_3.setImageResource(R.mipmap.shop_product_price_litre);
-                mParamsMaps.put("prop", "");
+//                mParamsMaps.put("prop", "");
                 getProductListData();
                 break;
             case R.id.tv_shop_product_2:

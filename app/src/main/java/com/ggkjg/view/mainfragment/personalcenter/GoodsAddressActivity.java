@@ -122,6 +122,7 @@ public class GoodsAddressActivity extends BaseActivity {
         });
     }
 
+
     private void initAddressList(boolean isLoad) {
         showLoadDialog();
         DataManager.getInstance().getReceiptAddrList(new DefaultSingleObserver<AddreessDataDto>() {

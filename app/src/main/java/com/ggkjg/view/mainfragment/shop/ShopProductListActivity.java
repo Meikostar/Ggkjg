@@ -75,6 +75,7 @@ public class ShopProductListActivity extends BaseActivity {
     private HashMap<String, Object> mParamsMaps;
     private int loadDataType = ProductListType.synthesize.getType(); //加载数据类型
     private int mCurrentPage = 1;
+    private int state;
     private SwipeRefreshLayoutUtil mSwipeRefreshLayoutUtil;
 
 
@@ -92,12 +93,18 @@ public class ShopProductListActivity extends BaseActivity {
     public void initData() {
         searchKey = getIntent().getStringExtra(ACTION_SEARCH_KEY);
         mCategoryId = getIntent().getExtras().getInt(PRODUCT_TYPE);
+        state= getIntent().getExtras().getInt("state");
         mParamsMaps = new HashMap<>();
         mParamsMaps.put("rows", Constants.PAGE_SIZE);
         if(searchKey != null){
             mParamsMaps.put("goodsName", searchKey);
         }else {
             mParamsMaps.put("categoryId", mCategoryId);
+        }
+        if(state==1){
+            mParamsMaps.put("all", "1");
+        }else {
+            mParamsMaps.put("all", "0");
         }
         setTopTitlesView(tv_shop_product_1);
     }

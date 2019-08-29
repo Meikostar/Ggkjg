@@ -67,7 +67,17 @@ public class GlideUtils {
                         .transforms(new CenterCrop(), new CircleTransform()))
                 .into(imageView);
     }
-
+    public void loadRoundImgs(Context context, ImageView imageView, Object imgUrl) {
+        Glide.with(context)
+                .asBitmap()
+                .load(imgUrl)
+                .apply(new RequestOptions()
+                        .placeholder(R.mipmap.user_default_icon)
+                        .error(R.mipmap.user_default_icon)
+                        // .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .transforms(new CenterCrop(), new CircleTransform()))
+                .into(imageView);
+    }
     /**
      * 加载正常图片居中填充控件
      *

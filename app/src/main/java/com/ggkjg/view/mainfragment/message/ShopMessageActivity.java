@@ -1,23 +1,26 @@
 package com.ggkjg.view.mainfragment.message;
 
 import android.graphics.Bitmap;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
+import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.base.BuildConfig;
-import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.WebViewUtil;
+import com.ggkjg.dto.DetailDto;
+import com.ggkjg.http.manager.DataManager;
+import com.ggkjg.http.subscribers.DefaultSingleObserver;
+import com.ggkjg.view.widgets.autoview.ActionbarView;
 
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 商城快讯
@@ -25,8 +28,14 @@ import butterknife.BindView;
  */
 
 public class ShopMessageActivity extends BaseActivity {
-    private static final String TAG = ShopMessageActivity.class.getSimpleName();
-    public static final String MESSAGE_ID = "message_id";//调用者传递的名字
+    private static final String TAG        = ShopMessageActivity.class.getSimpleName();
+    public static final  String MESSAGE_ID = "message_id";//调用者传递的名字
+    @BindView(R.id.custom_action_bar)
+    ActionbarView customActionBar;
+    @BindView(R.id.tv_title)
+    TextView      tvTitle;
+    @BindView(R.id.tv_time)
+    TextView      tvTime;
     private long message_id;//消息ID
     @BindView(R.id.shop_message_webview)
     WebView webView;
@@ -46,23 +55,44 @@ public class ShopMessageActivity extends BaseActivity {
     @Override
     public void initData() {
         message_id = getIntent().getLongExtra(MESSAGE_ID, 0);
-        final String url = BuildConfig.BASE_URL + "cmsinfo/cmsinfo/CmsInfo/front/readDetail/gotopage?id=" + message_id;
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-        webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
-        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
-        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);//不使用缓存
-        webView.loadUrl(url);
-        webView.setWebViewClient(new MyWebViewClient());
+        findMemberQrCode();
+        final String url = BuildConfig.BASE_URL + "cmsinfo/cmsinfo/CmsInfo/readDetail?id=" + message_id;
+
+
     }
 
     @Override
     public void initListener() {
 
     }
+
+    private void findMemberQrCode() {
+        showLoadDialog();
+        DataManager.getInstance().readDetail(new DefaultSingleObserver<DetailDto>() {
+            @Override
+            public void onSuccess(DetailDto imgUrl) {
+                if(TextUtil.isNotEmpty(imgUrl.cmsTitle)){
+                    tvTitle.setText(imgUrl.cmsTitle);
+                }
+                if(TextUtil.isNotEmpty(imgUrl.createDate)){
+                    tvTime.setText(imgUrl.createDate);
+                }
+                if (imgUrl != null && TextUtil.isNotEmpty(imgUrl.cmsContentz)) {
+
+                    WebViewUtil.setWebView(webView, Objects.requireNonNull(ShopMessageActivity.this));
+                    WebViewUtil.loadHtml(webView, imgUrl.cmsContentz);
+                }
+                dissLoadDialog();
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+            }
+        }, message_id + "");
+    }
+
 
     class MyWebViewClient extends WebViewClient {
         @Override

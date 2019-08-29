@@ -49,7 +49,7 @@ public class SearchShopProduct extends BaseActivity implements TextView.OnEditor
     @BindView(R.id.recy_search_message)
     RecyclerView recyclerView;
     private SearchProductAdapter adapter;
-
+    private int state;
     @Override
     public int getLayoutId() {
         return R.layout.ui_search_product_layout;
@@ -57,6 +57,7 @@ public class SearchShopProduct extends BaseActivity implements TextView.OnEditor
 
     @Override
     public void initView() {
+        state=getIntent().getIntExtra("state",0);
         StatusBarUtils.StatusBarLightMode(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false) {
             @Override
@@ -165,6 +166,8 @@ public class SearchShopProduct extends BaseActivity implements TextView.OnEditor
 
         Bundle bundle = new Bundle();
         bundle.putString(ShopProductListActivity.ACTION_SEARCH_KEY, key);
+        bundle.putInt("state", state);
+
         gotoActivity(ShopProductListActivity.class, false, bundle);
     }
 

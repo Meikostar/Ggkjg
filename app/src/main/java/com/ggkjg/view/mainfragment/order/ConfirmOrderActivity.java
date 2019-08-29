@@ -412,6 +412,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 
     @Override
     public void initListener() {
+
+        tv_level_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -482,6 +489,22 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             deliverType = 2;
             dealSelLevel();
         });
+        tv_level_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selLevel = 0;
+                deliverType = 1;
+                dealSelLevel();
+            }
+        });
+        tv_level_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selLevel = 1;
+                deliverType = 2;
+                dealSelLevel();
+            }
+        });
 
         bindClickEvent(rlOffer, () -> {
             if (conponList != null) {
@@ -526,6 +549,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                 }
             }
 
+        }else {
+            findDefaultReceiptAddr();
         }
     }
 
@@ -579,7 +604,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                         tv_confirm_order_goods_total_weight.setText(object.sumWeight + "");
                     }
                     tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
-                    if (object.conponList != null) {
+                    if (object.conponList != null&&object.conponList.size()>0) {
                         tvPriceSum.setText("有券可用" );
 
                         conponList = object.conponList;

@@ -10,8 +10,30 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/my_color_EBEBEB"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/my_color_333333"
+        android:textStyle="bold"
+        android:textSize="@dimen/wz_16sp"/>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="@dimen/bj_15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/my_color_999999"
+        android:textStyle="bold"
+        android:textSize="@dimen/wz_12sp"/>
+
 
     <WebView
+        android:layout_marginTop="@dimen/bj_22dp"
+        android:paddingLeft="@dimen/bj_15dp"
+        android:paddingRight="@dimen/bj_15dp"
         android:id="@+id/shop_message_webview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

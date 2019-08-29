@@ -45,7 +45,7 @@ public class ShareQRcodeActivity extends BaseActivity {
             finish();
         });
         bindClickEvent(img_qrcode_share, () -> {
-            ShareSdkUtils.getInstances().showShareDialog(this, "港港跨境二维码分享", "港港跨境", "", shareUrl);
+            ShareSdkUtils.getInstances().showShareDialog(this, "港港跨境二维码分享", "港港跨境", "", shareUrl,null);
 
         });
 

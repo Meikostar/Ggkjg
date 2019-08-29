@@ -62,6 +62,7 @@ import com.ggkjg.view.mainfragment.shop.ShopProductListActivity;
 import com.ggkjg.view.mainfragment.spike.SpikeActivity;
 import com.ggkjg.view.mainfragment.spike.VoucherProductListActivity;
 import com.ggkjg.view.widgets.LoadingDialog;
+import com.ggkjg.view.widgets.NewSwipeRefreshLayout;
 import com.ggkjg.view.widgets.RecyclerItemDecoration;
 import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
 import com.ggkjg.view.widgets.autoview.EmptyView;
@@ -163,7 +164,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     private int loadinglevel = 0;
 
     @BindView(R.id.refresh_home)
-    SuperSwipeRefreshLayout swipeRefreshLayout;
+    NewSwipeRefreshLayout swipeRefreshLayout;
     SwipeRefreshLayoutUtil swipeRefreshLayoutUtil;
     private int currentPage = Constants.PAGE_NUM;
     private SlidersDto adOneSlider = null;
@@ -414,34 +415,40 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     @Override
     protected void initListener() {
         bindClickEvent(iv_home_img1, () -> {
-            if(homeActiveIndexDtos==null){
+            if(homeActiveIndexDtos==null&&homeActiveIndexDtos.size()>=1){
                 return;
             }
             startActivityCommodityDetail(homeActiveIndexDtos.get(0).getId());
         });
         bindClickEvent(iv_home_img2, () -> {
-            if(homeActiveIndexDtos==null){
+            if(homeActiveIndexDtos==null&&homeActiveIndexDtos.size()>=2){
                 return;
             }
             startActivityCommodityDetail(homeActiveIndexDtos.get(1).getId());
         });
         bindClickEvent(iv_home_img3, () -> {
-            if(homeActiveIndexDtos==null){
+            if(homeActiveIndexDtos==null&&homeActiveIndexDtos.size()>=3){
                 return;
             }
             startActivityCommodityDetail(homeActiveIndexDtos.get(2).getId());
         });
         bindClickEvent(iv_home_img4, () -> {
-            if(homeActiveIndexDtos==null){
+            if(homeActiveIndexDtos==null&&homeActiveIndexDtos.size()>=4){
                 return;
             }
             startActivityCommodityDetail(homeActiveIndexDtos.get(3).getId());
         });
         bindClickEvent(iv_home_img5, () -> {
-            if(homeActiveIndexDtos==null){
+            if(homeActiveIndexDtos==null&&homeActiveIndexDtos.size()>=5){
                 return;
             }
             startActivityCommodityDetail(homeActiveIndexDtos.get(4).getId());
+        });
+        bindClickEvent(iv_home_img6, () -> {
+            if(homeActiveIndexDtos==null&&homeActiveIndexDtos.size()>=6){
+                return;
+            }
+            startActivityCommodityDetail(homeActiveIndexDtos.get(5).getId());
         });
         bindClickEvent(ivAdOne, () -> {
             if(homeActiveIndexDtos==null){
@@ -491,7 +498,10 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             }
         });
         bindClickEvent(top_search_view, () -> {
-            gotoActivity(SearchShopProduct.class);
+            Intent intent = new Intent(getActivity(), SearchShopProduct.class);
+            intent.putExtra("state",1);
+            startActivity(intent);
+//            gotoActivity(SearchShopProduct.class);
         });
         bindClickEvent(rl_home_shop_message, () -> {
             gotoActivity(ShopMessageListActivity.class);
@@ -553,6 +563,7 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
     private void startActivityProductList(int product_type) {
         Bundle bundle = new Bundle();
         bundle.putInt(ShopProductListActivity.PRODUCT_TYPE, product_type);
+
         gotoActivity(ShopProductListActivity.class, false, bundle);
     }
 

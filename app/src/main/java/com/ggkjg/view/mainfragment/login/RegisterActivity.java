@@ -231,7 +231,7 @@ public class RegisterActivity extends BaseActivity implements BaseActivity.Permi
             @Override
             public void onSuccess(String object) {
                 ToastUtil.toast("获取验证成功");
-                et_register_msm_code.setText(object);
+//                et_register_msm_code.setText(object);
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess() = " + object);
             }
 

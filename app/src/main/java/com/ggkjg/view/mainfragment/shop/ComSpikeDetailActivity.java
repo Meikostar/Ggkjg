@@ -697,7 +697,7 @@ public class ComSpikeDetailActivity extends BaseActivity implements BaseActivity
             @Override
             public void onSuccess(ShareGoodsDto shareGoodsDto) {
                 if (shareGoodsDto != null && mCommodityDetailDto != null) {
-                    ShareSdkUtils.getInstances().showShareDialog(ComSpikeDetailActivity.this, mCommodityDetailDto.getGoodsInfo().getGoodsName(), "", "", shareGoodsDto.getShareUrl());
+                    ShareSdkUtils.getInstances().showShareDialog(ComSpikeDetailActivity.this, mCommodityDetailDto.getGoodsInfo().getGoodsName(), "", "", shareGoodsDto.getShareUrl(),null);
                 }
             }
         }, product_id + "");

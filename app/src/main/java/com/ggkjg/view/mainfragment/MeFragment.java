@@ -283,7 +283,7 @@ public class MeFragment extends BaseFragment {
                     mUserInfoDto = userInfoDto;
                     userNameTv.setText(userInfoDto.getNickName());
                     String userHeadUrl = BuildConfig.BASE_IMAGE_URL + userInfoDto.getHeadImg();
-                    GlideUtils.getInstances().loadRoundImg(getContext(), userIcon, userHeadUrl);
+                    GlideUtils.getInstances().loadRoundImgs(getContext(), userIcon, userHeadUrl);
                     String memberLevelName = "";
                     if (userInfoDto.getMemberLevel() == MemberLevelType.level_1.getType()) {
                         memberLevelName = MemberLevelType.level_1.getValue();

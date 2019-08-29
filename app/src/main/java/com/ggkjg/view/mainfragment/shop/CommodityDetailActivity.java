@@ -217,23 +217,17 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         findServiceTel();
         //findAllEvaList(1, 10, product_id, 1);
     }
-
+   private ShareProductDialog dialog;
     @Override
     public void initListener() {
         actionbar.setImageAction(R.mipmap.share_icon, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Constants.getInstance().isLogin()) {
-                    ShareProductDialog dialog = new ShareProductDialog(CommodityDetailActivity.this, productImg, shareImgUrl);
+                    dialog = new ShareProductDialog(CommodityDetailActivity.this, productImg, shareImgUrl);
                     dialog.setCanceledOnTouchOutside(true);
                     dialog.show();
 
-                    dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            ShareSdkUtils.getInstances().dissMiss();
-                        }
-                    });
                     findShareParam();
                 } else {
                     gotoActivity(LoginActivity.class);
@@ -909,9 +903,19 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         DataManager.getInstance().findShareParam(new DefaultSingleObserver<ShareGoodsDto>() {
             @Override
             public void onSuccess(ShareGoodsDto shareGoodsDto) {
-                if (shareGoodsDto != null && mCommodityDetailDto != null) {
-                    ShareSdkUtils.getInstances().showShareDialog(CommodityDetailActivity.this, mCommodityDetailDto.getGoodsInfo().getGoodsName(), "", "", shareGoodsDto.getShareUrl());
-                }
+                if (shareGoodsDto != null && mCommodityDetailDto != null)
+
+                    ShareSdkUtils.getInstances().showShareDialog(CommodityDetailActivity.this, mCommodityDetailDto.getGoodsInfo().getGoodsName(), "", "", shareGoodsDto.getShareUrl(), new ShareSdkUtils.onCancelDissListener() {
+                        @Override
+                        public void cancels() {
+                            if(dialog!=null){
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+
+
+
             }
         }, product_id + "");
     }
