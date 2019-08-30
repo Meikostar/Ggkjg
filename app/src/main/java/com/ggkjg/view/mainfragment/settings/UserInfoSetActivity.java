@@ -71,11 +71,12 @@ public class UserInfoSetActivity extends BaseActivity {
             updateHeader();
         });
         bindClickEvent(ll_nick_name, () -> {
-            if (mUserInfoDto != null && !"2".equals(mUserInfoDto.getNickModityState())) {
-                gotoActivity(UserNameActivity.class);
-            }else {
-                ToastUtil.showToast("已修改过昵称");
-            }
+//            if (mUserInfoDto != null && !"2".equals(mUserInfoDto.getNickModityState())) {
+//                gotoActivity(UserNameActivity.class);
+//            }else {
+//                ToastUtil.showToast("已修改过昵称");
+//            }
+            gotoActivity(UserNameActivity.class);
         });
         bindClickEvent(ll_phone, () -> {
             Bundle bundle = new Bundle();

@@ -9,7 +9,8 @@ public class BuildConfig {
      * 调试
      */
 //    public static final String BASE_URL = "http://ng.2aa6.com/hkonline/";
-    public static final String BASE_URL = "http://app.ggkjsz.com/test/";
+//    public static final String BASE_URL = "http://app.ggkjsz.com/test/";
+    public static final String BASE_URL = "http://app.ggkj.hk/hkonline/";
 //    public static final String BASE_URL = "http://b.ng.2aa6.com:8080/hkonline/";
 
 //    public static final String BASE_URL = "http://a.smg.kingstang.com:8080/hkonline/";

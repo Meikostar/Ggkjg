@@ -59,6 +59,7 @@ import com.ggkjg.view.widgets.autoview.ObservableScrollView;
 import com.ggkjg.view.widgets.autoview.SuperExpandableListView;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -188,6 +189,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
     private PopVoucherAdapter popadapter;
     private List<CartAtrrDto> conponList;
 
+
+
+
     public void showPopWindows() {
 
         if (mView == null) {
@@ -216,7 +220,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                         if (dto.isChoose) {
                             tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_D13229));
                             tvPriceSum.setText("-" + dto.subPrice);
-                            tv_confirm_order_total_money.setText(total - Double.valueOf(dto.subPrice) + "");
+                            DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+                            String distanceString = decimalFormat.format(total - Double.valueOf(dto.subPrice)) ;
+                            tv_confirm_order_total_money.setText( distanceString);
                         }
                     }
                 }

@@ -19,6 +19,7 @@ import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.MD5Utils;
 import com.ggkjg.common.utils.RxTimerUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.StringUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
@@ -161,6 +162,16 @@ public class RegisterActivity extends BaseActivity implements BaseActivity.Permi
             }
             if (TextUtils.isEmpty(loginPwd)) {
                 ToastUtil.showToast("密码不能为空！");
+                return;
+            }
+            if (!StringUtil.isMobileNO(phone)) {
+                ToastUtil.showToast("请输入正确验证码");
+
+                return;
+            }
+
+            if (loginPwd.length()<6) {
+                ToastUtil.showToast("密码长度至少6位数！");
                 return;
             }
             if (TextUtils.isEmpty(pushCode)) {

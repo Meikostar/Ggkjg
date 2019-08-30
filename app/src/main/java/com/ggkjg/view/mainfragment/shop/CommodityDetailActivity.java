@@ -34,6 +34,8 @@ import com.ggkjg.dto.CommodityDetailBannerDto;
 import com.ggkjg.dto.CommodityDetailDto;
 import com.ggkjg.dto.CommodityDetailInfoDto;
 import com.ggkjg.dto.FavoriteStateDto;
+import com.ggkjg.dto.GoodsAttrDto;
+import com.ggkjg.dto.GoodsColorAndSpecDto;
 import com.ggkjg.dto.ServiceTelDto;
 import com.ggkjg.dto.ShareGoodsDto;
 import com.ggkjg.dto.ShopEvaluateDto;
@@ -212,6 +214,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
     public void initData() {
         product_id = getIntent().getLongExtra(PRODUCT_ID, 0);
         findGoodsDetail(product_id);
+        findGoodsAttr(product_id);
         findGoodsQrCode(product_id);
         findEvaState(product_id);
         findServiceTel();
@@ -770,7 +773,40 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         WebViewUtil.loadHtml(webView, goodsInfo.getGoodsDetail());
         dissLoadDialog();
     }
+    /**
+     * 获取商品颜色，规格
+     *
+     * @param goodsId 商品id
+     */
+    private String content;
+    private void findGoodsAttr(long goodsId) {
+        DataManager.getInstance().findGoodsAttr(new DefaultSingleObserver<GoodsColorAndSpecDto>() {
+            @Override
+            public void onSuccess(GoodsColorAndSpecDto object) {
+                LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
+                content="";
+                loadingDialog.cancelDialog();
+                int i=0;
+                if (null != object.getAttrMap() && !object.getAttrMap().isEmpty()) {
+                  for(GoodsAttrDto dto:object.getAttrMap()){
+                      if(i==0){
+                          content=dto.getAttrList().get(0).getColorCode();
+                      }else {
+                          content=content+","+dto.getAttrList().get(0).getColorCode();
+                      }
+                      i++;
+                  }
+                }
+                tv_commodity_info_type.setText(content);
+            }
 
+            @Override
+            public void onError(Throwable throwable) {
+                LogUtil.i(TAG, "--RxLog-Thread: onError() = " + throwable.toString());
+                loadingDialog.cancelDialog();
+            }
+        }, goodsId);
+    }
     /**
      * 评论
      *
@@ -891,6 +927,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             slidersDto.setModifyTime(item.getModifyTime());
             slidersDto.setEnableFlag(item.getEnableFlag());
             slidersDto.setClickUrl(item.getClickUrl());
+            slidersDto.setClickType(item.getClickType());
             slidersDtos.add(slidersDto);
         }
         LoopViewPagerAdapter loopViewPagerAdapter = new LoopViewPagerAdapter(this, ads_vp_container, ads_ll_indicators);

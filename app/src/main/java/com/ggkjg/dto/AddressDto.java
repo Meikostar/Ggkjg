@@ -2,8 +2,10 @@ package com.ggkjg.dto;
 
 import java.io.Serializable;
 
+
+
 public class AddressDto implements Serializable {
-    String id;
+   public String id;
     String memberId;
     String contactName;
     String mobileNo;

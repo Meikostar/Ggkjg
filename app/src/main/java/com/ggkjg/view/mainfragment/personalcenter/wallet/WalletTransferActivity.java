@@ -106,6 +106,10 @@ public class WalletTransferActivity extends BaseActivity {
             ToastUtil.showToast("请输入数量");
             return;
         }
+        if (Double.valueOf(ed_count.getText().toString())<0.01) {
+            ToastUtil.showToast("转让数量过小");
+            return;
+        }
         getMemberBaseInfo(new InputPwdDialog.InputPasswordListener() {
             @Override
             public void callbackPassword(String password) {

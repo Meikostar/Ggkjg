@@ -209,6 +209,7 @@
                 </RelativeLayout>
                 <!--我的MYCC-->
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/rl_me_item_mycc"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bj_50dp"
