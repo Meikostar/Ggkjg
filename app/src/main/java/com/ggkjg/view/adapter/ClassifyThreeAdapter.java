@@ -42,7 +42,8 @@ public class ClassifyThreeAdapter extends BaseQuickAdapter<StoreCategoryDto, Bas
                 Bundle bundle = new Bundle();
 //                bundle.putLong(CommodityDetailActivity.PRODUCT_ID, item.getId());
 //                gotoActivity(CommodityDetailActivity.class, bundle);
-                bundle.putString(ShopProductListActivity.ACTION_SEARCH_KEY, item.getCategoryName());
+                bundle.putInt(ShopProductListActivity.PRODUCT_TYPE, (int)item.getId());
+//                bundle.putString(ShopProductListActivity.ACTION_SEARCH_KEY, item.getCategoryName());
                 gotoActivity(ShopProductListActivity.class, bundle);
             }
         });

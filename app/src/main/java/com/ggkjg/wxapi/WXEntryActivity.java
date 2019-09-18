@@ -57,13 +57,31 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
-                result = R.string.errcode_cancel;
+                if (type == RETURN_MSG_TYPE_LOGIN) {
+                    result = R.string.errcode_cancel_dl;
+
+                } else {
+                    result = R.string.errcode_cancel;
+                }
+
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                result = R.string.errcode_deny;
+                if (type == RETURN_MSG_TYPE_LOGIN) {
+                    result = R.string.errcode_deny_dl;
+
+                } else {
+                    result = R.string.errcode_deny;
+                }
+
                 break;
             default:
-                result = R.string.errcode_unknown;
+                if (type == RETURN_MSG_TYPE_LOGIN) {
+                    result = R.string.errcode_unknown_dl;
+
+                } else {
+                    result = R.string.errcode_unknown;
+                }
+
                 break;
         }
 

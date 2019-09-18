@@ -239,6 +239,9 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         });
         bindClickEvent(tv_commodity_service, () -> {
             String shiroToken = Constants.getInstance().getString(Constants.USER_SHIRO_TOKEN, "");
+            if(TextUtils.isEmpty(shiroToken)){
+                shiroToken="ggky_123456";
+            }
 
             if(TextUtil.isNotEmpty(shiroToken)){
                 CommodityDetailInfoDto goodsInfo = mCommodityDetailDto.getGoodsInfo();
@@ -254,7 +257,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                 item.setCommodityUrl("https://detail.tmall.com/item.htm?spm=a1z10.3746-b.w4946-14396547293.1.4PUcgZ&id=529634221064&sku_properties=-1:-1");
 
 
-
+//                UDeskSDK.getInstance().showConversation();
                 UdeskSDKManager.getInstance().entryChat(CommodityDetailActivity.this, CreatUdeskStyle.makeBuilder(CommodityDetailActivity.this,item).build(), shiroToken);
             }
 //            if (!isPermissioin(CALL_PHONE)) {
@@ -703,7 +706,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                 tv_voucher_cout.setVisibility(View.VISIBLE);
                 tv_voucher_cout.setText("用券立减" +commodityDetailDto.getGoodsInfo().conponPrice);
             }else {
-                tv_voucher_cout.setVisibility(View.VISIBLE);
+                tv_voucher_cout.setVisibility(View.INVISIBLE);
             }
 
         }

@@ -23,8 +23,11 @@
 
     <string name="errcode_success">分享成功</string>
     <string name="errcode_cancel">分享取消</string>
+    <string name="errcode_cancel_dl">登录取消</string>
     <string name="errcode_deny">分享被拒绝</string>
+    <string name="errcode_deny_dl">登录被拒绝</string>
     <string name="errcode_unknown">分享返回</string>
+    <string name="errcode_unknown_dl">登录返回</string>
     <string name="spike">秒杀专区</string>
     <string name="nearOverText">即将售罄</string>
     <string name="overText">已售罄</string>

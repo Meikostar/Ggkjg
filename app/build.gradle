@@ -64,6 +64,7 @@ greendao {
     targetGenDir 'src/main/java' //生成的文件放到的目录
 }
 //configurations {
+
 //    all*.exclude group: 'com.android.support', module: 'support-v4'
 //}
 dependencies {

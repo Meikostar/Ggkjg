@@ -116,7 +116,7 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher {
 
     private void userFeedback() {
         String contentStr = editText.getText().toString();
-        if (TextUtils.isEmpty(contentStr)&&contentStr.length()>0) {
+        if (TextUtils.isEmpty(contentStr.trim())) {
             ToastUtil.showToast("请输入反馈");
             return;
         }

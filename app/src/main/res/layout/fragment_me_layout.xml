@@ -261,7 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="我的港券"
+                        android:text="我的港(H)券"
                         android:textColor="@color/my_color_333333"
                         android:textSize="@dimen/wz_16sp" />
 
