@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -160,7 +161,14 @@ public class WalletRechargeActivity extends BaseActivity {
                 if (currentPayWay == WX_PAY) { //微信支付
 //                    payOrderInfo(rechargeOrderDto.getOrder_no());
                 } else {
-                    payZFBOrderInfo(rechargeDto.getOrderString());
+
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(rechargeDto.getOrderString());         //要跳转的网页
+                    intent.setData(content_url);
+                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                    startActivity(intent);
+//                    payZFBOrderInfo(rechargeDto.getOrderString());
                 }
 
             }

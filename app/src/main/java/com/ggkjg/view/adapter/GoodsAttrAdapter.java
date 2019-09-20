@@ -35,6 +35,9 @@ public class GoodsAttrAdapter extends BaseQuickAdapter<GoodsAttrDto, BaseViewHol
     }
 
     public void setInitColorIds(List<GoodsAttrDto> data) {
+        if(data==null||data.size()==0){
+            return;
+        }
         String colorIdStr = null;
         for (int i = 0; i < data.size(); i++) {
             List<GoodsAttrItemDto> goodsAttrItemDtos = data.get(i).getAttrList();

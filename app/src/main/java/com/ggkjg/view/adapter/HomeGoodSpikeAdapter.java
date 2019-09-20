@@ -89,21 +89,21 @@ public class HomeGoodSpikeAdapter extends BaseAdapter {
         if(TextUtil.isNotEmpty(data.get(i).goodsName)){
             holder.tvTitle.setText(data.get(i).goodsName);
         }
-        if(TextUtil.isNotEmpty(data.get(i).gdPrice)){
-            holder.tvItemHomeGoodShopPrice.setText(data.get(i).gdPrice);
+        if(TextUtil.isNotEmpty(data.get(i).activePrice)){
+            holder.tvItemHomeGoodShopPrice.setText(data.get(i).activePrice);
         }
-        if(TextUtil.isNotEmpty(data.get(i).marketPrice)){
-            String name = data.get(i).marketPrice;
-            TextPaint textPaint = new TextPaint();
-            textPaint.setTextSize(12);
-            int with = (int) textPaint.measureText(name);
-            FrameLayout.LayoutParams linearParams =(FrameLayout.LayoutParams) holder.line.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
-
-            linearParams.width = ScreenSizeUtil.dp2px(with-6);// 控件的宽强制设成30
-
-            holder.line.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
-            holder.tvPrice.setText(data.get(i).marketPrice);
-        }
+//        if(TextUtil.isNotEmpty(data.get(i).marketPrice)){
+//            String name = data.get(i).marketPrice;
+//            TextPaint textPaint = new TextPaint();
+//            textPaint.setTextSize(12);
+//            int with = (int) textPaint.measureText(name);
+//            FrameLayout.LayoutParams linearParams =(FrameLayout.LayoutParams) holder.line.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
+//
+//            linearParams.width = ScreenSizeUtil.dp2px(with-6);// 控件的宽强制设成30
+//
+//            holder.line.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+//            holder.tvPrice.setText(data.get(i).marketPrice);
+//        }
         holder.ll_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

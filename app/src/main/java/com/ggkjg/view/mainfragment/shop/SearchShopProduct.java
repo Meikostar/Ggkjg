@@ -77,6 +77,20 @@ public class SearchShopProduct extends BaseActivity implements TextView.OnEditor
         adapter = new SearchProductAdapter(datas, this);
         recyclerView.setAdapter(adapter);
     }
+    private boolean isFirst;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFirst){
+            List<SearchHistory> datas = SeachHistotyDBUtil.getInstance().loadAll();
+            Collections.reverse(datas);
+            adapter.setNewData(datas);
+        }else {
+            isFirst=true;
+        }
+
+    }
 
     @Override
     public void initListener() {

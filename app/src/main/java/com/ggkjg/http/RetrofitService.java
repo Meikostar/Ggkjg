@@ -448,6 +448,11 @@ public interface RetrofitService {
     @POST("noSilent/store/findPaymentList")
     Single<HttpResult<List<PayOrderDto>>> findPaymentList();
 
+    /**
+     * 删除用户地址
+     */
+    @GET("noSilent/fund/checkAliPayStaus/{address_id}")
+    Single<HttpResult<RechargeDto>> checkAliPayStaus( @Path("address_id") String address_id);
 
     /**
      * 获取某个分类的商品列表

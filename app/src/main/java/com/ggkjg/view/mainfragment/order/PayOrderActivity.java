@@ -2,6 +2,7 @@ package com.ggkjg.view.mainfragment.order;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -222,17 +223,23 @@ public class PayOrderActivity extends BaseActivity {
 
                     }else if ("zfb".equals(payType)) {
                         if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
-                            PayUtils.getInstances().zfbPaySync(PayOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
-                                @Override
-                                public void zfbPayOk(boolean payOk) {
-                                    showTipDialog(payOk);
-                                }
-
-                                @Override
-                                public void wxPayOk(boolean payOk) {
-
-                                }
-                            });
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse(httpResult.getData().getOrderString());         //要跳转的网页
+                            intent.setData(content_url);
+                            intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                            startActivity(intent);
+//                            PayUtils.getInstances().zfbPaySync(PayOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
+//                                @Override
+//                                public void zfbPayOk(boolean payOk) {
+//                                    showTipDialog(payOk);
+//                                }
+//
+//                                @Override
+//                                public void wxPayOk(boolean payOk) {
+//
+//                                }
+//                            });
                         }
 
                     }

@@ -50,7 +50,7 @@ public class BusinesstListAdapter extends BaseQuickAdapter<BusinessListDto, Base
                 }
             });
             String imgUrl = BuildConfig.BASE_IMAGE_URL + item.cmsMainImg;
-            GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_item_product_img), imgUrl, R.mipmap.img_default_6);
+            GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_img), imgUrl, R.mipmap.img_default_6);
         }
     }
 }

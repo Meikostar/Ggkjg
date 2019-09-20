@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bj_110dp"
         android:paddingLeft="@dimen/bj_15dp"

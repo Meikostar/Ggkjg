@@ -165,6 +165,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="@dimen/bj_15dp">
                         <LinearLayout
+                            android:visibility="gone"
                             android:id="@+id/layout_level_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -388,6 +389,7 @@
             <!--分割线-->
             <!--分割线-->
             <LinearLayout
+                android:id="@+id/ll_bg"
                 android:background="@color/my_color_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

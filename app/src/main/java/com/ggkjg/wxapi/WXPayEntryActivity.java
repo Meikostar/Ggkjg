@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.ggkjg.R;
 import com.ggkjg.common.Constants;
+import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.db.bean.WEIXINREQ;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -62,6 +63,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         sb.append("sign"+req.sign+"\n\n");
         req.sign = weixinreq.sign;
         api.registerApp(AppRegister.APP_ID);
+        LogUtil.e("wchat_pay","appid: "+ req.appId+"noncestr: "+ req.nonceStr+"package: "+req.packageValue+"partnerid: "+ req.partnerId+"prepayid: "+req.prepayId+"timestamp: "+ req.timeStamp+"sign: "+req.sign);
         boolean b = api.sendReq(req);
         if (b == false) {
             Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();

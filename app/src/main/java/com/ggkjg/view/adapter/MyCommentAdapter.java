@@ -77,7 +77,7 @@ public class MyCommentAdapter extends BaseQuickAdapter<ShopEvaluateRowsDto, Base
 
         helper.setText(R.id.tv_user_nickname, item.getNickName());
         String userAvatar = BuildConfig.BASE_IMAGE_URL + item.getHeadImg();
-        GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_user_icon), userAvatar, R.mipmap.img_default_1);
+        GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_user_icon), userAvatar, R.mipmap.user_default_icon);
          if(item.getGoodsList() != null && item.getGoodsList().size() > 0){
              MyOrderItemDto myOrderItemDto = item.getGoodsList().get(0);
              helper.setText(R.id.tv_commodity_des, myOrderItemDto.getGoodsName())

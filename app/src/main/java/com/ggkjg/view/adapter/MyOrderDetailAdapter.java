@@ -1,6 +1,10 @@
 package com.ggkjg.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -8,6 +12,7 @@ import com.ggkjg.BuildConfig;
 import com.ggkjg.R;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.dto.MyOrderItemDto;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 
 import java.util.List;
 
@@ -39,5 +44,19 @@ public class MyOrderDetailAdapter extends BaseQuickAdapter<MyOrderItemDto, BaseV
         } else {
             helper.setGone(R.id.rl_comment, false);
         }
+        RelativeLayout view = helper.getView(R.id.rl_bg);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(mContext,CommodityDetailActivity.class);
+
+                bundle.putLong(CommodityDetailActivity.PRODUCT_ID, Long.valueOf(item.getGoodsId()));
+                if (bundle != null) {
+                    intent.putExtras(bundle);
+                }
+               mContext.startActivity(intent);
+            }
+        });
     }
 }

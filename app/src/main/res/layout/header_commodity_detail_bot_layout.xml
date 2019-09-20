@@ -16,7 +16,7 @@
         android:drawableTop="@mipmap/icon_commodity_service"
         android:drawablePadding="@dimen/bj_3dp"
         android:gravity="center"
-        android:text="客户电话"
+        android:text="联系客服"
         android:textColor="@color/my_color_696969"
         android:textSize="@dimen/wz_12sp" />
 

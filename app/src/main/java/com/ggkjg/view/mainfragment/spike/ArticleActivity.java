@@ -5,6 +5,7 @@ import android.webkit.WebView;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.common.utils.WebViewUtil;
 import com.ggkjg.dto.AgreeMentDto;
@@ -34,14 +35,21 @@ public class ArticleActivity extends BaseActivity {
     @Override
     public void initView() {
         id=getIntent().getStringExtra("id");
+        url=getIntent().getStringExtra("url");
         actionbar.setImgStatusBar(R.color.my_color_white);
+        WebViewUtil.setWebView(webView, Objects.requireNonNull(this));
+        if(TextUtil.isNotEmpty(url)){
+        }else {
+            findAgreeMent();
+        }
         StatusBarUtils.StatusBarLightMode(this);
     }
    private String id;
+   private String url;
     @Override
     public void initData() {
-        WebViewUtil.setWebView(webView, Objects.requireNonNull(this));
-        findAgreeMent();
+
+
     }
 
     @Override

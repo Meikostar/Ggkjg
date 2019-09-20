@@ -120,7 +120,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
     RelativeLayout rlAdsVpContainer;
     @BindView(R.id.header_commodity_detail_bot_layout)
     LinearLayout headerCommodityDetailBotLayout;
-    private long product_id;//产品ID
+    public static long product_id;//产品ID
 
     @BindView(R.id.tv_commodity_info_title)
     TextView tv_commodity_info_title;
@@ -254,7 +254,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                 //左侧图片
                 item.setThumbHttpUrl(url);
                 // 咨询对象网络链接
-                item.setCommodityUrl("https://detail.tmall.com/item.htm?spm=a1z10.3746-b.w4946-14396547293.1.4PUcgZ&id=529634221064&sku_properties=-1:-1");
+                item.setCommodityUrl(shareImgUrl);
 
 
 //                UDeskSDK.getInstance().showConversation();
@@ -300,17 +300,26 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
             bundle.putLong(ShopEvaluateActivity.PRODUCT_ID, product_id);
             gotoActivity(ShopEvaluateActivity.class, false, bundle);
         });
-        bindClickEvent(tv_shop_cart_submit, () -> {
-            if (Constants.getInstance().isLogin()) {
-                ShopProductTypeDialog dialog = new ShopProductTypeDialog(this, getCommodityDetailInfoDto(), new ShopProductTypeDialog.ShopProductTypeListener() {
-                    @Override
-                    public void callbackSelect(long specId, int cartNum) {
-                        findGoodsDetail(getCommodityDetailInfoDto().getId(), specId, cartNum);
+//        bindClickEvent(tv_shop_cart_submit, () -> {
+//
+//        });
+        tv_shop_cart_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Constants.getInstance().isLogin()) {
+                    ShopProductTypeDialog dialog = new ShopProductTypeDialog(CommodityDetailActivity.this, getCommodityDetailInfoDto(), new ShopProductTypeDialog.ShopProductTypeListener() {
+                        @Override
+                        public void callbackSelect(long specId, int cartNum) {
+                            findGoodsDetail(getCommodityDetailInfoDto().getId(), specId, cartNum);
+                        }
+                    }, true);
+                    if(CommodityDetailActivity.this!=null){
+                        dialog.show();
                     }
-                }, true);
-                dialog.show();
-            } else {
-                gotoActivity(LoginActivity.class);
+
+                } else {
+                    gotoActivity(LoginActivity.class);
+                }
             }
         });
         bindClickEvent(rl_commodity_info_select_v, () -> {
@@ -335,6 +344,8 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         });
 
     }
+
+
 
     public CommodityDetailInfoDto getCommodityDetailInfoDto() {
         return commodityDetailInfoDto;
@@ -676,6 +687,9 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     }else {
                         tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
                     }
+                    if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getGdPrice())){
+                        tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                    }
                     llMore.setBackgroundColor(getResources().getColor(R.color.my_color_green));
 
                 }else {
@@ -685,14 +699,17 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     tvTobuy.setText("港港秒杀");
                     tvInteger.setText("距结束时间");
                     line.setVisibility(View.VISIBLE);
-                    tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
+//                    tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
                     tvTobuy.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvHour.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvMinter.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvSecond.setTextColor(getResources().getColor(R.color.my_color_f23));
                     if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
-                        tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().activePrice);
                     }else {
+                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                    }
+                    if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getGdPrice())){
                         tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
                     }
                     llMore.setBackgroundColor(getResources().getColor(R.color.my_color_f23));

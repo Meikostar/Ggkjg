@@ -827,6 +827,17 @@ public class DataManager {
      *
      * @param observer
      */
+    public void checkAliPayStaus(DefaultSingleObserver<HttpResult<RechargeDto>> observer,  String no) {
+        Single<HttpResult<RechargeDto>> observable = retrofitService.checkAliPayStaus(no)
+                .map(new HttpResultMapper.HttpResultOtheData<>(null));
+        subscribe(observable, observer);
+    }
+
+    /**
+     * 订单支付
+     *
+     * @param observer
+     */
     public void submitWxOrder(DefaultSingleObserver<HttpResult<WEIXINREQ>> observer, HashMap<String, String> map) {
         Single<HttpResult<WEIXINREQ>> observable = retrofitService.submitWxOrder(map)
                 .map(new HttpResultMapper.HttpResultOtheData<>(null));

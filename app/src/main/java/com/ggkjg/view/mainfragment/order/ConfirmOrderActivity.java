@@ -3,6 +3,8 @@ package com.ggkjg.view.mainfragment.order;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -97,6 +99,9 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
     ObservableScrollView svConfirmOrder;
     @BindView(R.id.tv_confirm_order_goods_bottom_view)
     LinearLayout tvConfirmOrderGoodsBottomView;
+    @BindView(R.id.ll_bg)
+    LinearLayout llbg;
+
     @BindView(R.id.tv_first)
     TextView tvFirst;
     @BindView(R.id.tv_second)
@@ -484,17 +489,26 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 //            showPopPayWindows();
 //
 //        });
-        bindClickEvent(layout_level_1, () -> {
-            selLevel = 0;
-            deliverType = 1;
-            dealSelLevel();
-        });
 
-        bindClickEvent(layout_level_2, () -> {
-            selLevel = 1;
-            deliverType = 2;
-            dealSelLevel();
+        layout_level_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selLevel = 0;
+                deliverType = 1;
+                dealSelLevel();
+            }
         });
+//        layout_level_2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                selLevel = 1;
+//                deliverType = 2;
+//                dealSelLevel();
+//            }
+//        });
+//        bindClickEvent(layout_level_2, () -> {
+//
+//        });
         tv_level_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -520,13 +534,19 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         });
         bindClickEvent(ivAdd, () -> {
            if(ivAdd.isCheck()){
-               tv_confirm_order_total_money.setText(Double.valueOf(tv_confirm_order_total_money.getText().toString())-Double.valueOf(addPrice)+"");
+
+
+               DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+               String distanceString = decimalFormat.format( Double.valueOf(Double.valueOf(tv_confirm_order_total_money.getText().toString())-Double.valueOf(addPrice))) ;
+               tv_confirm_order_total_money.setText(distanceString);
                total = totals-addPrice;
                ivAdd.setChecked(false);
            }else {
                total = totals+addPrice;
-               tv_confirm_order_total_money.setText(Double.valueOf(tv_confirm_order_total_money.getText().toString())+Double.valueOf(addPrice)+"");
-
+//               tv_confirm_order_total_money.setText(Double.valueOf(tv_confirm_order_total_money.getText().toString())+Double.valueOf(addPrice)+"");
+               DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+               String distanceString = decimalFormat.format( Double.valueOf(Double.valueOf(tv_confirm_order_total_money.getText().toString())-Double.valueOf(addPrice))) ;
+               tv_confirm_order_total_money.setText(distanceString);
                ivAdd.setChecked(true);
            }
 
@@ -591,12 +611,17 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     }
                     if (TextUtil.isNotEmpty(object.sumgdPrice)) {
                         tv_confirm_order_goods_total_money.setText(object.sumgdPrice);
+
                         tv_confirm_order_total_money.setText(object.sumgdPrice);
+//                        tv_confirm_order_total_money.setText();
 
                         if(ivAdd.isCheck()){
-                            if(object.conponBase!=null){
-                                tv_confirm_order_total_money.setText(Double.valueOf(object.sumgdPrice)+Double.valueOf(object.conponBase.addPrice)+"");
-                                total = Double.valueOf(object.sumgdPrice)+Double.valueOf(object.conponBase.addPrice);
+                            if(object.conponBase!=null&&object.conponBase.addPrice!=null){
+                                DecimalFormat decimalFormats =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+                                String distanceStrings = decimalFormats.format(Double.valueOf(object.sumgdPrice)+object.conponBase.addPrice!=null?Double.valueOf(object.conponBase.addPrice):0) ;
+                                tv_confirm_order_total_money.setText(distanceStrings);
+//                                tv_confirm_order_total_money.setText(+"");
+                                total = Double.valueOf(object.sumgdPrice)+object.conponBase.addPrice!=null?Double.valueOf(object.conponBase.addPrice):0;
                             }
 
                         }else {
@@ -612,12 +637,13 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
                     if (object.conponList != null&&object.conponList.size()>0) {
                         tvPriceSum.setText("有券可用" );
-
+                        llbg.setVisibility(View.VISIBLE);
                         conponList = object.conponList;
                     }else {
+                         llbg.setVisibility(View.GONE);
                         tvPriceSum.setText("无可用" );
                     }
-                    if(object.conponBase!=null){
+                    if(object.conponBase!=null&&object.conponBase.addPrice!=null){
                         addPrice=Double.valueOf(object.conponBase.addPrice);
                         tvFirst.setText(object.conponBase.addPrice+"");
                         tvSecond.setText("(满"+object.conponBase.fullPrice+"减"+object.conponBase.subPrice+")");
@@ -778,6 +804,56 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
     private int RQ_WEIXIN_PAY = 12;
     private int RQ_PAYPAL_PAY = 16;
     private int RQ_ALIPAY_PAY = 10;
+    private String out_trade_no;
+
+    public boolean isFirst;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFirst){
+            checkAliPayStaus();
+        }else {
+            isFirst=true;
+        }
+    }
+
+    /**
+     * 余额支付
+     */
+    private void checkAliPayStaus() {
+
+
+        DataManager.getInstance().checkAliPayStaus(new DefaultSingleObserver<HttpResult<RechargeDto>>() {
+            @Override
+            public void onSuccess(HttpResult<RechargeDto> httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+                    if(httpResult.getData().success){
+                        ToastUtil.showToast("支付成功");
+                        finish();
+                    }else {
+                        ToastUtil.showToast("取消支付");
+
+                    }
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getData().message);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        },out_trade_no );
+    }
+
     /**
      * 余额支付
      */
@@ -786,12 +862,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
         HashMap<String, String> map = new HashMap<>();
         map.put("orderId", orderId);
         map.put("orderNo", orderNo);
-//        map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
+        //        map.put("realOrderMoney", realOrderMoney);  //订单支付 去掉参数 订单金额  realOrderMoney
         map.put("payMentId", payMentId);
         if(TextUtil.isNotEmpty(tradePwd)){
             map.put("tradePwd", MD5Utils.getMD5Str(tradePwd + Constants.MD5_ADD_STR));
         }else {
-//            map.put("tradePwd", "");
+            //            map.put("tradePwd", "");
         }
 
         DataManager.getInstance().submitOrder(new DefaultSingleObserver<HttpResult<RechargeDto>>() {
@@ -806,20 +882,40 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                         bundle.putString(Constants.ORDER_ID, orderId);
                         gotoActivity(PaySuccessActivity.class, true, bundle);
                     } else if ("wx".equals(payType)) {
-//                       PayUtils.getInstances().WXPay(ConfirmOrderActivity.this,(WEIXINREQ) httpResult.getData());
+                        //                       PayUtils.getInstances().WXPay(ConfirmOrderActivity.this,(WEIXINREQ) httpResult.getData());
                     }else if ("zfb".equals(payType)) {
                         if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
-                            PayUtils.getInstances().zfbPaySync(ConfirmOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
-                                @Override
-                                public void zfbPayOk(boolean payOk) {
-                                    showTipDialog(payOk);
-                                }
-
-                                @Override
-                                public void wxPayOk(boolean payOk) {
-
-                                }
-                            });
+                            //                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            //
+                            //                                //8.0 以上
+                            //                                Intent intent = new Intent();
+                            //                                intent.setAction("android.intent.action.VIEW");
+                            //                                Uri content_url = Uri.parse(httpResult.getData().getOrderString());
+                            //                                intent.setData(content_url);
+                            //                                intent.setClassName("org.chromium.webview_shell","org.chromium.webview_shell.WebViewBrowserActivity");
+                            //                               startActivity(intent);
+                            //                            }  else {
+                            //                                // 8.0以下
+                            //
+                            //                            }
+                            out_trade_no=httpResult.getData().out_trade_no;
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            Uri content_url = Uri.parse(httpResult.getData().getOrderString());         //要跳转的网页
+                            intent.setData(content_url);
+                            intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                            startActivity(intent);
+                            //                            PayUtils.getInstances().zfbPaySync(ConfirmOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
+                            //                                @Override
+                            //                                public void zfbPayOk(boolean payOk) {
+                            //                                    showTipDialog(payOk);
+                            //                                }
+                            //
+                            //                                @Override
+                            //                                public void wxPayOk(boolean payOk) {
+                            //
+                            //                                }
+                            //                            });
                         }
 
                     }

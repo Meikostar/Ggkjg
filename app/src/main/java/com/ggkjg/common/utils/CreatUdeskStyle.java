@@ -2,10 +2,12 @@ package com.ggkjg.common.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.ggkjg.R;
 import com.ggkjg.common.Constants;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 import com.yzq.zxinglibrary.common.Constant;
 
 import java.util.HashMap;
@@ -112,7 +114,15 @@ public class CreatUdeskStyle {
                 .setTxtMessageClick(new ITxtMessageWebonCliclk() {
                     @Override
                     public void txtMsgOnclick(String url) {
-                        Toast.makeText(context, "对文本消息中的链接消息处理设置回调", Toast.LENGTH_SHORT).show();
+
+                        Bundle bundle = new Bundle();
+                        Intent intent = new Intent(context,CommodityDetailActivity.class);
+                        bundle.putLong(CommodityDetailActivity.PRODUCT_ID, CommodityDetailActivity.product_id);
+                        if (bundle != null) {
+                            intent.putExtras(bundle);
+                        }
+                        context.startActivity(intent);
+//                        Toast.makeText(context, "对文本消息中的链接消息处理设置回调", Toast.LENGTH_SHORT).show();
                     }
                 })   //如果需要对文本消息中的链接消息处理可以设置该回调，点击事件的拦截回调。 包含表情的不会拦截回调。
                 .setFormCallBack(new IUdeskFormCallBack() {
