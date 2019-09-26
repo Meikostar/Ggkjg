@@ -408,27 +408,40 @@ public class DataManager {
         subscribe(observable, observer);
     }
 
+//    /**
+//     * 获取精选好货
+//     */
+//    public void findGoodsIndex(DefaultSingleObserver<HomeDto> observer) {
+//        Single<HomeDto> observable = retrofitService.findGoodsIndex()
+//                .map(new HttpResultMapper.HttpResultData<>(null));
+//        subscribe(observable, observer);
+//    }
     /**
      * 获取团队信息
      */
-    public void findMyTeam(DefaultSingleObserver<DataPageDto<RecommendDto>> observer, int page, String memberLevel) {
+    public void findMyTeam(DefaultSingleObserver<RecommendDto> observer, int page, String memberLevel,int type) {
         HashMap<String, String> map = new HashMap<>();
+        if(type==1){
+            map.put("type", type + "");
+        }else {
+            map.put("type", type + "");
+        }
         map.put("page", page + "");
         map.put("rows", Constants.PAGE_SIZE + "");
         if (!TextUtils.isEmpty(memberLevel)) {
             map.put("memberLevel", memberLevel);
         }
-        Single<DataPageDto<RecommendDto>> observable = retrofitService.findMyTeam(map)
+        Single<RecommendDto> observable = retrofitService.findMyTeam(map)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }
     /**
      * 获取团队信息
      */
-    public void findMyTeams(DefaultSingleObserver<DataPageDto<RecommendDto>> observer,HashMap<String, String> map) {
+    public void findMyTeams(DefaultSingleObserver<RecommendDto> observer,HashMap<String, String> map) {
 
 
-        Single<DataPageDto<RecommendDto>> observable = retrofitService.findMyTeam(map)
+        Single<RecommendDto> observable = retrofitService.findMyTeam(map)
                 .map(new HttpResultMapper.HttpResultData<>(null));
         subscribe(observable, observer);
     }

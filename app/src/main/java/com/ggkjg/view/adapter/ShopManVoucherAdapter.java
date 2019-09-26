@@ -28,7 +28,7 @@ public class ShopManVoucherAdapter extends BaseQuickAdapter<VoucherDto, BaseView
     @Override
     protected void convert(BaseViewHolder helper, VoucherDto item) {
         if(TextUtil.isNotEmpty(item.fullPrice)){
-            helper.setText(R.id.tv_detail,"满"+Double.valueOf(item.subPrice).intValue()+"可用");
+            helper.setText(R.id.tv_detail,"满"+Double.valueOf(item.fullPrice).intValue()+"可用");
         }
         if(TextUtil.isNotEmpty(item.conponName)){
             helper.setText(R.id.tv_tle,item.conponName);

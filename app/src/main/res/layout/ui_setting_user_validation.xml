@@ -75,6 +75,8 @@
                 android:hint="请填写身份证号"
                 android:paddingLeft="18dp"
                 android:singleLine="true"
+                android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"
+                android:inputType="number"
                 android:textColor="@color/my_color_010000"
                 android:textSize="@dimen/wz_13sp" />
         </LinearLayout>

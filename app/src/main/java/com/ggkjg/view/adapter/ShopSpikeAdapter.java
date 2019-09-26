@@ -2,6 +2,7 @@ package com.ggkjg.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
@@ -47,7 +48,7 @@ public class ShopSpikeAdapter extends BaseQuickAdapter<SpikeDto, BaseViewHolder>
     protected void convert(BaseViewHolder helper, SpikeDto item) {
         SaleProgressView spv = helper.getView(R.id.spv);
 
-            spv.setTotalAndCurrentCount(item.stockTotal, item.sold);
+            spv.setTotalAndCurrentCount(100, item.sold);
 
 
         ImageView imageView = helper.getView(R.id.iv_item_shop_cart_cover);
@@ -80,24 +81,25 @@ public class ShopSpikeAdapter extends BaseQuickAdapter<SpikeDto, BaseViewHolder>
         if (TextUtil.isNotEmpty(item.goodsName)) {
             tvTitle.setText(item.goodsName);
         }
+        if (TextUtil.isNotEmpty(item.activePrice)) {
+            tvPrice.setText(item.activePrice);
+        }else {
+            if (TextUtil.isNotEmpty(item.gdPrice)) {
+                tvPrice.setText(item.gdPrice);
+            }
+        }
         if (TextUtil.isNotEmpty(item.gdPrice)) {
-            tvPrice.setText(item.gdPrice);
-        }
-        if (TextUtil.isNotEmpty(item.marketPrice)) {
-            String name = item.marketPrice;
-            TextPaint textPaint = new TextPaint();
-            textPaint.setTextSize(12);
-            int with = (int) textPaint.measureText(name);
-            FrameLayout.LayoutParams linearParams =(FrameLayout.LayoutParams) line.getLayoutParams(); //取控件textView当前的布局参数 linearParams.height = 20;// 控件的高强制设成20
+            String name = "$"+item.gdPrice;
+            line.setVisibility(View.GONE);
+            tvFirstPrice.setText(name);
+            tvFirstPrice.getPaint().setAntiAlias(true);//抗锯齿
 
-            linearParams.width = with+15;// 控件的宽强制设成30
-
-            line.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
-            tvFirstPrice.setText(item.marketPrice);
+            tvFirstPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
         }
-        if (TextUtil.isNotEmpty(item.marketPrice)&&TextUtil.isNotEmpty(item.gdPrice)) {
-         double discout=   Double.valueOf(item.gdPrice)/Double.valueOf(item.marketPrice);
-            DecimalFormat df = new DecimalFormat("#.0");
+
+        if (TextUtil.isNotEmpty(item.activePrice)&&TextUtil.isNotEmpty(item.gdPrice)) {
+         double discout=   Double.valueOf(item.activePrice)/Double.valueOf(item.gdPrice);
+            DecimalFormat df = new DecimalFormat("0.0");
              String str = df.format(discout*10);
             tvDiscount.setText(str+"折");
         }

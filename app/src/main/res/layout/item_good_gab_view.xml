@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/bj_3dp"
             android:singleLine="true"
-            android:text="10000"
+            android:text=""
             android:textColor="@color/my_color_F32F12"
             android:textSize="13.5sp" />
         <FrameLayout

@@ -161,7 +161,7 @@ public class WalletRechargeActivity extends BaseActivity {
                 if (currentPayWay == WX_PAY) { //微信支付
 //                    payOrderInfo(rechargeOrderDto.getOrder_no());
                 } else {
-
+                    out_trade_no=rechargeDto.out_trade_no;
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
                     Uri content_url = Uri.parse(rechargeDto.getOrderString());         //要跳转的网页
@@ -200,6 +200,54 @@ public class WalletRechargeActivity extends BaseActivity {
 //        }, maps);
 //    }
 
+    /**
+     * 余额支付
+     */
+    private void checkAliPayStaus() {
+
+
+        DataManager.getInstance().checkAliPayStaus(new DefaultSingleObserver<HttpResult<RechargeDto>>() {
+            @Override
+            public void onSuccess(HttpResult<RechargeDto> httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+                    if(httpResult.getData().success){
+                        ToastUtil.showToast("支付成功");
+                        finish();
+                    }else {
+                        ToastUtil.showToast("取消支付");
+
+                    }
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getData().message);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        },out_trade_no );
+    }
+private String out_trade_no;
+
+    public boolean isFirst;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFirst){
+            checkAliPayStaus();
+        }else {
+            isFirst=true;
+        }
+    }
     private void payZFBOrderInfo(String order_no) {
 
         PayUtils.getInstances().zfbPaySync(WalletRechargeActivity.this, order_no, new PayResultListener() {

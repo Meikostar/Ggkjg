@@ -12,6 +12,8 @@ public class BusinessDto implements Serializable {
     public List<BusinessDto> records;
     public List<BusinessDto> adsList;
     public List<BusinessDto> storeAdPositionPOList;
+    public List<BusinessDto> banners;
+    public List<BusinessDto> commercialCollegeTypes ;
     public String total;
     public String size;
     public String current;
@@ -21,6 +23,7 @@ public class BusinessDto implements Serializable {
     public String modifyDate;
     public String modifyBy;
     public String nameType;
+    public String imgUrls;
     public String cmsMainImg;
     public String url;
     public String sort;

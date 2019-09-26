@@ -24,6 +24,7 @@ public class CommodityDetailInfoDto implements Serializable {
     private long threeCatsId;
     private String isBest;
     private String isHot;
+    public String freightType;
     private String isNew;
     private String isRecom;
     private String isColor;
@@ -37,7 +38,6 @@ public class CommodityDetailInfoDto implements Serializable {
     private int salesToatl;
     private long tempId;
     private String freight;
-    private String freightType;
     private String isSales;
     public String salesTime;
     public String startTime;

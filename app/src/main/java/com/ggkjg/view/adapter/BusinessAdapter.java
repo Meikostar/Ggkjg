@@ -45,6 +45,7 @@ public class BusinessAdapter extends BaseQuickAdapter<BusinessDto, BaseViewHolde
                     if(TextUtil.isNotEmpty(item.id)){
                         Intent intent = new Intent(mContext, GgBusinessListActivity.class);
                         intent.putExtra("id",item.id);
+                        intent.putExtra("url",item.cmsMainImg);
                         mContext.startActivity(intent);
                     }
 

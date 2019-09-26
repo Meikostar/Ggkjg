@@ -67,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="20"
+                android:inputType="phone"
                 android:background="@null"
                 android:hint="请填写收货人手机号码"
                 android:singleLine="true"
@@ -151,12 +152,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/bj_20dp"
         android:layout_marginTop="@dimen/bj_10dp"
-        android:layout_marginRight="@dimen/bj_20dp"
+        android:layout_marginRight="@dimen/bj_10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/ll_sel"
-            android:layout_width="@dimen/bj_32dp"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/bj_40dp">
 
             <ImageView
@@ -165,7 +166,14 @@
                 android:layout_height="@dimen/bj_18dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/radio_select_state" />
-
+            <TextView
+                android:layout_marginLeft="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text=" 默认地址    "
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
         </LinearLayout>
 
         <TextView

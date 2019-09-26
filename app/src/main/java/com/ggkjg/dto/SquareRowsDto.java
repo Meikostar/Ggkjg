@@ -20,6 +20,7 @@ public class SquareRowsDto implements Serializable {
     private String createTime;
     private String modifyTime;
     private String enableFlag;
+    public String phone;
 
     public long getId() {
         return id;

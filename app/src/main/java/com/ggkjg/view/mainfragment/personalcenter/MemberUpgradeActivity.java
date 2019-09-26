@@ -129,7 +129,7 @@ public class MemberUpgradeActivity extends BaseActivity {
                     currentLevel = userInfoDto.getMemberLevel();
                     tv_user_nickname.setText(userInfoDto.getNickName());
                     String userHeadUrl = BuildConfig.BASE_IMAGE_URL + userInfoDto.getHeadImg();
-                    GlideUtils.getInstances().loadNormalImg(MemberUpgradeActivity.this, img_user_header, userHeadUrl);
+                    GlideUtils.getInstances().loadNormalImg(MemberUpgradeActivity.this, img_user_header, userHeadUrl,R.mipmap.user_default_icon);
                     String memberLevelName = "";
                     if (userInfoDto.getMemberLevel() == MemberLevelType.level_1.getType()) {
                         memberLevelName = MemberLevelType.level_1.getValue();

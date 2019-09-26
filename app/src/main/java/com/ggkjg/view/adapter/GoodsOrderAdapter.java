@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.ggkjg.R;
 import com.ggkjg.base.BuildConfig;
 import com.ggkjg.common.utils.GlideUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.OrderPreviewSellersDto;
 import com.ggkjg.dto.ShopCartDto;
 
@@ -109,7 +110,7 @@ public class GoodsOrderAdapter extends BaseExpandableListAdapter {
         GlideUtils.getInstances().loadNormalImg(mContext, childViewHolder.iv_goods_order_img, BuildConfig.BASE_IMAGE_URL + item.getGoodsImg(), R.mipmap.img_default_1);
         childViewHolder.tv_goods_order_title.setText(item.getGoodsName());
         childViewHolder.tv_goods_order_qty.setText("X"+item.getCartNum());
-        childViewHolder.tv_goods_order_price.setText(item.getGdPrice() + "");
+        childViewHolder.tv_goods_order_price.setText(item.activePrice!=0?item.activePrice+"":item.getGdPrice() + "");
         childViewHolder.tv_goods_order_type.setText(item.getSpecName());
         return convertView;
     }

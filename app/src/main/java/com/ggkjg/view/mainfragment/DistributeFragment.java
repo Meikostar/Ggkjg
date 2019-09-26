@@ -228,25 +228,26 @@ public class DistributeFragment extends BaseFragment {
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
         map.put("page", currentPage + "");
+        map.put("type", 2 + "");
         map.put("rows", Constants.PAGE_SIZE + "");
         map.put("column", column);
         if(TextUtil.isNotEmpty(mobileNo)){
             map.put("mobileNo", mobileNo);
         }
 
-        DataManager.getInstance().findMyTeams(new DefaultSingleObserver<DataPageDto<RecommendDto>>() {
+        DataManager.getInstance().findMyTeams(new DefaultSingleObserver<RecommendDto>() {
             @Override
-            public void onSuccess(DataPageDto<RecommendDto> dataPageDto) {
+            public void onSuccess(RecommendDto dataPageDto) {
                 dissLoadDialog();
                 mobileNo="";
                 if (dataPageDto != null) {
                     if (currentPage == Constants.PAGE_NUM) {
-                        shopSpikeAdapter.setNewData(dataPageDto.getRows());
-                        if(dataPageDto.getRows() ==null || dataPageDto.getRows().size() == 0){
+                        shopSpikeAdapter.setNewData(dataPageDto.rows);
+                        if(dataPageDto.rows ==null || dataPageDto.rows.size() == 0){
                             shopSpikeAdapter.setEmptyView(new EmptyView(getActivity()));
                         }
                     } else {
-                        shopSpikeAdapter.addData(dataPageDto.getRows());
+                        shopSpikeAdapter.addData(dataPageDto.rows);
                     }
                 }
             }

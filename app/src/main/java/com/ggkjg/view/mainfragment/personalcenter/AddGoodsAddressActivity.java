@@ -17,6 +17,7 @@ import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.StringUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.AddressDto;
 import com.ggkjg.http.manager.DataManager;
@@ -100,6 +101,10 @@ public class AddGoodsAddressActivity extends BaseActivity {
             }
             if (TextUtils.isEmpty(detail)) {
                 Toast.makeText(this, "请输入地区", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (!StringUtil.isMobileNO(mobile)) {
+                Toast.makeText(this, "请输入正确手机号码", Toast.LENGTH_LONG).show();
                 return;
             }
             HashMap<String, String> map = new HashMap<>();

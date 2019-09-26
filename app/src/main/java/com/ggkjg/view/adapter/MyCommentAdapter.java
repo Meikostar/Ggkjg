@@ -1,6 +1,10 @@
 package com.ggkjg.view.adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -13,6 +17,7 @@ import com.ggkjg.dto.EvaluateUserDto;
 import com.ggkjg.dto.MyOrderItemDto;
 import com.ggkjg.dto.ShopEvaluateImgListDto;
 import com.ggkjg.dto.ShopEvaluateRowsDto;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
 
 import java.util.List;
 
@@ -39,6 +44,7 @@ public class MyCommentAdapter extends BaseQuickAdapter<ShopEvaluateRowsDto, Base
         } else {
             helper.setGone(R.id.tv_comment, false);
         }
+        RelativeLayout view = helper.getView(R.id.ll_bg);
         List<ShopEvaluateImgListDto> imageList = item.getImgList();
         if (imageList != null && imageList.size() > 0) { //显示评论图
             helper.setGone(R.id.ll_comment_img, true);
@@ -80,12 +86,27 @@ public class MyCommentAdapter extends BaseQuickAdapter<ShopEvaluateRowsDto, Base
         GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_user_icon), userAvatar, R.mipmap.user_default_icon);
          if(item.getGoodsList() != null && item.getGoodsList().size() > 0){
              MyOrderItemDto myOrderItemDto = item.getGoodsList().get(0);
+             view.setVisibility(View.VISIBLE);
              helper.setText(R.id.tv_commodity_des, myOrderItemDto.getGoodsName())
                         .setText(R.id.tv_commodity_money, myOrderItemDto.getGoodsPrice())
                         .setText(R.id.tv_commodity_number, myOrderItemDto.getGoodsSpecName());
              String imgUrl = BuildConfig.BASE_IMAGE_URL + myOrderItemDto.getGoodsImg();
              GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.img_commodity_item), imgUrl, R.mipmap.img_default_1);
+              view.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      Bundle bundle = new Bundle();
+                      Intent intent = new Intent(mContext, CommodityDetailActivity.class);
 
+                      bundle.putLong(CommodityDetailActivity.PRODUCT_ID, Long.valueOf(myOrderItemDto.getGoodsId()));
+                      if (bundle != null) {
+                          intent.putExtras(bundle);
+                      }
+                      mContext.startActivity(intent);
+                  }
+              });
+         }else {
+             view.setVisibility(View.GONE);
          }
 
 

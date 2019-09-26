@@ -19,6 +19,7 @@ public class BusinessListDto implements Serializable {
     public String id;
     public String createDate;
     public String createBy;
+    public String imgUrls;
     public String modifyDate;
     public String commercialCollegeTypeId;
     public String modifyBy;

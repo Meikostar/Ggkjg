@@ -17,8 +17,11 @@ public class ShopCartDto  implements Serializable {
     private String goodsImg;
     private int stockName;
     private String specName;
+    public String isNowSedKill;
+    public String goodsId;
     private long id;
     private String goodsName;
+    public double activePrice;
     private int cartNum;
     public int conponCount;
     public int stockTotal;

@@ -63,6 +63,8 @@ public class GoodsAddressActivity extends BaseActivity {
             public void onClick(View v) {
                 gotoActivity(AddGoodsAddressActivity.class, false, null, INTENT_REQUESTCODE_ADD_ADDRESS);
             }
+
+
         });
         actionbar.setTextActionColor(getResources().getColor(R.color.my_color_212121));
         Bundle bundle = getIntent().getExtras();

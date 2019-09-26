@@ -114,6 +114,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleTranslucentTheme" />
         <activity
+            android:name=".view.mainfragment.SquareActivity"
+            android:label="会员广场"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme" />
+
+        <activity
             android:name=".view.mainfragment.spike.GgBusinessListActivity"
             android:label="我的港券"
             android:screenOrientation="portrait"

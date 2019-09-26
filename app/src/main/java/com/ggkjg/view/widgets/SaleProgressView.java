@@ -195,10 +195,10 @@ public class SaleProgressView extends View {
 
     //绘制文字信息
     private void drawText(Canvas canvas) {
-        String scaleText = new DecimalFormat("#%").format(scale);
-        String saleText = String.format("已抢%s件", progressCount);
-
-        float scaleTextWidth = textPaint.measureText(scaleText);
+//        String scaleText = new DecimalFormat("#%").format(scale);
+        String saleText = String.format("已售%s", progressCount);
+        saleText=saleText+"%";
+//        float scaleTextWidth = textPaint.measureText(scaleText);
 
         Bitmap textBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas textCanvas = new Canvas(textBitmap);
@@ -206,10 +206,10 @@ public class SaleProgressView extends View {
 
         if (scale < 0.8f) {
             textCanvas.drawText(saleText, dp2px(10), baseLineY, textPaint);
-            textCanvas.drawText(scaleText, width - scaleTextWidth - dp2px(10), baseLineY, textPaint);
+//            textCanvas.drawText(scaleText, width - scaleTextWidth - dp2px(10), baseLineY, textPaint);
         } else if (scale < 1.0f) {
             textCanvas.drawText(nearOverText, width / 2 - nearOverTextWidth / 2, baseLineY, textPaint);
-            textCanvas.drawText(scaleText, width - scaleTextWidth - dp2px(10), baseLineY, textPaint);
+//            textCanvas.drawText(scaleText, width - scaleTextWidth - dp2px(10), baseLineY, textPaint);
         } else {
             textCanvas.drawText(overText, width / 2 - overTextWidth / 2, baseLineY, textPaint);
         }

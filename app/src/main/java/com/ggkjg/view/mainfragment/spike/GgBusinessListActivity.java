@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,11 +26,14 @@ import com.ggkjg.dto.BusinessListDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.adapter.BusinesstListAdapter;
+import com.ggkjg.view.adapter.BussListAdapter;
 import com.ggkjg.view.adapter.LoopViewAdapter;
 import com.ggkjg.view.adapter.LoopViewListAdapter;
 import com.ggkjg.view.widgets.ClearEditText;
+import com.ggkjg.view.widgets.RegularListView;
 import com.ggkjg.view.widgets.autoview.ActionbarView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,9 +41,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GgBusinessListActivity extends BaseActivity {
-    @BindView(R.id.recy_view)
-    RecyclerView recyclerView;
-    BusinesstListAdapter mAdapter;
+    @BindView(R.id.list_view)
+    RegularListView recyclerView;
+    BussListAdapter mAdapter;
 
     @BindView(R.id.vp_container)
     ViewPager vpContainer;
@@ -53,6 +57,8 @@ public class GgBusinessListActivity extends BaseActivity {
     ImageView actionbarBack;
     @BindView(R.id.rl_vp_container)
     RelativeLayout rlVpContainer;
+    @BindView(R.id.rl_bg)
+    RelativeLayout rl_bg;
     @BindView(R.id.tv_search)
     TextView tv_search;
     @BindView(R.id.ll_bg)
@@ -62,6 +68,7 @@ public class GgBusinessListActivity extends BaseActivity {
     private int currentPage = Constants.PAGE_NUM;
     private String search;
     private String id;
+    private String url;
     @Override
     public void initListener() {
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -114,11 +121,21 @@ public class GgBusinessListActivity extends BaseActivity {
     public void initView() {
 
         id=getIntent().getStringExtra("id");
+        url=getIntent().getStringExtra("url");
+        if(TextUtil.isNotEmpty(id)){
+            rl_bg.setVisibility(View.VISIBLE);
+            BusinessListDto businessListDto = new BusinessListDto();
+            businessListDto.imgUrl=url;
+            data.add(businessListDto);
+            setAds(data);
+        }else {
+            rl_bg.setVisibility(View.GONE);
+        }
         initAdapter();
 
 
     }
-
+   private List<BusinessListDto> data =new ArrayList<>();
     /**
      * 设置广告位图片
      *
@@ -144,25 +161,22 @@ public class GgBusinessListActivity extends BaseActivity {
             }
         };
 
-        recyclerView.setLayoutManager(linearLayoutManager);
 
-        mAdapter = new BusinesstListAdapter();
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+        mAdapter = new BussListAdapter(this);
+
         recyclerView.setAdapter(mAdapter);
     }
 
     private void loadData() {
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
-        map.put("id", id);
+
+        if(TextUtil.isNotEmpty(id)){
+            map.put("commercialCollegeTypeId", id);
+        }
         if(TextUtil.isNotEmpty(search)){
-            map.put("cmsTitle", search);
+            map.put("cmsContent", search);
         }
 
         DataManager.getInstance().findCommercialCollegeList(new DefaultSingleObserver<BusinessListDto>() {
@@ -171,11 +185,11 @@ public class GgBusinessListActivity extends BaseActivity {
                 dissLoadDialog();
                 if (helpDto != null && helpDto.storeAdPositionPOList != null) {
                     if (helpDto.storeAdPositionPOList.size() > 0 && helpDto.storeAdPositionPOList.get(0).adsList != null) {
-                        setAds(helpDto.storeAdPositionPOList.get(0).adsList);
+
                     }
                 }
                 if (helpDto != null && helpDto.commercialCollegeInfoPage != null && helpDto.commercialCollegeInfoPage.records != null) {
-                    mAdapter.setNewData(helpDto.commercialCollegeInfoPage.records);
+                    mAdapter.setData(helpDto.commercialCollegeInfoPage.records);
                 }
             }
 

@@ -216,8 +216,8 @@ public class VoucherProductListActivity extends BaseActivity {
             SelectProductDialog dialog = new SelectProductDialog(this, mCategoryId, new SelectProductDialog.SelectProductListener() {
 
                 @Override
-                public void callbackSelectProduct(String price, String type, String color) {
-                    LogUtil.i(TAG, "-- callbackSelectProduct price=" + price + " |type=" + type + " |color=" + color);
+                public void callbackSelectProduct(String min,String max,String type, String color) {
+//                    LogUtil.i(TAG, "-- callbackSelectProduct price=" + price + " |type=" + type + " |color=" + color);
                 }
             });
             dialog.show();

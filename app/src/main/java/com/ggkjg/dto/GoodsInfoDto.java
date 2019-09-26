@@ -11,6 +11,7 @@ public class GoodsInfoDto {
     private int goodsId;
     private int goodsNum;
     private String goodsPrice;
+    public String activePrice;
     private String goodsImg;
     private String goodsSpecName;
     private int goodsSpecId;

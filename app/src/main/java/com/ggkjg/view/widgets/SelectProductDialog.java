@@ -13,13 +13,10 @@ import android.widget.TextView;
 
 import com.donkingliang.labels.LabelsView;
 import com.ggkjg.R;
-import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.dto.CategoryDto;
 import com.ggkjg.dto.CategoryListDto;
 import com.ggkjg.dto.ColorListDto;
-import com.ggkjg.dto.CommodityDetailListDto;
-import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -38,6 +35,10 @@ import io.reactivex.functions.Action;
  * Created by dahai on 2019/01/25.
  */
 public class SelectProductDialog extends Dialog {
+    @BindView(R.id.et_min)
+    ClearEditText etMin;
+    @BindView(R.id.et_max)
+    ClearEditText etMax;
     private Context mContext;
     @BindView(R.id.lv_select_product_price)
     LabelsView labelsViewPrice;
@@ -49,11 +50,11 @@ public class SelectProductDialog extends Dialog {
     @BindView(R.id.rl_select_product_all_calss)
     RelativeLayout rl_select_product_all_calss;
     @BindView(R.id.iv_select_product_calss)
-    ImageView iv_select_product_calss;
+    ImageView      iv_select_product_calss;
     @BindView(R.id.rl_select_product_all_color)
     RelativeLayout rl_select_product_all_color;
     @BindView(R.id.iv_select_product_color)
-    ImageView iv_select_product_color;
+    ImageView      iv_select_product_color;
 
 
     @BindView(R.id.tv_select_product_reset)
@@ -64,13 +65,14 @@ public class SelectProductDialog extends Dialog {
     List<String> prices;
     List<String> calss;
     List<String> colors;
-    private String selectPrice;
+    private String min;
+    private String max;
     private String selectType;
     private String selectColor;
 
     public SelectProductDialog(Context context, int categoryId, SelectProductListener listener) {
         super(context, R.style.dialog_with_alpha);
-//        setCanceledOnTouchOutside(false);//设置点击外部不可以取消;
+        //        setCanceledOnTouchOutside(false);//设置点击外部不可以取消;
         this.mContext = context;
         setContentView(R.layout.dialog_select_product);
         ButterKnife.bind(this);
@@ -97,7 +99,22 @@ public class SelectProductDialog extends Dialog {
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
                 //label是被点击的标签，data是标签所对应的数据，position是标签的位置。
-                selectPrice = prices.get(position);
+                if(position==0){
+                    min="0";
+                    max="1000";
+                    etMin.setText("0");
+                    etMax.setText("1000");
+                }else  if(position==1){
+                    min="1000";
+                    max="2000";
+                    etMin.setText("1000");
+                    etMax.setText("2000");
+                }else  if(position==2){
+                    min="2000";
+                    max="5000";
+                    etMin.setText("2000");
+                    etMax.setText("5000");
+                }
             }
         });
         labelsViewCalss.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
@@ -145,16 +162,25 @@ public class SelectProductDialog extends Dialog {
             labelsViewPrice.setSelectType(LabelsView.SelectType.SINGLE);
             labelsViewCalss.setSelectType(LabelsView.SelectType.SINGLE);
             labelsViewColor.setSelectType(LabelsView.SelectType.SINGLE);
-            selectPrice = null;
+            min=null;
+            max=null;
+            etMax.setText("");
+            etMin.setText("");
             selectType = null;
             selectColor = null;
         });
 
         bindClickEvent(tv_select_product_submit, () -> {
             if (null != selectProductListener) {
-                selectProductListener.callbackSelectProduct(selectPrice,selectType,selectColor);
+                if(Double.valueOf(etMax.getText().toString())>=Double.valueOf(etMin.getText().toString())){
+                    selectProductListener.callbackSelectProduct(etMin.getText().toString(),etMax.getText().toString(), selectType, selectColor);
+                    hide();
+                }else {
+                    ToastUtil.showToast("最大值不能小于最小值");
+                    etMax.setText("");
+                }
             }
-            hide();
+
         });
     }
 
@@ -162,11 +188,10 @@ public class SelectProductDialog extends Dialog {
         findCategoryAndColor(categoryId);
         labelsViewPrice.setSelectType(LabelsView.SelectType.SINGLE);
         prices = new ArrayList<>();
-        prices.add("最低价");
-        prices.add("最高价");
-        prices.add("100-300");
-        prices.add("300-500");
-        prices.add("500-1000");
+
+        prices.add("0-1000");
+        prices.add("1000-2000");
+        prices.add("2000-5000");
         labelsViewPrice.setLabels(prices, new LabelsView.LabelTextProvider<String>() {
             @Override
             public CharSequence getLabelText(TextView label, int position, String data) {
@@ -238,7 +263,7 @@ public class SelectProductDialog extends Dialog {
     }
 
     public interface SelectProductListener {
-        void callbackSelectProduct(String price, String type, String color);
+        void callbackSelectProduct(String min,String max, String type, String color);
     }
 
 

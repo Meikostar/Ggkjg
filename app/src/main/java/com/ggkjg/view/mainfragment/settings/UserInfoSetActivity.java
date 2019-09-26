@@ -152,7 +152,7 @@ public class UserInfoSetActivity extends BaseActivity {
                     tv_nickname.setText(userInfoDto.getNickName());
                     tv_phone.setText(userInfoDto.getMobileNo());
                     String userHeadUrl = BuildConfig.BASE_IMAGE_URL + userInfoDto.getHeadImg();
-                    GlideUtils.getInstances().loadRoundImg(UserInfoSetActivity.this, img_user_header, userHeadUrl);
+                    GlideUtils.getInstances().loadRoundImg(UserInfoSetActivity.this, img_user_header, userHeadUrl,R.mipmap.user_default_icon);
 
                 }
             }

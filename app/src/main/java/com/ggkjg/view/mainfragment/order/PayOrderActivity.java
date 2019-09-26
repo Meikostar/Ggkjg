@@ -197,7 +197,55 @@ public class PayOrderActivity extends BaseActivity {
             }
         });
     }
+    private String out_trade_no;
 
+    public boolean isFirst;
+
+    /**
+     * 余额支付
+     */
+    private void checkAliPayStaus() {
+
+
+        DataManager.getInstance().checkAliPayStaus(new DefaultSingleObserver<HttpResult<RechargeDto>>() {
+            @Override
+            public void onSuccess(HttpResult<RechargeDto> httpResult) {
+                dissLoadDialog();
+                if (httpResult != null && httpResult.getStatus() == 1) {
+                    if(httpResult.getData().success){
+                        ToastUtil.showToast("支付成功");
+                        finish();
+                    }else {
+                        ToastUtil.showToast("取消支付");
+
+                    }
+
+
+                } else {
+                    if (httpResult != null) {
+                        ToastUtil.showToast(httpResult.getData().message);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                dissLoadDialog();
+
+            }
+        },out_trade_no );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFirst){
+            checkAliPayStaus();
+        }else {
+            isFirst=true;
+        }
+    }
     /**
      * 余额支付
      */
@@ -223,6 +271,7 @@ public class PayOrderActivity extends BaseActivity {
 
                     }else if ("zfb".equals(payType)) {
                         if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
+                            out_trade_no=httpResult.getData().out_trade_no;
                             Intent intent = new Intent();
                             intent.setAction("android.intent.action.VIEW");
                             Uri content_url = Uri.parse(httpResult.getData().getOrderString());         //要跳转的网页

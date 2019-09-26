@@ -7,6 +7,7 @@ public class CategoryDto {
     private List<CategoryListDto> categoryList;
     private List<ColorListDto> colorList;
 
+
     public List<CategoryListDto> getCategoryList() {
         return categoryList;
     }

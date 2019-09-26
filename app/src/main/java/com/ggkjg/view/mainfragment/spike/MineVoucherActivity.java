@@ -63,7 +63,6 @@ public class MineVoucherActivity extends BaseActivity {
         return R.layout.ui_voucher_layout;
     }
 
-    //    private SpikeChooseTimeAdapter testAdapter;
     private TestAdapter testAdapter;
     private boolean isShow;
 

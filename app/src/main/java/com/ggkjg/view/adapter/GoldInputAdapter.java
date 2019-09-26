@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ggkjg.R;
 import com.ggkjg.base.BuildConfig;
 import com.ggkjg.common.utils.GlideUtils;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.SquareRowsDto;
 
 import java.util.List;
@@ -31,7 +32,11 @@ public class GoldInputAdapter extends BaseQuickAdapter<SquareRowsDto, BaseViewHo
             helper.setText(R.id.iv_item_gold_time, "发布时间:"+item.getCreateTime());
             helper.setText(R.id.iv_item_gold_user_msg, item.getTitle());
             helper.setText(R.id.iv_item_gold_user_name_, "姓名:"+item.getRealName());
-            helper.setText(R.id.iv_item_gold_user_qq, "QQ:"+item.getTxNo());
+            if(TextUtil.isNotEmpty(item.getTxNo())){
+                helper.setText(R.id.iv_item_gold_user_qq, "微信:" + item.getTxNo());
+            }if(TextUtil.isNotEmpty(item.phone)){
+                helper.setText(R.id.iv_item_gold_user_phone, "手机号:" + item.phone);
+            };
             helper.setText(R.id.iv_item_gold_buy_num, item.getTransferNum());
             helper.setText(R.id.iv_item_gold_num, item.getTransferPrice()+"港币/港豆");
             String imgUrl = BuildConfig.BASE_IMAGE_URL + item.getHeadImg();

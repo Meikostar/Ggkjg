@@ -23,10 +23,10 @@ public class RewardAdapter extends BaseQuickAdapter<BonusDetailItemDto, BaseView
         String titleName = null;
         switch (item.getBonusType()) {
             case 1:
-                titleName = "一级分享奖";
+                titleName = "一级分销奖";
                 break;
             case 2:
-                titleName = "二级分享奖";
+                titleName = "二级分销奖";
                 break;
             case 3:
                 titleName = "直推奖";

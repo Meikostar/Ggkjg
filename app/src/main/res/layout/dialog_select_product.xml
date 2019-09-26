@@ -22,6 +22,52 @@
             android:text="价格区间"
             android:textColor="@color/my_color_333333"
             android:textSize="14sp" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.ggkjg.view.widgets.ClearEditText
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:id="@+id/et_min"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/bg_input_black_bg"
+                android:hint="最低价"
+                android:textColorHint="@color/my_color_999999"
+                android:inputType="number"
+                android:maxLength="8"
+                android:singleLine="true"
+                android:textColor="@color/my_color_333333"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="— —"
+                android:textColor="@color/udesk_black"/>
+            <com.ggkjg.view.widgets.ClearEditText
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:id="@+id/et_max"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/bg_input_black_bg"
+                android:hint="最高价"
+
+                android:textColorHint="@color/my_color_999999"
+                android:inputType="number"
+                android:maxLength="8"
+                android:singleLine="true"
+                android:textColor="@color/my_color_333333"
+                android:textSize="15sp" />
+        </LinearLayout>
 
         <com.donkingliang.labels.LabelsView
             android:id="@+id/lv_select_product_price"
@@ -46,6 +92,7 @@
             android:background="@color/my_color_EBEBEB" />
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rl_select_product_all_calss"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,6 +135,7 @@
 
 
         <com.donkingliang.labels.LabelsView
+
             android:id="@+id/lv_select_product_calss"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,6 +153,7 @@
             android:visibility="gone"/>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rl_select_product_all_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

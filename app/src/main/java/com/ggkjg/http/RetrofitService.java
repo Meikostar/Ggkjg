@@ -125,12 +125,17 @@ public interface RetrofitService {
     Single<HttpResult<HelpDto>> helpCenter(@Query("page") int page, @Query("rows") int rows);
 
 
+//    /**
+//     * 商学院首页
+//     */
+//    @POST("silent/store/findCommercialCollegeIndex")
+//    Single<HttpResult<BusinessDto>> findCommercialCollegeIndex();
+
     /**
      * 商学院首页
      */
-    @POST("silent/store/findCommercialCollegeIndex")
+    @POST("silent/store/commercialCollegeHome")
     Single<HttpResult<BusinessDto>> findCommercialCollegeIndex();
-
 
     /**
      * 商学院首页
@@ -283,7 +288,7 @@ public interface RetrofitService {
      * 获取团队信息
      */
     @POST("noSilent/member/findMyTeam")
-    Single<HttpResult<DataPageDto<RecommendDto>>> findMyTeam(@QueryMap HashMap<String, String> map);
+    Single<HttpResult<RecommendDto>> findMyTeam(@QueryMap HashMap<String, String> map);
 
     /**
      * 会员等级申请

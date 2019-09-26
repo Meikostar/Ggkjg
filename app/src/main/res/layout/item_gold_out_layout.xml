@@ -35,7 +35,7 @@
                 android:layout_toRightOf="@+id/iv_item_gold_user_icon"
                 android:maxEms="4"
                 android:singleLine="true"
-                android:text="尚道"
+                android:text=""
                 android:textColor="@color/my_color_white"
                 android:textSize="@dimen/wz_15sp" />
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="发布时间:2019-01-18"
+                android:text="发布时间:"
                 android:textColor="@color/my_color_white"
                 android:textSize="@dimen/wz_13sp" />
 
@@ -71,24 +71,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/bj_15dp"
-            android:text="姓名:周六福"
+            android:text="姓名:"
             android:singleLine="true"
             android:textColor="@color/my_color_white"
             android:textSize="@dimen/wz_15sp" />
-
         <TextView
             android:id="@+id/iv_item_gold_user_qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/bj_15dp"
+            android:text="微信:"
             android:singleLine="true"
-            android:text="QQ:000222114"
+            android:textColor="@color/my_color_white"
+            android:textSize="@dimen/wz_15sp" />
+        <TextView
+            android:id="@+id/iv_item_gold_user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bj_15dp"
+            android:singleLine="true"
+            android:text="手机号:"
             android:textColor="@color/my_color_white"
             android:textSize="@dimen/wz_15sp" />
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="0.6dp"
             android:layout_marginTop="@dimen/bj_15dp"
             android:background="@color/my_color_white" />
 
@@ -119,7 +127,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/bj_5dp"
-                android:text="1000"
+                android:text=""
                 android:textColor="@color/my_color_F5FB0A"
                 android:textSize="@dimen/wz_15sp" />
         </RelativeLayout>

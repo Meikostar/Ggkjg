@@ -23,23 +23,19 @@
         android:text="key"
         android:textColor="@color/my_color_A7A7A7"
         android:textSize="12sp" />
-
-    <com.donkingliang.labels.LabelsView
+    <com.ggkjg.view.widgets.FlexboxLayout
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
         android:id="@+id/tv_item_select_commodity_datas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        app:labelBackground="@drawable/label_bg"
-        app:labelTextColor="@drawable/label_text_color"
-        app:labelTextPaddingBottom="5dp"
-        app:labelTextPaddingLeft="15dp"
-        app:labelTextPaddingRight="15dp"
-        app:labelTextPaddingTop="5dp"
-        app:labelTextSize="11sp"
-        app:lineMargin="10dp"
-        app:maxSelect="30"
-        app:wordMargin="10dp" />
+
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        android:minHeight="40dp"
+        app:justifyContent="flex_start" />
+
 
 </LinearLayout>

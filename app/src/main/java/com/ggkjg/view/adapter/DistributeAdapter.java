@@ -65,19 +65,19 @@ public class DistributeAdapter extends BaseQuickAdapter<RecommendDto, BaseViewHo
         }
 
         String memberName = "";//	会员等级 0-普通会员 1-VIP1 2-VIP2 3-VIP3 4-VIP4 5-VIP5 6-VIP6
-        if (item.getMemberLevel() == 0) {
+        if (item.getMemberLevel().equals("0") ) {
             helper.setText(R.id.tv_content, "普通会员");
-        } else if (item.getMemberLevel() == 1) {
+        } else if (item.getMemberLevel().equals("1") ) {
             helper.setText(R.id.tv_content, "VIP1");
-        } else if (item.getMemberLevel() == 2) {
+        } else if (item.getMemberLevel().equals("2")  ) {
             helper.setText(R.id.tv_content, "VIP1");
-        } else if (item.getMemberLevel() == 3) {
+        } else if (item.getMemberLevel().equals("3") ) {
             helper.setText(R.id.tv_content, "VIP1");
-        }else if (item.getMemberLevel() == 4) {
+        }else if (item.getMemberLevel().equals("4")  ) {
             helper.setText(R.id.tv_content, "VIP4");
-        }else if (item.getMemberLevel() == 5) {
+        }else if (item.getMemberLevel().equals("5") ) {
             helper.setText(R.id.tv_content, "VIP5");
-        }else if (item.getMemberLevel() == 6) {
+        }else if (item.getMemberLevel().equals("6") ) {
             helper.setText(R.id.tv_content, "VIP6");
         }
 

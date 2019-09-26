@@ -107,7 +107,7 @@ public class WalletTransferActivity extends BaseActivity {
             return;
         }
         if (Double.valueOf(ed_count.getText().toString())<0.01) {
-            ToastUtil.showToast("转让数量过小");
+            ToastUtil.showToast("转让数量需大于0.01");
             return;
         }
         getMemberBaseInfo(new InputPwdDialog.InputPasswordListener() {

@@ -389,7 +389,7 @@
             <!--分割线-->
             <!--分割线-->
             <LinearLayout
-                android:id="@+id/ll_bg"
+
                 android:background="@color/my_color_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -399,6 +399,8 @@
                     android:layout_height="10dp"
                     android:background="@color/my_color_EBEBEB" />
                 <RelativeLayout
+
+                    android:visibility="gone"
                     android:id="@+id/rl_offer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bj_45dp">
@@ -435,12 +437,14 @@
 
                 <!--分割线-->
                 <ImageView
+                    android:id="@+id/lines"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/bj_15dp"
                     android:layout_marginRight="@dimen/bj_15dp"
                     android:background="@color/my_color_EBEBEB" />
                 <LinearLayout
+                    android:id="@+id/ll_bgs"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -496,6 +500,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:background="@color/my_color_white"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
@@ -524,11 +529,12 @@
                     android:textColor="@color/my_color_999999"
                     android:textSize="@dimen/wz_14sp" />
                 <TextView
+                    android:id="@+id/tv_xy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/bj_5dp"
-                    android:text="《某某服务协议》"
+                    android:text="《用户须知》"
                     android:textColor="#008cd6"
                     android:textSize="@dimen/wz_14sp" />
 

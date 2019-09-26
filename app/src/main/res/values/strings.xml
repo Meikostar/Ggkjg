@@ -8,7 +8,7 @@
     <string name="setting_set_pay_pwd">设置支付密码</string>
     <string name="help">帮助</string>
     <string name="wallet">我的钱包</string>
-    <string name="wallet_transfer">余额转让</string>
+    <string name="wallet_transfer">港豆转让</string>
     <string name="wallet_recharge">余额充值</string>
     <string name="mycc">我的MYCC积分</string>
     <string name="hkdt">我的HKDT</string>

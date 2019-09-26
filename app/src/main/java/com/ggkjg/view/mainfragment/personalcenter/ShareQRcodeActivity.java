@@ -98,7 +98,7 @@ public class ShareQRcodeActivity extends BaseActivity {
                     tv_user_nickname.setText(userInfoDto.getNickName());
                     tv_user_code.setText("推荐码: "+referralQrcode);
                     findMemberQrCode();
-                    GlideUtils.getInstances().loadNormalImg(ShareQRcodeActivity.this, img_user_header, BuildConfig.BASE_IMAGE_URL + userInfoDto.getHeadImg());
+                    GlideUtils.getInstances().loadNormalImg(ShareQRcodeActivity.this, img_user_header, BuildConfig.BASE_IMAGE_URL + userInfoDto.getHeadImg(),R.mipmap.user_default_icon);
                     findPersonalShareParam();
                 } else {
                     dissLoadDialog();

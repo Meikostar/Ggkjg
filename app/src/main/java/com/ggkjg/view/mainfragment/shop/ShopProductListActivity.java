@@ -17,6 +17,7 @@ import com.ggkjg.common.type.ProductListType;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.CommodityDetailInfoDto;
 import com.ggkjg.dto.CommodityDetailListDto;
 import com.ggkjg.http.manager.DataManager;
@@ -95,7 +96,27 @@ public class ShopProductListActivity extends BaseActivity {
         mCategoryId = getIntent().getExtras().getInt(PRODUCT_TYPE);
         state= getIntent().getExtras().getInt("state");
         mParamsMaps = new HashMap<>();
-        mParamsMaps.put("rows", Constants.PAGE_SIZE);
+        mParamsMaps.put("rows", 16);
+        if(searchKey != null){
+            mParamsMaps.put("goodsName", searchKey);
+        }else {
+            mParamsMaps.put("categoryId", mCategoryId);
+            mParamsMaps.put("goodsName", "");
+        }
+        if(state==1){
+            mParamsMaps.put("all", "1");
+        }else {
+
+//            mParamsMaps.put("all", "");
+        }
+        setTopTitlesView(tv_shop_product_1);
+    }
+    private int type;
+    private void getProductListData() {
+        mParamsMaps.clear();
+        mParamsMaps = new HashMap<>();
+        mParamsMaps.put("rows", 16);
+        mParamsMaps.put("page", mCurrentPage);
         if(searchKey != null){
             mParamsMaps.put("goodsName", searchKey);
         }else {
@@ -103,30 +124,55 @@ public class ShopProductListActivity extends BaseActivity {
         }
         if(state==1){
             mParamsMaps.put("all", "1");
-        }else {
-            mParamsMaps.put("all", "0");
         }
-        setTopTitlesView(tv_shop_product_1);
-    }
+        if(type==0){
+            mParamsMaps.put("prop", "");
 
-    private void getProductListData() {
-        mParamsMaps.put("page", mCurrentPage);
+        }else if(type==1){
+            mParamsMaps.put("prop", "sales_total");
+        }else if(type==2){
+            mParamsMaps.put("prop", "gd_price");
+            if(order.equals("desc")){
+                mParamsMaps.put("order", "desc");
+            }else {
+                mParamsMaps.put("order", "asc");
+            }
+
+        }else if(type==3){
+            if(TextUtil.isNotEmpty(min)){
+                mParamsMaps.put("minPrice", min);
+            } if(TextUtil.isNotEmpty(max)){
+                mParamsMaps.put("maxPrice", max);
+            } if(TextUtil.isNotEmpty(colorId)){
+                mParamsMaps.put("colorId", colorId);
+            }
+
+        }
+
         DataManager.getInstance().findGoodsList(mParamsMaps, new DefaultSingleObserver<CommodityDetailListDto>() {
             @Override
             public void onSuccess(CommodityDetailListDto data) {
+                EmptyView emptyView = new EmptyView(ShopProductListActivity.this);
                 if (null != data.getRows() && !data.getRows().isEmpty()) {
                     if (mCurrentPage == 1) {
-                        mAdapter.setNewData(data.getRows());
+                        if(data.getRows().size()>0){
+                            mAdapter.setNewData(data.getRows());
+                        }else {
+                            mAdapter.setNewData(null);
+                            emptyView.setTvEmptyTip("暂无商品数据");
+                        }
+
                         refreshLayout.setRefreshing(false);
                     } else {
                         mAdapter.addData(data.getRows());
                         refreshLayout.setLoadMore(false);
                     }
                 } else {
-                    EmptyView emptyView = new EmptyView(ShopProductListActivity.this);
+
                     if(!TextUtils.isEmpty(searchKey)){
                         emptyView.setTvEmptyTip(String.format("没搜索到%s相关数据", searchKey));
                     }else{
+                        mAdapter.setNewData(null);
                         emptyView.setTvEmptyTip("暂无商品数据");
                     }
                     mAdapter.setEmptyView(emptyView);
@@ -144,7 +190,9 @@ public class ShopProductListActivity extends BaseActivity {
             }
         });
     }
-
+     private String min;
+     private String max;
+     private String colorId;
     @Override
     public void initListener() {
         bindClickEvent(tv_shop_product_1, () -> {
@@ -162,8 +210,11 @@ public class ShopProductListActivity extends BaseActivity {
             SelectProductDialog dialog = new SelectProductDialog(this, mCategoryId,new SelectProductDialog.SelectProductListener(){
 
                 @Override
-                public void callbackSelectProduct(String price, String type, String color) {
-                    LogUtil.i(TAG,"-- callbackSelectProduct price="+price+" |type="+type+" |color="+color);
+                public void callbackSelectProduct(String mins,String maxs, String type, String color) {
+                    min=mins;
+                    max=maxs;
+                    colorId=color;
+                    getProductListData();
                 }
             });
             dialog.show();
@@ -206,9 +257,10 @@ public class ShopProductListActivity extends BaseActivity {
 
     private void setTopTitlesView(View view) {
         mCurrentPage = 1;
-        mParamsMaps.put("order", "");
+        mParamsMaps.put("goodsName", "");
         switch (view.getId()) {
             case R.id.tv_shop_product_1:
+                type=0;
                 loadDataType = ProductListType.synthesize.getType();
                 tv_shop_product_1.setSelected(true);
                 tv_shop_product_2.setSelected(false);
@@ -216,10 +268,11 @@ public class ShopProductListActivity extends BaseActivity {
                 tv_shop_product_4.setSelected(false);
                 iv_shop_product_3.setTag("priceSelect");
                 iv_shop_product_3.setImageResource(R.mipmap.shop_product_price_litre);
-                mParamsMaps.put("prop", "");
+
                 getProductListData();
                 break;
             case R.id.tv_shop_product_2:
+                type=1;
                 loadDataType = ProductListType.sales.getType();
                 tv_shop_product_1.setSelected(false);
                 tv_shop_product_2.setSelected(true);
@@ -227,16 +280,18 @@ public class ShopProductListActivity extends BaseActivity {
                 tv_shop_product_4.setSelected(false);
                 iv_shop_product_3.setTag("priceSelect");
                 iv_shop_product_3.setImageResource(R.mipmap.shop_product_price_litre);
-                mParamsMaps.put("prop", "sales_total");
+
                 getProductListData();
                 break;
             case R.id.ll_shop_product_3:
+                type=2;
                 tv_shop_product_1.setSelected(false);
                 tv_shop_product_2.setSelected(false);
                 tv_shop_product_3.setSelected(true);
                 tv_shop_product_4.setSelected(false);
                 break;
             case R.id.ll_shop_product_4:
+                type=3;
                 loadDataType = ProductListType.screening.getType();
                 tv_shop_product_1.setSelected(false);
                 tv_shop_product_2.setSelected(false);
@@ -250,21 +305,21 @@ public class ShopProductListActivity extends BaseActivity {
 
     private void setTopTitles3View() {
         mCurrentPage = 1;
-        mParamsMaps.put("prop", "gd_price");
         if (iv_shop_product_3.getTag().equals("priceSelect")) {
             loadDataType = ProductListType.priceLitre.getType();
             iv_shop_product_3.setTag("unPriceSelect");
             iv_shop_product_3.setImageResource(R.mipmap.shop_product_price_drop);
-            mParamsMaps.put("order", "desc");
+
+            order= "desc";
         } else {
             loadDataType = ProductListType.priceDrop.getType();
             iv_shop_product_3.setTag("priceSelect");
             iv_shop_product_3.setImageResource(R.mipmap.shop_product_price_litre);
-            mParamsMaps.put("order", "asc");
+            order= "asc";
         }
         getProductListData();
     }
-
+     private String order= "desc";
     /**
      * 启动商品详细
      *

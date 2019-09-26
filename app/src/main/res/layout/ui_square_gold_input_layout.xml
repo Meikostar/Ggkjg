@@ -88,13 +88,39 @@
                     android:singleLine="true"
                     android:textSize="13sp" />
             </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_15dp"
+                android:text="手机号:"
+                android:textColor="@color/my_color_333333"
+                android:textSize="@dimen/wz_13sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bj_7dp"
+                android:background="@drawable/bg_welfare_shape"
+                android:orientation="horizontal">
+
+                <com.ggkjg.view.widgets.ClearEditText
+                    android:id="@+id/btn_gold_input_mb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/bj_6dp"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:padding="@dimen/bj_10dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/bj_15dp"
-                android:text="QQ:"
+                android:text="微信:"
                 android:textColor="@color/my_color_333333"
                 android:textSize="@dimen/wz_13sp" />
 
@@ -111,7 +137,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/bj_6dp"
                     android:background="@null"
-                    android:inputType="number"
                     android:maxLength="20"
                     android:padding="@dimen/bj_10dp"
                     android:singleLine="true"

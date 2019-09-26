@@ -1,5 +1,6 @@
 package com.ggkjg.view.mainfragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import com.ggkjg.dto.UserInfoDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
+import com.ggkjg.view.mainfragment.login.LoginActivity;
 import com.ggkjg.view.mainfragment.order.MyOrderActivity;
 import com.ggkjg.view.mainfragment.personalcenter.GoodsAddressActivity;
 import com.ggkjg.view.mainfragment.personalcenter.HKDTActivity;
@@ -82,7 +84,8 @@ public class MeFragment extends BaseFragment {
     LinearLayout rl_voucher;
     @BindView(R.id.rl_business)
     LinearLayout rl_business;
-
+    @BindView(R.id.rl_square)
+    LinearLayout rl_square;
     @BindView(R.id.rl_me_item_reward)
     RelativeLayout rl_me_item_reward;
     @BindView(R.id.rl_me_item_group)
@@ -168,7 +171,12 @@ public class MeFragment extends BaseFragment {
         bindClickEvent(rl_business, () -> {
             gotoActivity(GgBusinessActivity.class);
         });
-
+        rl_square.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),SquareActivity.class));
+            }
+        });
 //        bindClickEvent(rl_voucher, () -> {
 //            gotoActivity(HKDTActivity.class);
 //        });
@@ -199,7 +207,14 @@ public class MeFragment extends BaseFragment {
 
         });
         bindClickEvent(btn_message, () -> {
-            gotoActivity(MessageCenterActivity.class);
+            if (!Constants.getInstance().isLogin()) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+            } else {
+                gotoActivity(MessageCenterActivity.class);
+            }
+//            gotoActivity(MessageCenterActivity.class);
         });
         bindClickEvent(rl_me_item_collection, () -> {
             gotoActivity(MyCollectionActivity.class);

@@ -54,6 +54,7 @@ import com.ggkjg.view.adapter.HomeGoodShopAdapter;
 import com.ggkjg.view.adapter.HomeGoodSpikeAdapter;
 import com.ggkjg.view.adapter.HomeZoneAdapter;
 import com.ggkjg.view.adapter.LoopViewPagerAdapter;
+import com.ggkjg.view.mainfragment.login.LoginActivity;
 import com.ggkjg.view.mainfragment.message.ShopMessageListActivity;
 import com.ggkjg.view.mainfragment.personalcenter.MessageCenterActivity;
 import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
@@ -512,8 +513,14 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
             getActivity().sendBroadcast(intent);
         }, 2500);
         bindClickEvent(iv_top_message, () -> {
+            if (!Constants.getInstance().isLogin()) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
 
-            gotoActivity(MessageCenterActivity.class);
+            } else {
+                gotoActivity(MessageCenterActivity.class);
+            }
+
         });
         setScrollListener(Constants.PAGE_SIZE);
 
@@ -658,7 +665,10 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
                 }
                 if(object!=null&&object.goodsSedKill!=null&&object.goodsSedKill.records!=null){
                     if(object.goodsSedKill.records.size()==0){
-                        mScrollView.setVisibility(View.GONE);
+                        if(mScrollView!=null){
+                            mScrollView.setVisibility(View.GONE);
+                        }
+
                         llMore.setVisibility(View.GONE);
                     }else {
                         mScrollView.setVisibility(View.VISIBLE);
@@ -717,13 +727,24 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
 
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
 //                goodShopAdapter.setNewData(object);
-                loadingDialog.setLoadinglevel(++loadinglevel);
+                if(loadingDialog!=null){
+                    loadingDialog.setLoadinglevel(++loadinglevel);
+                }
+
+
+
+
+
+
             }
 
             @Override
             public void onError(Throwable throwable) {
                 LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
-                loadingDialog.setLoadinglevel(++loadinglevel);
+                if(loadingDialog!=null){
+                    loadingDialog.setLoadinglevel(++loadinglevel);
+                }
+
             }
         });
     }
@@ -874,6 +895,14 @@ public class HomeFragment extends BaseFragment implements LoadingDialog.LoadingL
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(countDownTimer!=null){
+            countDownTimer.cancel();
+        }
     }
 
     @Override

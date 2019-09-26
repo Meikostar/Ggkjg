@@ -116,7 +116,7 @@ public class LoopViewAdapter extends BaseLoopPagerAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final BusinessDto slidersDto = bannerDtoList.get(position);
-        String  imgStr = slidersDto.imgUrl;
+        String  imgStr = slidersDto.imgUrls;
         if(imgStr != null){
             if(imgStr.contains("http://")){
                 GlideUtils.getInstances().loadNormalImg(activity, holder.ivBanner, imgStr,R.mipmap.img_default_2);

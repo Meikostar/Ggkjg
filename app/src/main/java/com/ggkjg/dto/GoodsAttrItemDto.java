@@ -14,6 +14,7 @@ public class GoodsAttrItemDto implements Serializable {
     private String colorName;
     private String colorCode;
     private long categoryId;
+    public boolean isChoos;
     private String sort;
     private String createTime;
     private String modifyTime;

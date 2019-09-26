@@ -97,35 +97,52 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_marginTop="@dimen/bj_3dp"
+
+   <com.ggkjg.view.widgets.StickyScrollView
        android:layout_width="match_parent"
-       android:layout_height="@dimen/bj_160dp">
-       <RelativeLayout
-           android:id="@+id/rl_vp_container"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
+       android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/rl_bg"
+                android:layout_marginTop="@dimen/bj_3dp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bj_160dp">
+                <RelativeLayout
+                    android:id="@+id/rl_vp_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-           <android.support.v4.view.ViewPager
-               android:id="@+id/vp_container"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:background="@color/my_color_919191" />
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/vp_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/my_color_919191" />
 
-           <LinearLayout
-               android:id="@+id/home_ll_indicators"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignParentBottom="true"
-               android:layout_centerHorizontal="true"
-               android:layout_marginBottom="6dp"
-               android:orientation="horizontal"
-               android:visibility="visible" />
-       </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/home_ll_indicators"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="6dp"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+                </RelativeLayout>
 
-   </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recy_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+            <com.ggkjg.view.widgets.RegularListView
+                android:id="@+id/list_view"
+                style="@style/lv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:background="@color/white"
+                android:visibility="visible" />
+        </LinearLayout>
+
+   </com.ggkjg.view.widgets.StickyScrollView>
+
 </LinearLayout>

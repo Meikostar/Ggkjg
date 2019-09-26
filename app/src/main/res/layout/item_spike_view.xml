@@ -92,10 +92,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:text="￥298"
+                            android:text="$298"
                             android:textColor="@color/my_color_999999"
                             android:textSize="@dimen/wz_12sp" />
                         <View
+                            android:visibility="gone"
                             android:id="@+id/line"
                             android:layout_marginTop="8dp"
                             android:layout_width="@dimen/bj_44dp"

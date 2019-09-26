@@ -90,6 +90,8 @@
         android:layout_marginTop="@dimen/bj_5dp" />
 
     <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/ll_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/bj_10dp"

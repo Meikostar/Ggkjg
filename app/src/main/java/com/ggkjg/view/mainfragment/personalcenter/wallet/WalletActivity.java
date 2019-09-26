@@ -18,6 +18,7 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.AccountBalanceDto;
 import com.ggkjg.dto.MemberLevelDto;
 import com.ggkjg.dto.MyccRecordDto;
@@ -30,6 +31,7 @@ import com.ggkjg.view.widgets.SuperSwipeRefreshLayout;
 import com.ggkjg.view.widgets.autoview.ActionbarView;
 import com.ggkjg.view.widgets.autoview.EmptyView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -181,7 +183,14 @@ public class WalletActivity extends BaseActivity {
                     if(object.size()==2){
                         tvTy.setText(object.get(0).getAvailAmount());
                         tvZy.setText(object.get(1).getAvailAmount());
-                        tv_gold_coin.setText(Double.valueOf(object.get(0).getAvailAmount())+Double.valueOf(object.get(0).getAvailAmount())+"");
+                        if(TextUtil.isNotEmpty(object.get(0).getAvailAmount())&&TextUtil.isNotEmpty(object.get(1).getAvailAmount())){
+                            DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+                            String distanceString = decimalFormat.format(Double.valueOf(object.get(0).getAvailAmount())+Double.valueOf(object.get(1).getAvailAmount())) ;
+                            tv_gold_coin.setText(distanceString+"");
+                        }
+
+
+
                     }
 
                 }

@@ -10,11 +10,20 @@ public class StoreCategoryDto implements Serializable {
     private long id;
     private String categoryName;
     private String imgUrl;
+    public String positionId;
+    public String categoryId;
+    public String adsName;
+    public String clickUrl;
+    public String createTime;
+    public String modifyTime;
+    public String enableFlag;
+    public String clickType;
     private String adUrl;
     private String adClickUrl;
     private long parentId;
     private String sort;
     private List<StoreCategoryDto> cateList;
+    public List<StoreCategoryDto> bannerList;
 
     public long getId() {
         return id;

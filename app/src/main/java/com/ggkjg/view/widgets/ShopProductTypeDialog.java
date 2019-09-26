@@ -23,6 +23,7 @@ import com.ggkjg.dto.CommodityDetailInfoDto;
 import com.ggkjg.dto.GoodsColorAndSpecDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
+import com.ggkjg.view.adapter.GoodsAtrrsAdapter;
 import com.ggkjg.view.adapter.GoodsAttrAdapter;
 import com.jakewharton.rxbinding2.view.RxView;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +37,7 @@ import io.reactivex.functions.Action;
  * 产品类型、规格
  * Created by dahai on 2018/12/18.
  */
-public class ShopProductTypeDialog extends Dialog implements GoodsAttrAdapter.GoodsSpecListener {
+public class ShopProductTypeDialog extends Dialog implements GoodsAtrrsAdapter.GoodsSpecListener {
     private static final String TAG = ShopProductTypeDialog.class.getSimpleName();
     private Context mContext;
     @BindView(R.id.iv_dialog_select_commodity_img)
@@ -61,15 +62,15 @@ public class ShopProductTypeDialog extends Dialog implements GoodsAttrAdapter.Go
     ImageView iv_dialog_select_commodity_increase;
 
     @BindView(R.id.rv_dialog_select_commodity)
-    RecyclerView recyclerView;
-    private int goodscount = 1;//数量
-    private long specId;//规格id
-    private int stockTotal;//库存总数
-    private boolean isShoppingCart = false; //是否添加到购物车
+    RegularListView recyclerView;
+    private int                     goodscount = 1;//数量
+    private long                    specId;//规格id
+    private int                     stockTotal;//库存总数
+    private boolean                 isShoppingCart = false; //是否添加到购物车
     private ShopProductTypeListener shopProductTypeListener;
-    private LoadingDialog loadingDialog;
-    private GoodsAttrAdapter goodsAttrAdapter;
-    private CommodityDetailInfoDto goodsDetailaDto;
+    private LoadingDialog           loadingDialog;
+    private GoodsAtrrsAdapter       goodsAttrAdapter;
+    private CommodityDetailInfoDto  goodsDetailaDto;
 
 
     public ShopProductTypeDialog(Context context, CommodityDetailInfoDto object, ShopProductTypeListener listener, boolean isShoppingCart) {
@@ -125,12 +126,12 @@ public class ShopProductTypeDialog extends Dialog implements GoodsAttrAdapter.Go
             }
             hide();
         });
-        goodsAttrAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SearchHistory object = (SearchHistory) adapter.getItem(position);
-            }
-        });
+//        goodsAttrAdapter.setOnItemClickListener(new GoodsSpecListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                SearchHistory object = (SearchHistory) adapter.getItem(position);
+//            }
+//        });
     }
 
     private void initData(CommodityDetailInfoDto object) {
@@ -147,9 +148,8 @@ public class ShopProductTypeDialog extends Dialog implements GoodsAttrAdapter.Go
             butSubmit.setText("加入购物车");
         }
         findGoodsAttr(object.getId());
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         recyclerView.setFocusable(false);
-        goodsAttrAdapter = new GoodsAttrAdapter(null,object.getId(),mContext);
+        goodsAttrAdapter = new GoodsAtrrsAdapter(mContext,object.getId());
         recyclerView.setAdapter(goodsAttrAdapter);
         goodsAttrAdapter.setGoodsSpecListener(this);
     }
@@ -185,7 +185,7 @@ public class ShopProductTypeDialog extends Dialog implements GoodsAttrAdapter.Go
                 LogUtil.i(TAG, "--RxLog-Thread: onSuccess()");
                 loadingDialog.cancelDialog();
                 if (null != object.getAttrMap() && !object.getAttrMap().isEmpty()) {
-                    goodsAttrAdapter.setNewData(object.getAttrMap());
+                    goodsAttrAdapter.setData(object.getAttrMap());
                     goodsAttrAdapter.setInitColorIds(object.getAttrMap());
                 }
             }
@@ -199,11 +199,12 @@ public class ShopProductTypeDialog extends Dialog implements GoodsAttrAdapter.Go
     }
 
     @Override
-    public void callbackGoodsSpec(long specId, int stockTotal) {
+    public void callbackGoodsSpec(long specId, int stockTotal,String price) {
         this.specId = specId;
         this.stockTotal = stockTotal;
         LogUtil.i(TAG, "--RxLog-Thread: onSuccess() 擦擦擦商品规格库存=" + stockTotal);
         tv_dialog_select_commodity_stock_total.setText("库存:" + stockTotal);
+        tv_dialog_select_commodity_price.setText(price);
     }
 
 

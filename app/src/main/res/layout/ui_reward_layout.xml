@@ -56,15 +56,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_profit"
+                    android:drawableLeft="@mipmap/icon_commission"
                     android:drawablePadding="@dimen/bj_5dp"
                     android:gravity="center"
-                    android:text="分润奖励"
+                    android:text="分享奖励"
                     android:textColor="@color/my_color_333333"
                     android:textSize="@dimen/wz_15sp" />
 
                 <TextView
-                    android:id="@+id/tv_profit"
+                    android:id="@+id/tv_commission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/bj_8dp"
@@ -73,10 +73,10 @@
                     android:textSize="@dimen/wz_18sp" />
             </LinearLayout>
 
+
             <ImageView
                 android:layout_width="@dimen/bj_5dp"
                 android:layout_height="wrap_content" />
-
             <LinearLayout
                 android:layout_width="@dimen/activity_horizontal_margin"
                 android:layout_height="match_parent"
@@ -88,15 +88,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/icon_commission"
+                    android:drawableLeft="@mipmap/icon_profit"
                     android:drawablePadding="@dimen/bj_5dp"
                     android:gravity="center"
-                    android:text="分享奖励"
+                    android:text="分润奖励"
                     android:textColor="@color/my_color_333333"
                     android:textSize="@dimen/wz_15sp" />
 
                 <TextView
-                    android:id="@+id/tv_commission"
+                    android:id="@+id/tv_profit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/bj_8dp"

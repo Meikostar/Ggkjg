@@ -1,6 +1,7 @@
 package com.ggkjg.view.mainfragment.shop;
 
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -314,6 +315,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                         }
                     }, true);
                     if(CommodityDetailActivity.this!=null){
+
                         dialog.show();
                     }
 
@@ -345,7 +347,10 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
 
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     public CommodityDetailInfoDto getCommodityDetailInfoDto() {
         return commodityDetailInfoDto;
@@ -552,7 +557,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     ll_evaluate_view.setVisibility(View.VISIBLE);
                     tv_commodity_comments_num.setText(String.format("评论(%s)", object.getEvaList().getTotal() + ""));
                     ShopEvaluateRowsDto item = object.getEvaList().getRows().get(0);
-                    GlideUtils.getInstances().loadRoundImg(CommodityDetailActivity.this, iv_me_user_icon, BuildConfig.BASE_URL + item.getHeadImg());
+                    GlideUtils.getInstances().loadRoundImg(CommodityDetailActivity.this, iv_me_user_icon, BuildConfig.BASE_URL + item.getHeadImg(),R.mipmap.user_default_icon);
                     tv_commodity_comments_name.setText(item.getNickName());
                     tv_commodity_comments_msg.setText(item.getContent());
                     if (null != item.getImgList() && !item.getImgList().isEmpty()) {
@@ -635,16 +640,28 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
      *
      * @param commodityDetailDto
      */
+    public static boolean isSekill;
     private CountDownTimer countDownTimer;
     private void notifyData(CommodityDetailDto commodityDetailDto) {
         long times=0;
         if(commodityDetailDto.isGoodsSedKill){
+            isSekill=true;
             llMoney.setVisibility(View.GONE);
             llMore.setVisibility(View.VISIBLE);
             if(commodityDetailDto.getGoodsInfo()!=null){
                 long curTime=System.currentTimeMillis();
                 long starTime=0;
                 long endTime=0;
+
+                if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().freightType)){
+                    if(commodityDetailDto.getGoodsInfo().freightType.equals("1")){
+                        tv_commodity_info_courier.setText("快递费:计重");
+                    }else if(commodityDetailDto.getGoodsInfo().freightType.equals("2")){
+                        tv_commodity_info_courier.setText("快递费:");
+                    }else if(commodityDetailDto.getGoodsInfo().freightType.equals("3")){
+                        tv_commodity_info_courier.setText("快递费:包邮");
+                    }
+                }
                 if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().startTime)){
                      starTime=TimeUtil.getStringToDate(commodityDetailDto.getGoodsInfo().startTime);
                 }
@@ -661,9 +678,9 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
 
                   if(starTime==0){
                       if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
-                          tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                          tvPrice.setText("$"+commodityDetailDto.getGoodsInfo().activePrice);
                       }else {
-                          tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                          tvPrice.setText("$"+commodityDetailDto.getGoodsInfo().getGdPrice());
                       }
                       if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getMarketPrice())){
                           tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
@@ -683,12 +700,15 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
                     tvSecond.setTextColor(getResources().getColor(R.color.my_color_green52e));
                     tvPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
                     if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
-                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().activePrice);
+                        tvFirstPrice.setText("秒杀价: $"+commodityDetailDto.getGoodsInfo().activePrice);
                     }else {
-                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                        tvFirstPrice.setText("秒杀价: $"+commodityDetailDto.getGoodsInfo().getGdPrice());
                     }
+                    tvFirstPrice.getPaint().setAntiAlias(true);//抗锯齿
+
+                    tvFirstPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
                     if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getGdPrice())){
-                        tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
+                        tvPrice.setText("$"+commodityDetailDto.getGoodsInfo().getGdPrice());
                     }
                     llMore.setBackgroundColor(getResources().getColor(R.color.my_color_green));
 
@@ -696,27 +716,46 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
 
 
                     times=endTime-curTime;
+                    if(times<=0){
+                        tvInteger.setText("已结束");
+                        llTime.setVisibility(View.INVISIBLE);
+                        if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
+                            tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().activePrice);
+                        }else {
+                            tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getGdPrice());
+                        }
+                        tvFirstPrice.getPaint().setAntiAlias(true);//抗锯齿
+
+                        tvFirstPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+                        tvPrice.setText(""+commodityDetailDto.getGoodsInfo().getGdPrice());
+                    }else {
+                        llTime.setVisibility(View.VISIBLE);
+                        tvInteger.setText("距结束时间");
+                        if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getGdPrice())){
+                            tvFirstPrice.setText("$ "+commodityDetailDto.getGoodsInfo().getGdPrice());
+                        }
+
+                        tvPrice.setText(""+commodityDetailDto.getGoodsInfo().activePrice);
+                        tvFirstPrice.getPaint().setAntiAlias(true);//抗锯齿
+
+                        tvFirstPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG); //中划线
+                    }
                     tvTobuy.setText("港港秒杀");
-                    tvInteger.setText("距结束时间");
-                    line.setVisibility(View.VISIBLE);
+
+                    line.setVisibility(View.GONE);
 //                    tvFirstPrice.setText(commodityDetailDto.getGoodsInfo().getMarketPrice());
                     tvTobuy.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvHour.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvMinter.setTextColor(getResources().getColor(R.color.my_color_f23));
                     tvSecond.setTextColor(getResources().getColor(R.color.my_color_f23));
-                    if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().activePrice)){
-                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().activePrice);
-                    }else {
-                        tvFirstPrice.setText("秒杀价: ￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
-                    }
-                    if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().getGdPrice())){
-                        tvPrice.setText("￥"+commodityDetailDto.getGoodsInfo().getGdPrice());
-                    }
+
+
                     llMore.setBackgroundColor(getResources().getColor(R.color.my_color_f23));
 
                 }
             }
         }else {
+            isSekill=false;
             llMoney.setVisibility(View.VISIBLE);
             llMore.setVisibility(View.GONE);
             if(TextUtil.isNotEmpty(commodityDetailDto.getGoodsInfo().isConpon)&&commodityDetailDto.getGoodsInfo().isConpon.equals("1")){
@@ -779,12 +818,12 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
         tv_commodity_info_price.setText(goodsInfo.getGdPrice());
         if (goodsInfo.getFreight() != null) {
             if (goodsInfo.getFreight().equals("0.00")) {
-                tv_commodity_info_courier.setText("快递费:计重");
+//                tv_commodity_info_courier.setText("快递费:计重");
             } else {
-                tv_commodity_info_courier.setText("快递费:" + goodsInfo.getFreight());
+//                tv_commodity_info_courier.setText("快递费:" + goodsInfo.getFreight());
             }
         } else {
-            tv_commodity_info_courier.setText("快递费:计重");
+//            tv_commodity_info_courier.setText("快递费:计重");
         }
         tv_commodity_info_sales.setText("销量:" + goodsInfo.getSalesToatl());
         tv_commodity_info_inventory.setText("库存:" + goodsInfo.getStockTotal());
@@ -980,6 +1019,7 @@ public class CommodityDetailActivity extends BaseActivity implements BaseActivit
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         dissLoadDialog();
         WebViewUtil.destroyWebView(webView);
     }

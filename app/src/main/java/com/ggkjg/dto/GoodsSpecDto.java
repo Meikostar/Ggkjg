@@ -17,6 +17,7 @@ public class GoodsSpecDto implements Serializable {
     private long salesTotal;
     private String isDef;
     private String createTime;
+    public String activePrice;
     private String modifyTime;
     private String enableFlag;
     private long categoryId;

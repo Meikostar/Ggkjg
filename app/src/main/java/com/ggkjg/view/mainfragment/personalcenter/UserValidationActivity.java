@@ -1,6 +1,8 @@
 package com.ggkjg.view.mainfragment.personalcenter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,8 @@ import com.ggkjg.common.utils.Compressor;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.ImagePickerUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.StringUtil;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.response.HttpResult;
@@ -26,6 +30,8 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -101,6 +107,10 @@ public class UserValidationActivity extends BaseActivity {
                 ToastUtil.showToast("身份证号不能为空！");
                 return;
             }
+            if(!StringUtil.IDCardValidate(et_set_user_validation_code.getText().toString().trim())){
+                ToastUtil.showToast("身份证号码无效！");
+                return;
+            }
             addRealNameApply(et_set_user_validation_name.getText().toString().trim(), et_set_user_validation_code.getText().toString().trim());
 
         });
@@ -170,8 +180,39 @@ public class UserValidationActivity extends BaseActivity {
     }
 
     private void loadImage(String imageUrl, ImageView imageView) {
-        GlideUtils.getInstances().loadNormalImg(this, imageView, imageUrl);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap fileBitMap = getFileBitMap(imageUrl);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GlideUtils.getInstances().loadNormalImg(UserValidationActivity.this, imageView, fileBitMap);
+                    }
+                });
+            }
+        }).start();
+
+//        imageView.setImageBitmap(fileBitMap);
+
     }
+
+    /**
+     * 加载本地图片
+     * @param url
+     * @return
+     */
+    public static Bitmap getFileBitMap(String url) {
+        try {
+            FileInputStream fis = new FileInputStream(url);
+            return BitmapFactory.decodeStream(fis);  ///把流转化为Bitmap图片
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     private void initUploadData() {
         showLoadDialog();

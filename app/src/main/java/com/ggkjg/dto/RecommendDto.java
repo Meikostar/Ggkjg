@@ -1,15 +1,19 @@
 package com.ggkjg.dto;
 
+import java.util.List;
+
 public class RecommendDto {
     String headImg;
     String nickName;
-    int memberLevel;
+    String memberLevel;
     String salesTotal;
     String province;
     String city;
     String area;
     String id;
     String pushNum;
+    public long total;
+    public List<RecommendDto> rows;
     public boolean isChoose;
 
     public String getHeadImg() {
@@ -28,11 +32,11 @@ public class RecommendDto {
         this.nickName = nickName;
     }
 
-    public int getMemberLevel() {
+    public String getMemberLevel() {
         return memberLevel;
     }
 
-    public void setMemberLevel(int memberLevel) {
+    public void setMemberLevel(String memberLevel) {
         this.memberLevel = memberLevel;
     }
 

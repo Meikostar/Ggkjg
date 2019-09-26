@@ -23,6 +23,7 @@ import com.ggkjg.dto.MemberLevelDto;
 import com.ggkjg.dto.RecommendDto;
 import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
+import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
 import com.ggkjg.view.adapter.MyCommentAdapter;
 import com.ggkjg.view.adapter.PopWalletFilterAdapter;
@@ -155,18 +156,18 @@ public class RecommendActivity extends BaseActivity {
      */
     private void findMyTeam(boolean isLoad) {
         showLoadDialog();
-        DataManager.getInstance().findMyTeam(new DefaultSingleObserver<DataPageDto<RecommendDto>>() {
+        DataManager.getInstance().findMyTeam(new DefaultSingleObserver<RecommendDto>() {
             @Override
-            public void onSuccess(DataPageDto<RecommendDto> dataPageDto) {
+            public void onSuccess(RecommendDto dataPageDto) {
                 dissLoadDialog();
                 if (dataPageDto != null) {
                     if (currentPage == Constants.PAGE_NUM) {
-                        mAdapter.setNewData(dataPageDto.getRows());
-                        if(dataPageDto.getRows() ==null || dataPageDto.getRows().size() == 0){
+                        mAdapter.setNewData(dataPageDto.rows);
+                        if(dataPageDto.rows ==null || dataPageDto.rows.size() == 0){
                             mAdapter.setEmptyView(new EmptyView(RecommendActivity.this));
                         }
                     } else {
-                        mAdapter.addData(dataPageDto.getRows());
+                        mAdapter.addData(dataPageDto.rows);
                     }
                 }
             }
@@ -175,7 +176,7 @@ public class RecommendActivity extends BaseActivity {
             public void onError(Throwable throwable) {
                 dissLoadDialog();
             }
-        }, currentPage, memberLevel);
+        }, currentPage, memberLevel,1);
     }
 
     private void setListener() {

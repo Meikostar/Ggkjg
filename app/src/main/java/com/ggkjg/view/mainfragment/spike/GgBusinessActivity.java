@@ -50,9 +50,8 @@ public class GgBusinessActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-//                    Intent intent = new Intent(GgBusinessActivity.this, GgBusinessListActivity.class);
-//                    intent.putExtra("id",item.id);
-//                   startActivity(intent);
+                    Intent intent = new Intent(GgBusinessActivity.this, GgBusinessListActivity.class);
+                   startActivity(intent);
 
             }
         });
@@ -132,13 +131,13 @@ public class GgBusinessActivity extends BaseActivity {
             @Override
             public void onSuccess(BusinessDto helpDto) {
                 dissLoadDialog();
-                if (helpDto != null && helpDto.storeAdPositionPOList != null) {
-                    if (helpDto.storeAdPositionPOList.size() > 0 && helpDto.storeAdPositionPOList.get(0).adsList != null) {
-                        setAds(helpDto.storeAdPositionPOList.get(0).adsList);
+                if (helpDto != null && helpDto.banners != null) {
+                    if (helpDto.banners!= null) {
+                        setAds(helpDto.banners);
                     }
                 }
-                if (helpDto != null && helpDto.commercialCollegeTypePage != null && helpDto.commercialCollegeTypePage.records != null) {
-                    mAdapter.setNewData(helpDto.commercialCollegeTypePage.records);
+                if (helpDto != null && helpDto.commercialCollegeTypes!= null) {
+                    mAdapter.setNewData(helpDto.commercialCollegeTypes);
                 }
             }
 

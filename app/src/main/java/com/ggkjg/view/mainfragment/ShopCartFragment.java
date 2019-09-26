@@ -35,6 +35,7 @@ import com.ggkjg.view.widgets.RecyclerItemDecoration;
 import com.ggkjg.view.widgets.autoview.EmptyView;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -132,7 +133,14 @@ public class ShopCartFragment extends BaseFragment {
             getActivity().sendBroadcast(intent);
         }, 2500);
         bindClickEvent(iv_top_message, () -> {
-            gotoActivity(MessageCenterActivity.class);
+            if (!Constants.getInstance().isLogin()) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+
+            } else {
+                gotoActivity(MessageCenterActivity.class);
+            }
+//            gotoActivity(MessageCenterActivity.class);
         });
         shopCartAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -330,10 +338,57 @@ public class ShopCartFragment extends BaseFragment {
             while (items.hasNext()) {
                 selectNum++;
                 ShopCartDto item = items.next();
-                price += item.getCartNum() * item.getGdPrice();
+                if(item.isNowSedKill.equals("1")){
+                    price += item.getCartNum() * item.activePrice;
+                }else {
+                    price += item.getCartNum() * item.getGdPrice();
+                }
+
             }
         }
-        cb_shop_cart_price.setText(price + "");
+        DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+        String distanceString = decimalFormat.format(price) ;
+        cb_shop_cart_price.setText(distanceString
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                + "");
         //全选状态
         if (shopCartAdapter.getData() != null && !shopCartAdapter.getData().isEmpty()) {
             if (shopCartAdapter.getData().size() == selectNum) {

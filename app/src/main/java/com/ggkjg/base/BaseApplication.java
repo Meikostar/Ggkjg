@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.stetho.Stetho;
 import com.ggkjg.common.Constants;
+import com.ggkjg.common.CrashUtil;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.db.DaoManager;
 
@@ -42,7 +43,8 @@ public class BaseApplication extends Application {
         instance = this;
         //GreenDao数据库管理初始化
         UdeskSDKManager.getInstance().initApiKey(this, "ggkjds.s2.udesk.cn","c83493630ab4134046357585e25cc3eb","e74387aa0a787b71");
-
+        CrashUtil crashUtil = CrashUtil.getInstance();
+        crashUtil.init(this);
 
         DaoManager.getInstance().init(this);
         Stetho.initializeWithDefaults(this); //调试接口
