@@ -19,18 +19,32 @@
         android:text="联系客服"
         android:textColor="@color/my_color_696969"
         android:textSize="@dimen/wz_12sp" />
-
-    <TextView
-        android:id="@+id/tv_commodity_collection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_bg"
         android:layout_weight="1"
-        android:drawableTop="@mipmap/icon_commodity_collection"
-        android:drawablePadding="@dimen/bj_3dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:text="收藏"
-        android:textColor="@color/my_color_696969"
-        android:textSize="@dimen/wz_12sp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_img"
+            android:src="@mipmap/icon_commodity_collection"
+            android:layout_width="@dimen/bj_19dp"
+            android:layout_height="@dimen/bj_19dp" />
+        <TextView
+            android:id="@+id/tv_commodity_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/bj_3dp"
+            android:gravity="center"
+            android:text="收藏"
+            android:textColor="@color/my_color_696969"
+            android:textSize="@dimen/wz_12sp" />
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/tv_commodity_cart"

@@ -34,8 +34,13 @@ public class GoldOutAdapter extends BaseQuickAdapter<SquareRowsDto, BaseViewHold
             helper.setText(R.id.iv_item_gold_user_name_, "姓名:" + item.getRealName());
             if(TextUtil.isNotEmpty(item.getTxNo())){
                 helper.setText(R.id.iv_item_gold_user_qq, "微信:" + item.getTxNo());
-            }if(TextUtil.isNotEmpty(item.phone)){
+            }else {
+                helper.setText(R.id.iv_item_gold_user_qq, "微信:" );
+            }
+            if(TextUtil.isNotEmpty(item.phone)){
                 helper.setText(R.id.iv_item_gold_user_phone, "手机号:" + item.phone);
+            }else {
+                helper.setText(R.id.iv_item_gold_user_phone, "手机号:" );
             }
 
             helper.setText(R.id.iv_item_gold_buy_num, item.getTransferNum());

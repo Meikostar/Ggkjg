@@ -22,7 +22,7 @@
         android:textSize="@dimen/wz_15sp"
         android:textStyle="bold" />
 
-    <com.ggkjg.view.widgets.autoview.ObservableScrollView
+    <com.ggkjg.view.widgets.StickyScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -204,9 +204,9 @@
                 android:id="@+id/btn_gold_input_submit"
                 style="@style/btn_confirm"
                 android:layout_marginTop="@dimen/bj_20dp"
-                android:layout_marginBottom="@dimen/bj_50dp"
+                android:layout_marginBottom="@dimen/bj_210dp"
                 android:text="发布" />
 
         </LinearLayout>
-    </com.ggkjg.view.widgets.autoview.ObservableScrollView>
+    </com.ggkjg.view.widgets.StickyScrollView>
 </LinearLayout>

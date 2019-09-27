@@ -2,6 +2,7 @@ package com.ggkjg.view.mainfragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -34,6 +35,8 @@ public class SquareFragment extends BaseFragment {
     private FragmentPagerAdapter pagerAdapter;
     @BindView(R.id.iv_home_square_editor)
     ImageView iv_home_square_editor;
+    @BindView(R.id.actionbar_back)
+    ImageView actionbar_back;
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +53,12 @@ public class SquareFragment extends BaseFragment {
         fragments.add(fragment2);
         initCommonTabLayout();
         initPagerAdapter();
+        actionbar_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void initCommonTabLayout() {

@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.ggkjg.R;
@@ -44,6 +46,8 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -135,8 +139,22 @@ public class ShopClassFragment extends BaseFragment {
                         switch(slidersDto.clickType){
                             case "1":
                                 if(!TextUtils.isEmpty(slidersDto.clickUrl)) {
-                                    startActivityProductList(Integer.valueOf(slidersDto.clickUrl));
-                                    Log.i("hahahah","返回来的数据是" + Integer.valueOf(slidersDto.clickUrl));
+                                    String str=slidersDto.clickUrl;
+                                    Pattern p = Pattern.compile("[0-9]*");
+                                    Matcher m = p.matcher(str);
+                                    if(!m.matches() ){
+                                        String str2="";
+                                        if(str != null && !"".equals(str)) {
+                                            for (int i = 0; i < str.length(); i++) {
+                                                if (str.charAt(i) >= 48 && str.charAt(i) <= 57) {
+                                                    str2 += str.charAt(i);
+                                                }
+                                            }
+                                        }
+                                        str=str2;
+                                    }
+                                    startActivityProductList(Integer.valueOf(str));
+//                                    Log.i("hahahah","返回来的数据是" + Integer.valueOf(slidersDto.clickUrl));
                                 }
                                 break;
                             case "2":

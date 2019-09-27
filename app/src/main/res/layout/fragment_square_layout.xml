@@ -15,7 +15,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bj_50dp">
-
+        <ImageView
+            android:id="@+id/actionbar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="25dp"
+            android:src="@mipmap/arrow_topbar"
+            android:visibility="visible" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

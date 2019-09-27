@@ -73,7 +73,7 @@ public class RegisterActivity extends BaseActivity implements BaseActivity.Permi
     private int REQUEST_CODE_SCAN = 111;
     private boolean isScan = false;
     // 倒计时数
-    private int mCount = 30;
+    private int mCount = 60;
 
     @Override
     public int getLayoutId() {
@@ -291,7 +291,7 @@ public class RegisterActivity extends BaseActivity implements BaseActivity.Permi
                 butGetSmsCode.setClickable(true);
                 butGetSmsCode.setText("获取验证码");
 //              butGetSmsCode.setTextColor(Color.parseColor("#1DC2CB"));
-                mCount = 30;
+                mCount = 60;
                 RxTimerUtil.cancel();
             }
         });

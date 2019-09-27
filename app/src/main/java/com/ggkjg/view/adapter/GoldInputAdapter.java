@@ -34,9 +34,13 @@ public class GoldInputAdapter extends BaseQuickAdapter<SquareRowsDto, BaseViewHo
             helper.setText(R.id.iv_item_gold_user_name_, "姓名:"+item.getRealName());
             if(TextUtil.isNotEmpty(item.getTxNo())){
                 helper.setText(R.id.iv_item_gold_user_qq, "微信:" + item.getTxNo());
+            }else {
+                helper.setText(R.id.iv_item_gold_user_qq, "微信:");
             }if(TextUtil.isNotEmpty(item.phone)){
                 helper.setText(R.id.iv_item_gold_user_phone, "手机号:" + item.phone);
-            };
+            }else {
+                helper.setText(R.id.iv_item_gold_user_phone, "手机号:" );
+            }
             helper.setText(R.id.iv_item_gold_buy_num, item.getTransferNum());
             helper.setText(R.id.iv_item_gold_num, item.getTransferPrice()+"港币/港豆");
             String imgUrl = BuildConfig.BASE_IMAGE_URL + item.getHeadImg();

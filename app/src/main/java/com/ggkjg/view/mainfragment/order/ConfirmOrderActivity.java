@@ -240,6 +240,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     List<CartAtrrDto> data = popadapter.getData();
                     for (CartAtrrDto dto : data) {
                         if (dto.isChoose) {
+
                             tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_D13229));
                             tvPriceSum.setText("-" + dto.subPrice);
                             curCutPrice=Double.valueOf(dto.subPrice);
@@ -634,7 +635,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             public void onSuccess(CartAtrrDto object) {
                 if (object != null) {
                     if (TextUtil.isNotEmpty(object.sumFreight)) {
-                        KdPrice=Double.valueOf(object.sumFreight);
+                        KdPrice=0;
                         tv_confirm_order_courier_num.setText(object.sumFreight);
                     }
                     if (TextUtil.isNotEmpty(object.sumgdPrice)) {
@@ -663,7 +664,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                         tv_confirm_order_goods_total_weight.setText(object.sumWeight + "");
 
                     }
-                    tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
+//                    tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
                     if (object.conponList != null&&object.conponList.size()>0) {
                         tvPriceSum.setText("去使用" );
                         rlOffer.setVisibility(View.VISIBLE);
@@ -680,7 +681,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
 
 
                     }
-                    if(object.conponBase!=null&&object.conponBase.addPrice!=null){
+                    if(object.conponBase!=null&&object.conponBase.addPrice!=null&&object.conponBase.fullPrice!=null){
                         manJPrice=Double.valueOf(object.conponBase.addPrice);
                         tvFirst.setText(object.conponBase.addPrice+"");
                         addPrice= Double.valueOf(object.conponBase.addPrice);

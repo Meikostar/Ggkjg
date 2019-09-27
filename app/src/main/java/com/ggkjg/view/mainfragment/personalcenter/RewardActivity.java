@@ -103,9 +103,9 @@ public class RewardActivity extends BaseActivity {
             fragments[index].setType("");
             fragments[index].setRewardInfoListener(infoListener);
         } else if (index == 1) {
-            fragments[index].setType("1");
-        } else if (index == 2) {
             fragments[index].setType("2");
+        } else if (index == 2) {
+            fragments[index].setType("1");
         }
         if (currentTabIndex != -1) {
             trx.hide(fragments[currentTabIndex]);

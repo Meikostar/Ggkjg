@@ -51,7 +51,7 @@ public class UpdatePhoneActivity extends BaseActivity {
     Button btn_update_phone_ok;
 
     // 倒计时数
-    private int mCount = 30;
+    private int mCount = 60;
 
     @Override
     public void initListener() {
@@ -124,6 +124,7 @@ public class UpdatePhoneActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
                 stopCount();
+                ToastUtil.showToast("图形验证码有误");
             }
         }, phone, positionCode);
     }

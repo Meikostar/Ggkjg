@@ -1,8 +1,11 @@
 package com.ggkjg.view.mainfragment.settings;
 
+import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
@@ -13,6 +16,7 @@ import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
+import com.ggkjg.view.mainfragment.login.ForgetPayActivity;
 
 import java.util.HashMap;
 
@@ -20,13 +24,15 @@ import butterknife.BindView;
 
 public class ModifyPayPwdActivity  extends BaseActivity {
     @BindView(R.id.btn_update_phone_ok)
-    Button btnSure;
+    Button   btnSure;
     @BindView(R.id.ed_old_pwd)
     EditText edOldPwd;
     @BindView(R.id.ed_new_pwd)
     EditText edNewPwd;
     @BindView(R.id.ed_new_pwd_repeat)
     EditText ed_new_pwd_repeat;
+    @BindView(R.id.tv_forget)
+    TextView tv_forget;
 
     @Override
     public int getLayoutId() {
@@ -46,6 +52,12 @@ public class ModifyPayPwdActivity  extends BaseActivity {
 
     @Override
     public void initListener() {
+        tv_forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ModifyPayPwdActivity.this,ForgetPayActivity.class));
+            }
+        });
         bindClickEvent(btnSure, () -> {
             String oldPwdStr = edOldPwd.getText().toString();
             String newPwdStr = edNewPwd.getText().toString();

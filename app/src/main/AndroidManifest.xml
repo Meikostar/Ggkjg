@@ -78,6 +78,13 @@
             android:theme="@style/NoTitleTranslucentTheme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".view.mainfragment.login.ForgetPayActivity"
+            android:label="忘记密码"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleTranslucentTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
             android:name=".view.mainfragment.login.BindPhoneActivity"
             android:label="绑定手机号"
             android:screenOrientation="portrait"

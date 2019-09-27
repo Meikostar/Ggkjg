@@ -232,6 +232,10 @@ public class MyOrderEvaluateActivity extends BaseActivity {
     }
 
     private void goodsEvaluate() {
+        if (TextUtils.isEmpty(ed_content.getText().toString().trim())) {
+            ToastUtil.showToast("请输入评价！");
+            return;
+        }
         showLoadDialog();
         HashMap<String, String> map = new HashMap<>();
         map.put("orderId", orderId);

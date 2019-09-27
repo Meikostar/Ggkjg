@@ -162,7 +162,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
      * @param action 跳转的Acticvity
      */
     protected void bindClickEvent(View view, final Action action) {
-        bindClickEvent(view, action, 1000);
+        bindClickEvent(view, action, 500);
     }
 
     @SuppressLint("CheckResult")

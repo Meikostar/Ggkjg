@@ -108,6 +108,7 @@ public class BindPhoneActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
                 LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
+                ToastUtil.showToast("图形验证码有误");
                 Constants.getInstance().save(Constants.COOKIE_KEY,"");
                 stopCount();
             }

@@ -54,7 +54,7 @@ public class RecommendAdapter extends BaseQuickAdapter<RecommendDto, BaseViewHol
             ;
         }
         helper.setText(R.id.tv_level_name, memberName)
-                .setText(R.id.tv_push_number, "总业绩: " + item.getPushNum());
+                .setText(R.id.tv_push_number, "总业绩: " + item.getSalesTotal());
         GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.img_user_header), BuildConfig.BASE_IMAGE_URL + item.getHeadImg(),R.mipmap.user_default_icon);
     }
 }

@@ -3,6 +3,7 @@ package com.ggkjg.view.mainfragment.login;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,17 +12,20 @@ import android.widget.TextView;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseActivity;
 import com.ggkjg.base.BuildConfig;
-import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.GlideUtils;
 import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.MD5Utils;
 import com.ggkjg.common.utils.RxTimerUtil;
 import com.ggkjg.common.utils.StatusBarUtils;
+import com.ggkjg.common.utils.StringUtil;
+import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
 import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.response.HttpResult;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 
@@ -30,8 +34,8 @@ import butterknife.BindView;
  * Created by xld021 on 2018/4/14.
  */
 
-public class ForgetPwdActivity extends BaseActivity {
-    private static final String TAG = ForgetPwdActivity.class.getSimpleName();
+public class ForgetPayActivity extends BaseActivity {
+    private static final String TAG = ForgetPayActivity.class.getSimpleName();
     @BindView(R.id.et_forget_pwd_phone)
     EditText et_forget_pwd_phone;
     @BindView(R.id.et_forget_img_code)
@@ -62,15 +66,34 @@ public class ForgetPwdActivity extends BaseActivity {
     @Override
     public void initView() {
         actionbar.setImgStatusBar(R.color.my_color_white);
+        actionbar.setTitle("找回支付密码");
         StatusBarUtils.StatusBarLightMode(this);
     }
 
     @Override
     public void initData() {
     }
+    private void modifyTradePwd(HashMap<String, String> map) {
+        showLoadDialog();
+        DataManager.getInstance().modifyTradePwd(new DefaultSingleObserver<HttpResult<Object>>() {
+            @Override
+            public void onSuccess(HttpResult<Object> object) {
+                ToastUtil.showToast(object.getMsg());
+                dissLoadDialog();
+              finish();
+            }
 
+            @Override
+            public void onError(Throwable throwable) {
+                ToastUtil.toast(ApiException.getShowToast(throwable));
+                dissLoadDialog();
+            }
+        }, map);
+
+    }
     @Override
     public void initListener() {
+        tv_forget_pwd_login.setVisibility(View.GONE);
         bindClickEvent(tv_forget_pwd_login, () -> {
             if (isTopActivity(1)) {
                 finish();
@@ -98,6 +121,10 @@ public class ForgetPwdActivity extends BaseActivity {
                 ToastUtil.showToast("请输入手机号码");
                 return;
             }
+            if (!StringUtil.isMobileNO(phone)) {
+                ToastUtil.showToast("请输入有效的手机号");
+                return;
+            }
             String url = BuildConfig.PICTURE_CODE + phone;
             GlideUtils.getInstances().loadRoundCornerImgUnCache(this, iv_forget_img_code, 5, url);
         });
@@ -107,6 +134,10 @@ public class ForgetPwdActivity extends BaseActivity {
             String pictureCode = et_forget_img_code.getText().toString();
             if (TextUtils.isEmpty(phone)) {
                 ToastUtil.showToast("请输入手机号码");
+                return;
+            }
+            if (!StringUtil.isMobileNO(phone)) {
+                ToastUtil.showToast("请输入有效手机号");
                 return;
             }
             if (TextUtils.isEmpty(pictureCode)) {
@@ -125,6 +156,10 @@ public class ForgetPwdActivity extends BaseActivity {
                 ToastUtil.showToast("请输入手机号码");
                 return;
             }
+            if (!StringUtil.isMobileNO(phone)) {
+                ToastUtil.showToast("请输入有效手机号");
+                return;
+            }
             if (TextUtils.isEmpty(newPwd)) {
                 ToastUtil.showToast("密码不能为空！");
                 return;
@@ -136,6 +171,7 @@ public class ForgetPwdActivity extends BaseActivity {
     }
 
     private void getMobileVerifyCode(String phone, String positionCode) {
+
         startCount();
         DataManager.getInstance().getMobileVerifyCode(new DefaultSingleObserver<String>() {
             @Override
@@ -148,7 +184,7 @@ public class ForgetPwdActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
                 LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
-                ToastUtil.showToast("图形验证码有误");
+                ToastUtil.toast(ApiException.getShowToast(throwable));
                 stopCount();
             }
         }, phone, positionCode);
@@ -181,22 +217,20 @@ public class ForgetPwdActivity extends BaseActivity {
     }
 
     private void onSubmit(String phone, String pictureCode, String smsCode, String newPwd) {
-        showLoadDialog();
-        DataManager.getInstance().forgetPwd(new DefaultSingleObserver<HttpResult<Object>>() {
-            @Override
-            public void onSuccess(HttpResult<Object> object) {
-                LogUtil.i(TAG, "--RxLog-Thread: onSuccess() = " + object);
-                dissLoadDialog();
-                ToastUtil.toast(object.getMsg());
-                onBackPressed();
-            }
 
-            @Override
-            public void onError(Throwable throwable) {
-                LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
-                dissLoadDialog();
-            }
-        }, phone, pictureCode, smsCode, newPwd);
+        HashMap<String, String> map = new HashMap<>();
+
+        if(TextUtil.isNotEmpty(phone)){
+            map.put("phone", phone);
+        }
+        if(TextUtil.isNotEmpty(pictureCode)){
+            map.put("imageCode", pictureCode);
+        }
+        map.put("msgCode", smsCode);
+        map.put("newPwd", newPwd);
+        modifyTradePwd(map);
+
+
     }
 
 

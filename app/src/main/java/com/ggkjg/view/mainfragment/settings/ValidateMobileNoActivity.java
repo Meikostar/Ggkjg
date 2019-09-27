@@ -117,6 +117,7 @@ public class ValidateMobileNoActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
                 stopCount();
+                ToastUtil.showToast("图形验证码有误");
             }
         }, phone, positionCode);
     }

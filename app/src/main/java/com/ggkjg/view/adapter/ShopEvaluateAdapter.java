@@ -22,7 +22,7 @@ public class ShopEvaluateAdapter extends BaseQuickAdapter<ShopEvaluateRowsDto, B
     @Override
     protected void convert(BaseViewHolder helper, ShopEvaluateRowsDto item) {
         if (null != item) {
-            GlideUtils.getInstances().loadRoundImg(mContext, helper.getView(R.id.iv_user_icon), BuildConfig.BASE_URL + item.getHeadImg(),R.mipmap.user_default_icon);
+            GlideUtils.getInstances().loadRoundImg(mContext, helper.getView(R.id.iv_user_icon), BuildConfig.BASE_IMAGE_URL + item.getHeadImg(),R.mipmap.user_default_icon);
             helper.setText(R.id.iv_user_name, item.getNickName());
             helper.setText(R.id.iv_user_comment, item.getContent());
             helper.setText(R.id.iv_user_specification, item.getCreateTime());

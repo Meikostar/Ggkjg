@@ -78,7 +78,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/bj_1dp"
             android:background="@color/my_color_f6f6f6" />
-
+        <TextView
+            android:id="@+id/tv_forget"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/bj_6dp"
+            android:gravity="center_vertical"
+            android:text="修改支付密码"
+            android:textColor="@color/my_color_blue"
+            android:textSize="@dimen/wz_14sp" />
 
         <Button
             android:id="@+id/btn_update_phone_ok"
