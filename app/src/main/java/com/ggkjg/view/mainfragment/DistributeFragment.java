@@ -12,10 +12,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ggkjg.R;
 import com.ggkjg.base.BaseFragment;
 import com.ggkjg.common.Constants;
+import com.ggkjg.common.type.MemberLevelType;
+import com.ggkjg.common.utils.LogUtil;
 import com.ggkjg.common.utils.SwipeRefreshLayoutUtil;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.dto.DataPageDto;
 import com.ggkjg.dto.DistributeDto;
+import com.ggkjg.dto.MemberLevelDto;
 import com.ggkjg.dto.RecommendDto;
 import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.http.manager.DataManager;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -62,6 +66,7 @@ public class DistributeFragment extends BaseFragment {
     private String mobileNo="";
     public void setSearch(String content){
         mobileNo=content;
+
         findMyTeam(true);
 
     }
@@ -120,6 +125,33 @@ public class DistributeFragment extends BaseFragment {
         findMyTeam(true);
 
 
+    }
+    private Map<String,String> maps=new HashMap<>();
+    /**
+     * 获取会员等级
+     */
+    private void getMemberLevel() {
+        showLoadDialog();
+        DataManager.getInstance().findMemberLevel(new DefaultSingleObserver<List<MemberLevelDto>>() {
+            @Override
+            public void onSuccess(List<MemberLevelDto> object) {
+                LogUtil.i(TAG, "--RxLog-Thread: onSuccess() object.size()=" + object.size());
+                dissLoadDialog();
+                maps.clear();
+                if(object!=null&&object.size()>0){
+                    for(MemberLevelDto dto:object){
+                        maps.put(dto.getMemberLevel()+"",dto.getLevelName());
+                    }
+                }
+                shopSpikeAdapter.setMapInfo(maps);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
+                dissLoadDialog();
+            }
+        });
     }
     private void setListener() {
         swipeRefreshLayoutUtil = new SwipeRefreshLayoutUtil();
@@ -199,7 +231,7 @@ public class DistributeFragment extends BaseFragment {
     @Override
     public void onResume() {
         selectList.clear();
-
+        getMemberLevel();
 
         super.onResume();
     }

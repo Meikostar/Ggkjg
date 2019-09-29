@@ -97,8 +97,10 @@ public class HomeZoneAdapter extends BaseAdapter {
         }
         if(data.get(i).isConpon.equals("1")){
             holder.llZone.setVisibility(View.VISIBLE);
-            if(TextUtil.isNotEmpty(data.get(i).conponPrice)){
+            if(TextUtil.isNotEmpty(data.get(i).conponPrice)&&Double.valueOf(data.get(i).conponPrice)!=0){
                 holder.tv_cout.setText(Double.valueOf(data.get(i).conponPrice).intValue()+"港券");
+            }else {
+                holder.llZone.setVisibility(View.GONE);
             }
         }else {
             holder.llZone.setVisibility(View.GONE);

@@ -17,7 +17,8 @@ public class AdsDto {
     private int positionId;
     private Object adsName;
     private String imgUrl;
-    private Object clickUrl;
+    public String clickType;
+    private String clickUrl;
     private int sort;
 
     public long getId() {
@@ -52,11 +53,11 @@ public class AdsDto {
         this.imgUrl = imgUrl;
     }
 
-    public Object getClickUrl() {
+    public String getClickUrl() {
         return clickUrl;
     }
 
-    public void setClickUrl(Object clickUrl) {
+    public void setClickUrl(String clickUrl) {
         this.clickUrl = clickUrl;
     }
 

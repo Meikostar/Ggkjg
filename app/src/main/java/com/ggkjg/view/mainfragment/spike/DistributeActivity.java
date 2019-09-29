@@ -1,12 +1,14 @@
 package com.ggkjg.view.mainfragment.spike;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,9 +19,7 @@ import com.ggkjg.common.Constants;
 import com.ggkjg.common.utils.StatusBarUtils;
 import com.ggkjg.common.utils.TextUtil;
 import com.ggkjg.common.utils.ToastUtil;
-import com.ggkjg.dto.AdsDto;
 import com.ggkjg.dto.TimeDataDto;
-import com.ggkjg.dto.VoucherDto;
 import com.ggkjg.http.error.ApiException;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.subscribers.DefaultSingleObserver;
@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 派发
@@ -64,6 +63,7 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
     LinearLayout ll_bg;
 
     private int currentPage = Constants.PAGE_NUM;
+    private InputMethodManager manager;//输入法管理器
 
     private String conponBaseId;
     private String ids="";
@@ -126,23 +126,23 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(TextUtil.isNotEmpty(charSequence.toString())){
-                    if(charSequence.toString().length()==11){
-                        if(poi==0){
-                            spikeFragment.setSearch(charSequence.toString());
-                        }else {
-                            spikeFragment1.setSearch(charSequence.toString());
-                        }
-                    }else if(charSequence.toString().length()>11){
-                        ToastUtil.showToast("你输入的内容过长");
-                    }
+//                    if(charSequence.toString().length()==11){
+//                        if(poi==0){
+//                            spikeFragment.setSearch(charSequence.toString());
+//                        }else {
+//                            spikeFragment1.setSearch(charSequence.toString());
+//                        }
+//                    }else if(charSequence.toString().length()>11){
+//                        ToastUtil.showToast("你输入的内容过长");
+//                    }
                     ll_bg.setVisibility(View.GONE);
 
                 }else {
-                    if(poi==0){
-                        spikeFragment.setSearch(charSequence.toString());
-                    }else {
-                        spikeFragment1.setSearch(charSequence.toString());
-                    }
+//                    if(poi==0){
+//                        spikeFragment.setSearch(charSequence.toString());
+//                    }else {
+//                        spikeFragment1.setSearch(charSequence.toString());
+//                    }
                     ll_bg.setVisibility(View.VISIBLE);
                 }
             }
@@ -152,6 +152,26 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
 
             }
         });
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //关闭软键盘
+                    if (manager.isActive()) {
+                        manager.hideSoftInputFromWindow(etSearch.getApplicationWindowToken(), 0);
+                    }
+
+                    if(poi==0){
+                        spikeFragment.setSearch(etSearch.getText().toString().trim());
+                    }else {
+                        spikeFragment1.setSearch(etSearch.getText().toString().trim());
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -193,7 +213,7 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
 
     @Override
     public void initData() {
-
+        manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         initFragMents(0);
     }
     public void disTribute(){
@@ -224,10 +244,9 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
     }
     private int poi;
     public void selection(int poition, boolean isShow) {
+        poi=poition;
         switch (poition) {
-
             case 0:
-                poition=0;
                 tvTime.setTextColor(getResources().getColor(R.color.my_color_blue));
                 tvPerson.setTextColor(getResources().getColor(R.color.my_color_333333));
                 lineSend.setVisibility(View.VISIBLE);
@@ -245,7 +264,6 @@ public class DistributeActivity extends BaseActivity implements DistributeFragme
 
                 break;
             case 1:
-                poition=1;
                 tvTime.setTextColor(getResources().getColor(R.color.my_color_333333));
                 tvPerson.setTextColor(getResources().getColor(R.color.my_color_blue));
                 lineUser.setVisibility(View.VISIBLE);

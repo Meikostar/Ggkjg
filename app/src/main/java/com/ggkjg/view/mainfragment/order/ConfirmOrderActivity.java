@@ -236,21 +236,28 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
             popadapter.setChooseListener(new PopVoucherAdapter.ChooseListener() {
                 @Override
                 public void choose() {
-
+                    boolean isUnChoose=false;
                     List<CartAtrrDto> data = popadapter.getData();
                     for (CartAtrrDto dto : data) {
                         if (dto.isChoose) {
-
+                            isUnChoose=true;
                             tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_D13229));
                             tvPriceSum.setText("-" + dto.subPrice);
                             curCutPrice=Double.valueOf(dto.subPrice);
                             id=dto.id;
+                            total=isCut==1?total+curCutPrice - Double.valueOf(dto.subPrice):total- Double.valueOf(dto.subPrice);
                             DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
-                            String distanceString = decimalFormat.format(isCut==1?total+curCutPrice - Double.valueOf(dto.subPrice):total- Double.valueOf(dto.subPrice)) ;
+                            String distanceString = decimalFormat.format(total) ;
                             tv_confirm_order_total_money.setText( distanceString);
                         }
                     }
-
+                    if (!isUnChoose){
+                        tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
+                        tvPriceSum.setText("去选择");
+                        DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+                        String distanceString = decimalFormat.format(total+curCutPrice) ;
+                        tv_confirm_order_total_money.setText( distanceString);
+                    }
                     isCut=1;
                 }
             });
@@ -666,12 +673,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OrderChooseAdd
                     }
 //                    tvPriceSum.setTextColor(getResources().getColor(R.color.my_color_333333));
                     if (object.conponList != null&&object.conponList.size()>0) {
-                        tvPriceSum.setText("去使用" );
+                        tvPriceSum.setText("去选择" );
                         rlOffer.setVisibility(View.VISIBLE);
                         conponList = object.conponList;
                     }else {
                         if(object.isConpon.equals("1")){
-                            tvPriceSum.setText("去使用" );
+                            tvPriceSum.setText("去选择" );
                             rlOffer.setVisibility(View.VISIBLE);
                             conponList = object.conponList;
                         }else {

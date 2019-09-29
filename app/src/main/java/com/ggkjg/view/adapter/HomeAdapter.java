@@ -57,8 +57,11 @@ public class HomeAdapter extends BaseQuickAdapter<GoodsPushRowsDto, BaseViewHold
             LinearLayout view = helper.getView(R.id.ll_zone);
             if(item.isConpon.equals("1")){
                 view.setVisibility(View.VISIBLE);
-                if(TextUtil.isNotEmpty(item.conponPrice)){
+
+                if(TextUtil.isNotEmpty(item.conponPrice)&&Double.valueOf(item.conponPrice)!=0){
                     helper.setText(R.id.tv_cout,Double.valueOf(item.conponPrice).intValue()+"港券");
+                }else {
+                    view.setVisibility(View.GONE);
                 }
             }else {
                 view.setVisibility(View.GONE);

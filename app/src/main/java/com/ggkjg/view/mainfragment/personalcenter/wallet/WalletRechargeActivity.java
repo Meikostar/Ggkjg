@@ -162,11 +162,16 @@ public class WalletRechargeActivity extends BaseActivity {
 //                    payOrderInfo(rechargeOrderDto.getOrder_no());
                 } else {
                     out_trade_no=rechargeDto.out_trade_no;
-                    Intent intent = new Intent();
+//                    Intent intent = new Intent();
+//                    intent.setAction("android.intent.action.VIEW");
+//                    Uri content_url = Uri.parse(rechargeDto.getOrderString());         //要跳转的网页
+//                    intent.setData(content_url);
+//                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+//                    startActivity(intent);
+                    Intent intent= new Intent();
                     intent.setAction("android.intent.action.VIEW");
-                    Uri content_url = Uri.parse(rechargeDto.getOrderString());         //要跳转的网页
+                    Uri content_url = Uri.parse(rechargeDto.getOrderString());
                     intent.setData(content_url);
-                    intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
                     startActivity(intent);
 //                    payZFBOrderInfo(rechargeDto.getOrderString());
                 }

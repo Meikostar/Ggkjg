@@ -10,8 +10,8 @@ public class BuildConfig {
      */
 //    public static final String BASE_URL = "http://ng.2aa6.com/hkonline/";
 //    public static final String BASE_URL = "http://app.ggkjsz.com/test/";
-//    public static final String BASE_URL = "http://app.ggkj.hk/hkonline/";
-    public static final String BASE_URL = "http://192.168.1.165/hkonline/";
+    public static final String BASE_URL = "http://app.ggkj.hk/hkonline/";
+//    public static final String BASE_URL = "http://192.168.1.165/hkonline/";
 //    public static final String BASE_URL = "http://ggkj.frp.2aa6.com/hkonline/";
 //    public static final String BASE_URL = "http://b.ng.2aa6.com:8080/hkonline/";
 

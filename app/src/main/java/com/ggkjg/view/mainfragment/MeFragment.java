@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.ggkjg.dto.AdsDataDto;
 import com.ggkjg.dto.AdsDto;
 import com.ggkjg.dto.RealNameDto;
 import com.ggkjg.dto.ServiceTelDto;
+import com.ggkjg.dto.SlidersDto;
 import com.ggkjg.dto.UserInfoDto;
 import com.ggkjg.http.manager.DataManager;
 import com.ggkjg.http.response.HttpResult;
@@ -42,6 +44,8 @@ import com.ggkjg.view.mainfragment.personalcenter.ShareQRcodeActivity;
 import com.ggkjg.view.mainfragment.personalcenter.UserValidationActivity;
 import com.ggkjg.view.mainfragment.personalcenter.wallet.WalletActivity;
 import com.ggkjg.view.mainfragment.settings.UserInfoSetActivity;
+import com.ggkjg.view.mainfragment.shop.CommodityDetailActivity;
+import com.ggkjg.view.mainfragment.shop.ShopProductListActivity;
 import com.ggkjg.view.mainfragment.spike.GgBusinessActivity;
 import com.ggkjg.view.mainfragment.spike.MangerVoucherActivity;
 import com.ggkjg.view.mainfragment.spike.MineVoucherActivity;
@@ -250,11 +254,56 @@ public class MeFragment extends BaseFragment {
         bindClickEvent(tv_me_order4, () -> {
             startMyOrderActivity(4);
         });
+
+        img_me_ads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (adsDto!=null&&!TextUtils.isEmpty(adsDto.clickType)) {
+                    switch(adsDto.clickType){
+                        case "1":
+                            if(!TextUtils.isEmpty(adsDto.getClickUrl())) {
+                                startActivityProductList(Integer.valueOf(adsDto.getClickUrl()));
+                                Log.i("hahahah","返回来的数据是" + Integer.valueOf(adsDto.getClickUrl()));
+                            }
+                            break;
+                        case "2":
+                            if(!TextUtils.isEmpty(adsDto.getClickUrl())) {
+                                startActivityCommodityDetail(Long.valueOf(adsDto.getClickUrl()));
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            }
+        });
 //        bindClickEvent(tv_me_order5, () -> {
 //            gotoActivity(AfterSaleActivity.class);
 //        });
     }
+    /**
+     * 启动产品列表
+     *
+     * @param product_type 商品类型
+     */
+    private void startActivityProductList(int product_type) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(ShopProductListActivity.PRODUCT_TYPE, product_type);
 
+        gotoActivity(ShopProductListActivity.class, false, bundle);
+    }
+    /**
+     * 启动商品详细
+     *
+     * @param product_id 商品ID
+     */
+    private void startActivityCommodityDetail(long product_id) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(CommodityDetailActivity.PRODUCT_ID, product_id);
+        gotoActivity(CommodityDetailActivity.class, false, bundle);
+    }
     /**
      * 启动我的订单
      *
@@ -323,18 +372,24 @@ public class MeFragment extends BaseFragment {
             }
         });
     }
+    private AdsDto adsDto;
 
     private void findCenterPosition() {
         DataManager.getInstance().findCenterPosition(new DefaultSingleObserver<List<AdsDataDto>>() {
             @Override
             public void onSuccess(List<AdsDataDto> adsDataDto) {
 
-                if (adsDataDto != null && adsDataDto != null && adsDataDto.size() > 0) {
-                    List<AdsDto> adsList = adsDataDto.get(0).getAdsList();
-                    if (adsList != null && adsDataDto.size() > 0) {
-                        AdsDto adsDto = adsList.get(0);
-                        GlideUtils.getInstances().loadNormalImg(getContext(), img_me_ads, BuildConfig.BASE_IMAGE_URL + adsDto.getImgUrl(), R.mipmap.img_default_3);
+                try {
+                    if (adsDataDto != null && adsDataDto != null && adsDataDto.size() > 0) {
+                        List<AdsDto> adsList = adsDataDto.get(0).getAdsList();
+                        if (adsList != null && adsDataDto.size() > 0) {
+                             adsDto = adsList.get(0);
+                            GlideUtils.getInstances().loadNormalImg(getContext(), img_me_ads, BuildConfig.BASE_IMAGE_URL + adsDto.getImgUrl(), R.mipmap.img_default_3);
+
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 

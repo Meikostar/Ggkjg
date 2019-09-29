@@ -39,6 +39,7 @@ import com.ggkjg.view.widgets.InputPwdDialog;
 import com.ggkjg.view.widgets.RechargeDialog;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -272,13 +273,18 @@ public class PayOrderActivity extends BaseActivity {
                     }else if ("zfb".equals(payType)) {
                         if(httpResult != null && !TextUtils.isEmpty(httpResult.getData().getOrderString())){
                             out_trade_no=httpResult.getData().out_trade_no;
-                            Intent intent = new Intent();
+//                            Intent intent = new Intent();
+//                            intent.setAction("android.intent.action.VIEW");
+//                            Uri content_url = Uri.parse(httpResult.getData().getOrderString());         //要跳转的网页
+//                            intent.setData(content_url);
+//                            intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+//                            startActivity(intent);
+                            Intent intent= new Intent();
                             intent.setAction("android.intent.action.VIEW");
-                            Uri content_url = Uri.parse(httpResult.getData().getOrderString());         //要跳转的网页
+                            Uri content_url = Uri.parse(httpResult.getData().getOrderString());
                             intent.setData(content_url);
-                            intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
                             startActivity(intent);
-//                            PayUtils.getInstances().zfbPaySync(PayOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
+//                                                        PayUtils.getInstances().zfbPaySync(PayOrderActivity.this, httpResult.getData().getOrderString(), new PayResultListener() {
 //                                @Override
 //                                public void zfbPayOk(boolean payOk) {
 //                                    showTipDialog(payOk);
@@ -329,7 +335,11 @@ public class PayOrderActivity extends BaseActivity {
             @Override
             public void onSuccess(List<AccountBalanceDto> object) {
                 if (object != null&&object.size()>0) {
-                    GdBalance = object.get(0).getAvailAmount();
+//                    GdBalance = object.get(0).getAvailAmount();
+                    if(TextUtil.isNotEmpty(object.get(0).getAvailAmount())&&TextUtil.isNotEmpty(object.get(1).getAvailAmount())){
+                        DecimalFormat decimalFormat =new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+                        GdBalance= decimalFormat.format(Double.valueOf(object.get(0).getAvailAmount())+Double.valueOf(object.get(1).getAvailAmount())) ;
+                    }
                     if (mAdapter != null) {
                         mAdapter.setMoney(GdBalance);
                     }
@@ -339,7 +349,8 @@ public class PayOrderActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
             }
-        }, 1+"");
+        }, "1,4");
+
     }
    private String HintType=Constants.RECHARGE_TYPE_FAIL;
     private void showTipDialog(boolean isSuccess) {

@@ -24,6 +24,10 @@
             android:layout_height="32dp"
             android:background="@null"
             android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:maxLength="11"
+            android:inputType="number"
             android:textColor="@color/my_color_333333"
             android:textSize="14sp" />
         <LinearLayout
@@ -45,7 +49,7 @@
                 android:textColor="@color/my_color_999999"
                 android:singleLine="true"
                 android:textSize="@dimen/wz_14sp"
-                android:text="输入关键词" />
+                android:text="输入手机号" />
         </LinearLayout>
 
     </RelativeLayout>

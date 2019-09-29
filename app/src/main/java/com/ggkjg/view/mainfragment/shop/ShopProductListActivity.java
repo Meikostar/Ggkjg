@@ -115,7 +115,7 @@ public class ShopProductListActivity extends BaseActivity {
     private void getProductListData() {
         mParamsMaps.clear();
         mParamsMaps = new HashMap<>();
-        mParamsMaps.put("rows", 16);
+        mParamsMaps.put("rows", Constants.PAGE_SIZE);
         mParamsMaps.put("page", mCurrentPage);
         if(searchKey != null){
             mParamsMaps.put("goodsName", searchKey);

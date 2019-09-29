@@ -16,6 +16,7 @@ import com.ggkjg.dto.ShopCartDto;
 import com.ggkjg.view.widgets.MCheckBox;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,7 +28,10 @@ public class DistributeAdapter extends BaseQuickAdapter<RecommendDto, BaseViewHo
     public DistributeAdapter(List<RecommendDto> data) {
         super(R.layout.item_distribute_view, data);
     }
-
+    public void setMapInfo(Map<String,String> map){
+        maps=map;
+    }
+    private Map<String,String> maps;
     @Override
     protected void convert(BaseViewHolder helper, RecommendDto item) {
         if(TextUtil.isNotEmpty(item.getNickName())){
@@ -63,23 +67,24 @@ public class DistributeAdapter extends BaseQuickAdapter<RecommendDto, BaseViewHo
         }else {
             helper.setText(R.id.tv_detail, "区域：未设置" );
         }
-
+//        1-普通会员 2-店主 3-创客 4-城市运营中心
         String memberName = "";//	会员等级 0-普通会员 1-VIP1 2-VIP2 3-VIP3 4-VIP4 5-VIP5 6-VIP6
-        if (item.getMemberLevel().equals("0") ) {
-            helper.setText(R.id.tv_content, "普通会员");
-        } else if (item.getMemberLevel().equals("1") ) {
-            helper.setText(R.id.tv_content, "VIP1");
-        } else if (item.getMemberLevel().equals("2")  ) {
-            helper.setText(R.id.tv_content, "VIP1");
-        } else if (item.getMemberLevel().equals("3") ) {
-            helper.setText(R.id.tv_content, "VIP1");
-        }else if (item.getMemberLevel().equals("4")  ) {
-            helper.setText(R.id.tv_content, "VIP4");
-        }else if (item.getMemberLevel().equals("5") ) {
-            helper.setText(R.id.tv_content, "VIP5");
-        }else if (item.getMemberLevel().equals("6") ) {
-            helper.setText(R.id.tv_content, "VIP6");
-        }
+        helper.setText(R.id.tv_content, maps.get(item.getMemberLevel())==null?"普通会员": maps.get(item.getMemberLevel()));
+//        if (item.getMemberLevel().equals("0") ) {
+//            helper.setText(R.id.tv_content, "普通会员");
+//        } else if (item.getMemberLevel().equals("1") ) {
+//            helper.setText(R.id.tv_content, "店主");
+//        } else if (item.getMemberLevel().equals("2")  ) {
+//            helper.setText(R.id.tv_content, "创客");
+//        } else if (item.getMemberLevel().equals("3") ) {
+//            helper.setText(R.id.tv_content, "城市运营中心");
+//        }else if (item.getMemberLevel().equals("4")  ) {
+//            helper.setText(R.id.tv_content, "VIP4");
+//        }else if (item.getMemberLevel().equals("5") ) {
+//            helper.setText(R.id.tv_content, "VIP5");
+//        }else if (item.getMemberLevel().equals("6") ) {
+//            helper.setText(R.id.tv_content, "VIP6");
+//        }
 
         GlideUtils.getInstances().loadNormalImg(mContext, helper.getView(R.id.iv_img), BuildConfig.BASE_IMAGE_URL + item.getHeadImg());
 

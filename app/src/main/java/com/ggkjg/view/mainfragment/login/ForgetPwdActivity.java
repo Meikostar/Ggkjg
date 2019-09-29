@@ -148,7 +148,8 @@ public class ForgetPwdActivity extends BaseActivity {
             @Override
             public void onError(Throwable throwable) {
                 LogUtil.i(TAG, "--RxLog-Thread: onError() = ");
-                ToastUtil.showToast("图形验证码有误");
+//                ToastUtil.showToast("图形验证码有误");
+                ToastUtil.toast(ApiException.getShowToast(throwable));
                 stopCount();
             }
         }, phone, positionCode);
